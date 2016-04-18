@@ -272,7 +272,7 @@ public class Main {
 				if(message.equals("!votestart")){api.sendPrivateMessage(e.getInvokerId(),"Command: !votestart name möglichkeit1 möglichkeit2 möglichkeit3 möglichkeit4");}
 				else{
 				if(message.startsWith("!votestart")){
-					String[] subString = message.split(" ",0);
+					String[] subString = message.split(" ; ",0);
 					String befehl = subString[0];
 					vote = subString[1];
 					if(subString[2].isEmpty()){subString[2]=" ";}
