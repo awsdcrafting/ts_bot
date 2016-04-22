@@ -48,10 +48,11 @@ public class Main {
         public void onTextMessage(TextMessageEvent e)
         {
         	
+        	
         if (e.getTargetMode() != TextMessageTargetMode.SERVER && e.getInvokerId() != botID) {
 				String message = e.getMessage();
-				if(DebugLevel==4){System.out.println("" + message);}
-				if(message.startsWith("!")){if(DebugLevel>=3){System.out.println("" + message);}}
+				if(DebugLevel==4){System.out.println("chat: " + e.getInvokerName() + ": " + message);}
+				if(message.startsWith("!")){if(DebugLevel>=3){System.out.println("command: " + e.getInvokerName() + ": " + message);}}
 				
 
 				
@@ -97,7 +98,7 @@ public class Main {
 							int clientID=client.getId();
 							System.out.println("ClientID: " + clientID);
 							api.kickClientFromServer(kickGrund, clientID);
-							api.sendChannelMessage(clientName + " wurde gekickt!");
+							api.sendChannelMessage(apiClientName + " wurde gekickt!");
 							}
 					}
 				}
@@ -143,7 +144,7 @@ public class Main {
 							int clientID=client.getId();
 							System.out.println("ClientID: " + clientID);
 							api.kickClientFromChannel(kickGrund, clientID);
-							api.sendChannelMessage(clientName + " wurde gekickt!");
+							api.sendChannelMessage(apiClientName + " wurde gekickt!");
 							}
 					}
 				}
@@ -272,7 +273,7 @@ public class Main {
 				if(message.equals("!votestart")){api.sendPrivateMessage(e.getInvokerId(),"Command: !votestart name möglichkeit1 möglichkeit2 möglichkeit3 möglichkeit4");}
 				else{
 				if(message.startsWith("!votestart")){
-					String[] subString = message.split(" ; ",0);
+					String[] subString = message.split(" ",6);
 					String befehl = subString[0];
 					vote = subString[1];
 					if(subString[2].isEmpty()){subString[2]=" ";}
