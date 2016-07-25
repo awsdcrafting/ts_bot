@@ -18,10 +18,10 @@ public class Main
 	static int DebugLevel=4;
 	static String clientName;
 	static String vote;
-	static int a_vote_m1;
-	static int a_vote_m2;
-	static int a_vote_m3;
-	static int a_vote_m4;
+	static int a_vote_m1 = 0;
+	static int a_vote_m2 = 0;
+	static int a_vote_m3 = 0;
+	static int a_vote_m4 = 0;
 	static String vote_m1;
 	static String vote_m2;
 	static String vote_m3;
@@ -89,7 +89,7 @@ public class Main
 				}
 				else
 				{
-					if(message.startsWith("!kick"))
+					if(message.startsWith("!kick "))
 					{
 						String[] subString = message.split(" ",3);
 						String befehl = subString[0];
@@ -122,7 +122,7 @@ public class Main
 				}
 				else
 				{
-					if(message.startsWith("!kick*"))
+					if(message.startsWith("!kick* "))
 					{
 						String[] subString = message.split(" ",3);
 						String befehl = subString[0];
@@ -156,7 +156,7 @@ public class Main
 				}
 				else
 				{
-					if(message.startsWith("!ckick"))
+					if(message.startsWith("!ckick "))
 					{
 						String[] subString = message.split(" ",3);
 						String befehl = subString[0];
@@ -189,7 +189,7 @@ public class Main
 				}
 				else
 				{
-					if(message.startsWith("!ckick*"))
+					if(message.startsWith("!ckick* "))
 					{
 						String[] subString = message.split(" ",3);
 						String befehl = subString[0];
@@ -197,7 +197,7 @@ public class Main
 						System.out.println("clientName: " +clientName);
 						String kickGrund = subString[2];
 						
-						if(kickGrund.isEmpty())
+						if(kickGrund.isEmpty() || kickGrund == "" || kickGrund == " ")
 						{
 							kickGrund = "Du wurdest gekickt!";
 						}
@@ -224,7 +224,7 @@ public class Main
 				}
 				else
 				{
-					if(message.startsWith("!msg"))
+					if(message.startsWith("!msg "))
 					{
 						String[] subString = message.split(" ",3);
 						String befehl = subString[0];
@@ -253,7 +253,7 @@ public class Main
 				}
 				else
 				{
-					if(message.startsWith("!poke"))
+					if(message.startsWith("!poke "))
 					{
 						String[] subString = message.split(" ",3);
 						String befehl = subString[0];
@@ -308,7 +308,7 @@ public class Main
 					}
 					else
 					{
-						if(message.startsWith("!ban"))
+						if(message.startsWith("!ban "))
 						{
 							String[] subString = message.split(" ",4);
 							String befehl = subString[0];
@@ -339,13 +339,13 @@ public class Main
 						}
 					}
 
-					if(message.equals("!ban*"))
+					if(message.equals("!ban* "))
 					{
 						api.sendPrivateMessage(e.getInvokerId(),"Command: !ban name zeit grund");
 					}
 					else
 					{
-						if(message.startsWith("!ban*"))
+						if(message.startsWith("!ban* "))
 						{
 							String[] subString = message.split(" ",4);
 							String befehl = subString[0];
@@ -383,7 +383,7 @@ public class Main
 				}
 				else
 				{
-					if(message.startsWith("!votestart"))
+					if(message.startsWith("!votestart "))
 					{
 						String[] subString = message.split(" ",0);
 						String befehl = subString[0];
@@ -414,7 +414,7 @@ public class Main
 					}
 				}
 				
-				if(message.startsWith("!vote"))
+				if(message.startsWith("!vote "))
 				{
 					String[] subString = message.split(" ",2);
 					String befehl = subString[0];
@@ -438,7 +438,7 @@ public class Main
 					}
 				}
 
-				if(message.equals("!voteend"))
+				if(message.equals("!voteend "))
 				{
 					api.sendPrivateMessage(e.getInvokerId(), "vote ergebnisse für: " + vote);
 					api.sendPrivateMessage(e.getInvokerId(), vote_m1 + ": " + a_vote_m1);
