@@ -458,7 +458,7 @@ public class Main
 					}
 				}
 
-				if(message.equals("!voteend "))
+				if(message.equals("!voteend"))
 				{
 					api.sendPrivateMessage(e.getInvokerId(), "vote ergebnisse für: " + vote);
 					api.sendPrivateMessage(e.getInvokerId(), vote_m1 + ": " + a_vote_m1);
