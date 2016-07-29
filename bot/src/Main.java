@@ -296,7 +296,7 @@ public class Main
 						}
 					}
 
-					if(message.equals("!stop"))
+					if(message.equals("!stop")||message.equals("!quit")||message.equals("!botquit"))
 					{
 						api.logout();
 						query2.exit();
