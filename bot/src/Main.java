@@ -383,7 +383,7 @@ public class Main
 					{
 						if(message.startsWith("!spam "))
 						{
-							String[] subString = message.split(" ",2);
+							String[] subString = message.split(" ", 3);
 							String befehl = subString[0];
 							String anzahl_S = subString[1];
 							String nachricht = subString[2];
