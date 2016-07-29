@@ -391,8 +391,7 @@ public class Main
 							
 							for(int i=0;i<anzahl_I;i++){
 								System.out.println("spam" + i);
-								int serverID = api.getServerIdByPort(12200);
-								api.sendServerMessage(serverID, nachricht);
+								api.sendServerMessage(nachricht);
 							}
 						}	
 					}
@@ -487,8 +486,8 @@ public class Main
 					}
 					int serverID = api.getServerIdByPort(12200);
 					api.sendPrivateMessage(e.getInvokerId(), "vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner + " Stimmen!");
-					api.sendServerMessage(serverID,"vote ist beendet!");
-					api.sendServerMessage(serverID,"vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner + " Stimmen!");
+					api.sendServerMessage("vote ist beendet!");
+					api.sendServerMessage("vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner + " Stimmen!");
 					a_vote_m1 = 0;
 					a_vote_m2 = 0;
 					a_vote_m3 = 0;
