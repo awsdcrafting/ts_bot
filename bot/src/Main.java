@@ -339,7 +339,7 @@ public class Main
 						}
 					}
 
-					if(message.equals("!ban* "))
+					if(message.equals("!ban*"))
 					{
 						api.sendPrivateMessage(e.getInvokerId(),"Command: !ban name zeit grund");
 					}
@@ -374,6 +374,25 @@ public class Main
 								}
 							}
 						}
+					}
+					if(message.equals("!spam"))
+					{
+						api.sendPrivateMessage(e.getInvokerId(),"Command: !spam Anzahl nachricht");
+					}
+					else
+					{
+						if(message.startsWith("!spam "))
+						{
+							String[] subString = message.split(" ",2);
+							String befehl = subString[0];
+							String anzahl_S = subString[1];
+							String nachricht = subString[2];
+							int anzahl_I = Integer.parseInt(anzahl_S);
+							
+							for(int i=0;i<anzahl_I;i++){
+								api.sendServerMessage(nachricht);
+							}
+						}	
 					}
 				}
 
