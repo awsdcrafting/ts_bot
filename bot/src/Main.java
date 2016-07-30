@@ -296,6 +296,26 @@ public class Main
 						}
 					}	
 				}
+				if(message.equals("!cspam"))
+				{
+					api.sendPrivateMessage(e.getInvokerId(),"Command: !cspam Anzahl nachricht");
+				}
+				else
+				{
+					if(message.startsWith("!cspam "))
+					{
+						String[] subString = message.split(" ", 3);
+						String befehl = subString[0];
+						String anzahl_S = subString[1];
+						String nachricht = subString[2];
+						int anzahl_I = Integer.parseInt(anzahl_S);
+						
+						for(int i=0;i<anzahl_I;i++){
+							System.out.println("spam" + i);
+							api.sendChannelMessage(nachricht);
+						}
+					}	
+				}
 				if(e.getTargetMode() == TextMessageTargetMode.CLIENT)
 				{
 
