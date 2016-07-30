@@ -276,7 +276,26 @@ public class Main
 						}
 					}
 				}
-
+				if(message.equals("!spam"))
+				{
+					api.sendPrivateMessage(e.getInvokerId(),"Command: !spam Anzahl nachricht");
+				}
+				else
+				{
+					if(message.startsWith("!spam "))
+					{
+						String[] subString = message.split(" ", 3);
+						String befehl = subString[0];
+						String anzahl_S = subString[1];
+						String nachricht = subString[2];
+						int anzahl_I = Integer.parseInt(anzahl_S);
+						
+						for(int i=0;i<anzahl_I;i++){
+							System.out.println("spam" + i);
+							api.sendServerMessage(nachricht);
+						}
+					}	
+				}
 				if(e.getTargetMode() == TextMessageTargetMode.CLIENT)
 				{
 
@@ -295,7 +314,14 @@ public class Main
 							}
 						}
 					}
-
+					
+					if(message.startsWith("!rename ")){
+						String[] subString = message.split(" ",2);
+						String befehl = subString[0];
+						String nickname = subString[1];
+						api.setNickname(nickname);
+					}
+					
 					if(message.equals("!stop")||message.equals("!quit")||message.equals("!botquit"))
 					{
 						api.logout();
@@ -375,27 +401,7 @@ public class Main
 							}
 						}
 					}
-					if(message.equals("!spam"))
-					{
-						api.sendPrivateMessage(e.getInvokerId(),"Command: !spam Anzahl nachricht");
-					}
-					else
-					{
-						if(message.startsWith("!spam "))
-						{
-							String[] subString = message.split(" ", 3);
-							String befehl = subString[0];
-							String anzahl_S = subString[1];
-							String nachricht = subString[2];
-							int anzahl_I = Integer.parseInt(anzahl_S);
-							
-							for(int i=0;i<anzahl_I;i++){
-								System.out.println("spam" + i);
-								api.sendServerMessage(nachricht);
-							}
-						}	
-					}
-				}
+					
 
 				if(message.equals("!votestart"))
 				{
@@ -496,4 +502,5 @@ public class Main
 			}
 		}
 	}
+}
 }
