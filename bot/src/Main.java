@@ -73,7 +73,8 @@ public class Main
 				String message = e.getMessage();
 				if(DebugLevel==4)
 				{
-					System.out.println("" + message);
+					clientName = e.getInvokerName();
+					System.out.println(clientName +": " + message);
 				}
 				if(message.startsWith("!"))
 				{
@@ -241,7 +242,7 @@ public class Main
 							{
 								int clientID=client.getId();
 								System.out.println("ClientID: " + clientID);
-								api.sendPrivateMessage(clientID,clientName + " hat dich angeschrieben: " + msgMSG);
+								api.sendPrivateMessage(clientID,e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
 							}
 						}
 					}
