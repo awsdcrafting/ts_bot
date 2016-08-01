@@ -70,7 +70,11 @@ public class WarnSystem {
 	      ArrayList<String> al = new ArrayList<String>();
 			try
 			{
-				FileReader fr = new FileReader("Warnungen.txt");
+				File file = new File("Warnungen.txt");
+				if(!file.exists()){
+					file.createNewFile();
+				}
+				FileReader fr = new FileReader(file);
 				BufferedReader br = new BufferedReader(fr);
 				String s = br.readLine();
 				while(s != null)
