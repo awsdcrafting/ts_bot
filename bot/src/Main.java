@@ -624,6 +624,7 @@ public class Main
 							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[1]);
 							if(anzahlWarnungen >= alAnzahlWarnungen){
 								anzahlWarnungen = 0;
+								alWarnungen.remove(i);
 							}
 							else{
 							anzahlWarnungen -= alAnzahlWarnungen;
