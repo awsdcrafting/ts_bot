@@ -554,7 +554,7 @@ public class Main
 						}
 					}
 					if(warnungExistiertNicht){
-						alWarnungen.add(alWarnungen.size()+1, name + anzahlWarnungen);
+						alWarnungen.add(name + anzahlWarnungen);
 					}
 					warnungExistiertNicht = true;
 					io.github.awsdcrafting.WarnSystem.SchreibeWarnung(alWarnungen);
