@@ -555,7 +555,7 @@ public class Main
 						if(name.equals(alWarnungenSubString[0])){
 							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[1]);
 							anzahlWarnungen += alAnzahlWarnungen;
-							alWarnungen.set(i, name + anzahlWarnungen);
+							alWarnungen.set(i, name + " " + anzahlWarnungen);
 							warnungExistiertNicht = false;
 						}
 					}
@@ -588,7 +588,7 @@ public class Main
 							if(apiClientName.equals(name))
 							{
 								String banGrund = anzahlWarnungen + ". Verwarnung";
-								int banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen);
+								int banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen-1);
 								if(banZeit >2678400){
 									banZeit = 0;
 								}
