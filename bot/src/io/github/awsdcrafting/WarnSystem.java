@@ -21,7 +21,7 @@ public class WarnSystem {
 		      FileWriter fw = new FileWriter("Warnungen.txt");
 		       
 		       // Text wird in den Stream geschrieben
-		      for(int i = 0;i<=Warnungen.size();i++){
+		      for(int i = 0;i<Warnungen.size();i++){
 		       fw.write(""+Warnungen.get(i));
 		       //Platformunabhängiger Zeilenumbruch wird in den Stream geschrieben
 		       fw.write(System.getProperty("line.separator"));
