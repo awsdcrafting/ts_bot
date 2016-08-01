@@ -41,6 +41,7 @@ public class Main
 		apim.login("scissiV2", "e5WqptB8");
 		apim.selectVirtualServerByPort(12200);
 		apim.setNickname("BOT");
+		apim.moveClient(apim.whoAmI().getId(),52360);
 
 		final int botIDm = apim.whoAmI().getId();
 		apim.registerAllEvents();
