@@ -627,7 +627,7 @@ public class Main
 								alWarnungen.remove(i);
 							}
 							else{
-							anzahlWarnungen -= alAnzahlWarnungen;
+							anzahlWarnungen = alAnzahlWarnungen - anzahlWarnungen;
 							alWarnungen.set(i, name + " " + anzahlWarnungen);
 							}
 							warnungExistiertNicht = false;
