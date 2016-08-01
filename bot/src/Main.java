@@ -585,9 +585,9 @@ public class Main
 							System.out.println("apiClientName: " + client.getNickname());
 							String apiClientName = client.getNickname();
 							
-							if(apiClientName.equals(clientName))
+							if(apiClientName.equals(name))
 							{
-								String banGrund = anzahlWarnungen + ". Warnung";
+								String banGrund = anzahlWarnungen + ". Verwarnung";
 								int banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen);
 								if(banZeit >2678400){
 									banZeit = 0;
@@ -595,7 +595,6 @@ public class Main
 								int clientID=client.getId();
 								System.out.println("ClientID: " + clientID);
 								api.banClient(clientID, banZeit, banGrund);
-								api.sendChannelMessage(clientName + " wurde gebannt!");
 							}
 						}
 					}
