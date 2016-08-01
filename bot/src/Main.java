@@ -530,7 +530,7 @@ public class Main
 				}
 				if(message.equals("!getallwarns")){
 					for(int i = 0;i<alWarnungen.size();i++){
-						api.sendPrivateMessage(e.getInvokerId(), alWarnungen.get(i));
+						api.sendPrivateMessage(e.getInvokerId(),"" + alWarnungen.get(i));
 					}
 				}
 				if(message.equals("!warn")){
@@ -628,8 +628,8 @@ public class Main
 							else{
 							anzahlWarnungen -= alAnzahlWarnungen;
 							alWarnungen.set(i, name + " " + anzahlWarnungen);
-							warnungExistiertNicht = false;
 							}
+							warnungExistiertNicht = false;
 						}
 					}
 					if(warnungExistiertNicht){
