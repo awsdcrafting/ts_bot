@@ -601,6 +601,44 @@ public class Main
 					
 					}
 				}
+				if(message.equals("!removewarn")){
+					api.sendPrivateMessage(e.getInvokerId(),"Command: !removewarn name [anzahlwarnungen]");
+				}
+				else {
+					if(message.startsWith("!removewarn ")){
+					int anzahlWarnungen = 0;
+					String[] subString = message.split(" ",3);
+					String befehl = subString[0];
+					String name = subString[1];
+					if(subString.length==2){
+						subString = new String[3];
+						subString[0] = befehl;
+						subString[1] = name;
+						subString[2] = "1";
+					}
+					boolean warnungExistiertNicht = true;
+					anzahlWarnungen = Integer.parseInt(subString[2]);
+					for(int i = 0;i<alWarnungen.size();i++){
+						String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
+						if(name.equals(alWarnungenSubString[0])){
+							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[1]);
+							if(anzahlWarnungen >= alAnzahlWarnungen){
+								anzahlWarnungen = 0;
+							}
+							else{
+							anzahlWarnungen -= alAnzahlWarnungen;
+							alWarnungen.set(i, name + " " + anzahlWarnungen);
+							warnungExistiertNicht = false;
+							}
+						}
+					}
+					if(warnungExistiertNicht){
+						api.sendPrivateMessage(e.getInvokerId(), name + " hat keine Verwarnungen!");
+					}
+					warnungExistiertNicht = true;
+					io.github.awsdcrafting.WarnSystem.SchreibeWarnung(alWarnungen);
+					}
+				}
 				
 				
 			}
