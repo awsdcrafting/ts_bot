@@ -542,6 +542,7 @@ public class Main
 						subString[1] = name;
 						subString[2] = "1";
 					}
+					boolean warnungExistiert = false;
 					int anzahlWarnungen = Integer.parseInt(subString[2]);
 					for(int i = 0;i<=alWarnungen.size();i++){
 						String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
@@ -549,8 +550,13 @@ public class Main
 							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[1]);
 							anzahlWarnungen += alAnzahlWarnungen;
 							alWarnungen.set(i, name + anzahlWarnungen);
+							warnungExistiert = true;
 						}
 					}
+					if(warnungExistiert = false){
+						alWarnungen.add(alWarnungen.size()+1, name + anzahlWarnungen);
+					}
+					warnungExistiert = false;
 					io.github.awsdcrafting.WarnSystem.SchreibeWarnung(alWarnungen);
 				}
 				
