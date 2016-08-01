@@ -544,7 +544,7 @@ public class Main
 					}
 					boolean warnungExistiert = false;
 					int anzahlWarnungen = Integer.parseInt(subString[2]);
-					for(int i = 0;i<=alWarnungen.size();i++){
+					for(int i = 0;i<alWarnungen.size();i++){
 						String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
 						if(name.equals(alWarnungenSubString[0])){
 							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[1]);

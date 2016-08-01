@@ -38,33 +38,6 @@ public class WarnSystem {
 		      e.printStackTrace();
 		    }
 		  }
-	  
-	  public static String[] leseWarnungen()
-	  {
-	      ArrayList<String> al = new ArrayList<String>();
-			try
-			{
-				File file = new File("Warnungen.txt");
-				if(!file.exists()){
-					file.createNewFile();
-				}
-				FileReader fr = new FileReader(file);
-				BufferedReader br = new BufferedReader(fr);
-				String s = br.readLine();
-				while(s != null)
-				{
-					al.add(s);
-					s = br.readLine();
-				}
-				br.close();
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-			return al.toArray(new String[1]);
-	    }
-	  
 	  public static ArrayList leseWarnungenAsArrayList()
 	  {
 	      ArrayList<String> al = new ArrayList<String>();
@@ -91,8 +64,15 @@ public class WarnSystem {
 			return al;
 	    }
 	  
+	  public static String[] leseWarnungenAsArray()
+	  {
+			return (String[]) leseWarnungenAsArrayList().toArray(new String[1]);
+	    }
+	  
+	  
+	  
 	  public static int getAnzahlWarnungen(String name){
-		  String[] alleWarnungen = leseWarnungen();
+		  String[] alleWarnungen = leseWarnungenAsArray();
 		  for(int i = 0;i<=alleWarnungen.length;i++){
 			 String[] Warnung = alleWarnungen[i].split(" ");
 			 if(Warnung[0].equals(name)){
