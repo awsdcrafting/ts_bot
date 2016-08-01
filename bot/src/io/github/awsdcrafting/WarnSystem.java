@@ -44,7 +44,11 @@ public class WarnSystem {
 	      ArrayList<String> al = new ArrayList<String>();
 			try
 			{
-				FileReader fr = new FileReader("Warnungen.txt");
+				File file = new File("Warnungen.txt");
+				if(!file.exists()){
+					file.createNewFile();
+				}
+				FileReader fr = new FileReader(file);
 				BufferedReader br = new BufferedReader(fr);
 				String s = br.readLine();
 				while(s != null)
@@ -58,7 +62,7 @@ public class WarnSystem {
 			{
 				e.printStackTrace();
 			}
-			return al.toArray(new String[0]);
+			return al.toArray(new String[1]);
 	    }
 	  
 	  public static ArrayList leseWarnungenAsArrayList()
