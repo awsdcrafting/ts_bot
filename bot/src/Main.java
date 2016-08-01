@@ -320,6 +320,9 @@ public class Main
 						}
 					}	
 				}
+				if(message.equals("!msgme")){
+					api.sendPrivateMessage(e.getInvokerId(), "Hallo :D");
+				}
 				if(e.getTargetMode() == TextMessageTargetMode.CLIENT)
 				{
 
@@ -532,7 +535,9 @@ public class Main
 				if(message.equals("!warn")){
 					api.sendPrivateMessage(e.getInvokerId(),"Command: !warn name [anzahlwarnungen]");
 				}
-				if(message.startsWith("!warn ")){
+				else {
+					if(message.startsWith("!warn ")){
+					int anzahlWarnungen = 0;
 					String[] subString = message.split(" ",3);
 					String befehl = subString[0];
 					String name = subString[1];
@@ -543,7 +548,7 @@ public class Main
 						subString[2] = "1";
 					}
 					boolean warnungExistiertNicht = true;
-					int anzahlWarnungen = Integer.parseInt(subString[2]);
+					anzahlWarnungen = Integer.parseInt(subString[2]);
 					for(int i = 0;i<alWarnungen.size();i++){
 						String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
 						if(name.equals(alWarnungenSubString[0])){
@@ -558,8 +563,44 @@ public class Main
 					}
 					warnungExistiertNicht = true;
 					io.github.awsdcrafting.WarnSystem.SchreibeWarnung(alWarnungen);
+					if(anzahlWarnungen==1){
+						for(Client client : api.getClients())
+						{
+							System.out.println("apiClientName: " + client.getNickname());
+							String apiClientName = client.getNickname();
+							
+							if(apiClientName.equals(name))
+							{
+								String kickGrund = "1. Verwarnung";
+								int clientID=client.getId();
+								System.out.println("ClientID: " + clientID);
+								api.kickClientFromServer(kickGrund, clientID);
+							}
+						}
+					}
+					if(anzahlWarnungen>=2){
+						for(Client client : api.getClients())
+						{
+							System.out.println("apiClientName: " + client.getNickname());
+							String apiClientName = client.getNickname();
+							
+							if(apiClientName.equals(clientName))
+							{
+								String banGrund = anzahlWarnungen + ". Warnung";
+								int banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen);
+								if(banZeit >2678400){
+									banZeit = 0;
+								}
+								int clientID=client.getId();
+								System.out.println("ClientID: " + clientID);
+								api.banClient(clientID, banZeit, banGrund);
+								api.sendChannelMessage(clientName + " wurde gebannt!");
+							}
+						}
+					}
+					
+					}
 				}
-				
 				
 				
 			}
