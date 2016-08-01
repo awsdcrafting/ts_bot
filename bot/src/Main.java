@@ -12,6 +12,8 @@ import com.github.theholywaffle.teamspeak3.api.event.TS3EventType;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
+import io.github.awsdcrafting.WarnSystem;
+
 public class Main 
 {
 
@@ -26,6 +28,7 @@ public class Main
 	static String vote_m2;
 	static String vote_m3;
 	static String vote_m4;
+	static ArrayList<String> alWarnungen;
 
 	public static void	main(String[] args)
 	{
@@ -45,7 +48,7 @@ public class Main
 		final BotTS3EventAdapter adapter = new BotTS3EventAdapter(apim, botIDm,query);
 		// Register the event listener
 		apim.addTS3Listeners(adapter);
-
+		alWarnungen = io.github.awsdcrafting.WarnSystem.leseWarnungenAsArrayList();
 		Runtime.getRuntime().addShutdownHook(new Thread(){
 			public void run(){
 				apim.logout();
@@ -484,6 +487,7 @@ public class Main
 						a_vote_m4 +=1;
 					}
 				}
+				
 
 				if(message.equals("!voteend"))
 				{
@@ -520,6 +524,38 @@ public class Main
 					a_vote_m3 = 0;
 					a_vote_m4 = 0;
 				}
+				if(message.equals("!getallwarns")){
+					for(int i = 0;i<alWarnungen.size();i++){
+						api.sendPrivateMessage(e.getInvokerId(), alWarnungen.get(i));
+					}
+				}
+				if(message.equals("!warn")){
+					api.sendPrivateMessage(e.getInvokerId(),"Command: !warn name [anzahlwarnungen]");
+				}
+				if(message.startsWith("!warn ")){
+					String[] subString = message.split(" ",3);
+					String befehl = subString[0];
+					String name = subString[1];
+					if(subString.length==2){
+						subString = new String[3];
+						subString[0] = befehl;
+						subString[1] = name;
+						subString[2] = "1";
+					}
+					int anzahlWarnungen = Integer.parseInt(subString[2]);
+					for(int i = 0;i<=alWarnungen.size();i++){
+						String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
+						if(name.equals(alWarnungenSubString[0])){
+							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[1]);
+							anzahlWarnungen += alAnzahlWarnungen;
+							alWarnungen.set(i, name + anzahlWarnungen);
+						}
+					}
+					io.github.awsdcrafting.WarnSystem.SchreibeWarnung(alWarnungen);
+				}
+				
+				
+				
 			}
 		}
 	}

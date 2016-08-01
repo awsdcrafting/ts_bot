@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class WarnSystem {
 	
-	  public static void SchreibeWarnung(String name,int anzahl_Warnungen){
+	  public static void SchreibeWarnung(ArrayList Warnungen){
 		    // File anlegen
 		     try {
 		       // new FileWriter(file ,true) - falls die Datei bereits existiert
@@ -21,11 +21,12 @@ public class WarnSystem {
 		      FileWriter fw = new FileWriter("Warnungen.txt");
 		       
 		       // Text wird in den Stream geschrieben
-		       fw.write(name + " " + anzahl_Warnungen);
-		       
-		       // Platformunabhängiger Zeilenumbruch wird in den Stream geschrieben
+		      for(int i = 0;i<=Warnungen.size();i++){
+		       fw.write(""+Warnungen.get(i));
+		       //Platformunabhängiger Zeilenumbruch wird in den Stream geschrieben
 		       fw.write(System.getProperty("line.separator"));
-		       
+		      }
+		      
 		       // Schreibt den Stream in die Datei
 		       // Sollte immer am Ende ausgeführt werden, sodass der Stream 
 		       // leer ist und alles in der Datei steht.
@@ -58,6 +59,28 @@ public class WarnSystem {
 				e.printStackTrace();
 			}
 			return al.toArray(new String[0]);
+	    }
+	  
+	  public static ArrayList leseWarnungenAsArrayList()
+	  {
+	      ArrayList<String> al = new ArrayList<String>();
+			try
+			{
+				FileReader fr = new FileReader("Warnungen.txt");
+				BufferedReader br = new BufferedReader(fr);
+				String s = br.readLine();
+				while(s != null)
+				{
+					al.add(s);
+					s = br.readLine();
+				}
+				br.close();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			return al;
 	    }
 	  
 	  public static int getAnzahlWarnungen(String name){
