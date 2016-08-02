@@ -75,8 +75,8 @@ public class WarnSystem {
 		  String[] alleWarnungen = leseWarnungenAsArray();
 		  for(int i = 0;i<=alleWarnungen.length;i++){
 			 String[] Warnung = alleWarnungen[i].split(" ");
-			 if(Warnung[0].equals(name)){
-				return Integer.parseInt(Warnung[1]);
+			 if(Warnung[1].equals(name)){
+				return Integer.parseInt(Warnung[2]);
 			 }
 			 }
 		  

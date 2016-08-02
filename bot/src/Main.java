@@ -542,6 +542,7 @@ public class Main
 					String[] subString = message.split(" ",3);
 					String befehl = subString[0];
 					String name = subString[1];
+					String clientUID = "";
 					if(subString.length==2){
 						subString = new String[3];
 						subString[0] = befehl;
@@ -550,17 +551,27 @@ public class Main
 					}
 					boolean warnungExistiertNicht = true;
 					anzahlWarnungen = Integer.parseInt(subString[2]);
+					for(Client client : api.getClients())
+					{
+						System.out.println("apiClientName: " + client.getNickname());
+						String apiClientName = client.getNickname();
+						
+						if(apiClientName.equals(name))
+						{
+							clientUID=client.getUniqueIdentifier();
+						}
+					}
 					for(int i = 0;i<alWarnungen.size();i++){
 						String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
-						if(name.equals(alWarnungenSubString[0])){
-							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[1]);
+						if(name.equals(alWarnungenSubString[1])||clientUID.equals(alWarnungenSubString[0])){
+							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[2]);
 							anzahlWarnungen += alAnzahlWarnungen;
-							alWarnungen.set(i, name + " " + anzahlWarnungen);
+							alWarnungen.set(i,clientUID + " " + name + " " + anzahlWarnungen);
 							warnungExistiertNicht = false;
 						}
 					}
 					if(warnungExistiertNicht){
-						alWarnungen.add(name + " " + anzahlWarnungen);
+						alWarnungen.add(clientUID + " " + name + " " + anzahlWarnungen);
 					}
 					warnungExistiertNicht = true;
 					io.github.awsdcrafting.WarnSystem.SchreibeWarnung(alWarnungen);
@@ -569,8 +580,8 @@ public class Main
 						{
 							System.out.println("apiClientName: " + client.getNickname());
 							String apiClientName = client.getNickname();
-							
-							if(apiClientName.equals(name))
+							String apiClientUID = client.getUniqueIdentifier();
+							if(apiClientName.equals(name)||apiClientUID.equals(clientUID))
 							{
 								String kickGrund = "1. Verwarnung";
 								int clientID=client.getId();
@@ -584,8 +595,8 @@ public class Main
 						{
 							System.out.println("apiClientName: " + client.getNickname());
 							String apiClientName = client.getNickname();
-							
-							if(apiClientName.equals(name))
+							String apiClientUID = client.getUniqueIdentifier();
+							if(apiClientName.equals(name)||apiClientUID.equals(clientUID))
 							{
 								String banGrund = anzahlWarnungen + ". Verwarnung";
 								int banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen-1);
@@ -610,6 +621,7 @@ public class Main
 					String[] subString = message.split(" ",3);
 					String befehl = subString[0];
 					String name = subString[1];
+					String clientUID = "";
 					if(subString.length==2){
 						subString = new String[3];
 						subString[0] = befehl;
@@ -620,15 +632,16 @@ public class Main
 					anzahlWarnungen = Integer.parseInt(subString[2]);
 					for(int i = 0;i<alWarnungen.size();i++){
 						String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
-						if(name.equals(alWarnungenSubString[0])){
-							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[1]);
+						if(name.equals(alWarnungenSubString[1])){
+							clientUID = alWarnungenSubString[0];
+							int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[2]);
 							if(anzahlWarnungen >= alAnzahlWarnungen){
 								anzahlWarnungen = 0;
 								alWarnungen.remove(i);
 							}
 							else{
 							anzahlWarnungen = alAnzahlWarnungen - anzahlWarnungen;
-							alWarnungen.set(i, name + " " + anzahlWarnungen);
+							alWarnungen.set(i,clientUID + " " + name + " " + anzahlWarnungen);
 							}
 							warnungExistiertNicht = false;
 						}
