@@ -561,10 +561,10 @@ public class Main
 						if(apiClientName.equals(name))
 						{
 							clientUID=client.getUniqueIdentifier();
+							clientUID_ = clientUID;
 							clientUIDErhalten = true;
 						}
 						if(!clientUIDErhalten){
-							
 							for(int i = 0;i<alWarnungen.size();i++){
 							String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
 							if(alWarnungenSubString[1].equals(name)){
