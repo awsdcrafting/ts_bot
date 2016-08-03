@@ -542,7 +542,7 @@ public class Main
 					String[] subString = message.split(" ",3);
 					String befehl = subString[0];
 					String name = subString[1];
-					String clientUID = "";
+					String clientUID = "fehlt";
 					if(subString.length==2){
 						subString = new String[3];
 						subString[0] = befehl;
@@ -599,13 +599,21 @@ public class Main
 							if(apiClientName.equals(name)||apiClientUID.equals(clientUID))
 							{
 								String banGrund = anzahlWarnungen + ". Verwarnung";
-								int banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen-1);
+								long banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen-1);
 								if(banZeit >2678400){
 									banZeit = 0;
 								}
 								int clientID=client.getId();
 								System.out.println("ClientID: " + clientID);
 								api.banClient(clientID, banZeit, banGrund);
+							}
+							else{
+								String banGrund = anzahlWarnungen + ". Verwarnung";
+								long banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen-1);
+								if(banZeit >2678400){
+									banZeit = 0;
+								}
+								api.addBan("", name, clientUID, banZeit, banGrund);
 							}
 						}
 					}
