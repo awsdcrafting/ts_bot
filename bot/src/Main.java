@@ -542,7 +542,8 @@ public class Main
 					String[] subString = message.split(" ",3);
 					String befehl = subString[0];
 					String name = subString[1];
-					String clientUID = "fehlt";
+					String clientUID;
+					String clientUID_ = "fehlt";;
 					if(subString.length==2){
 						subString = new String[3];
 						subString[0] = befehl;
@@ -551,6 +552,7 @@ public class Main
 					}
 					boolean warnungExistiertNicht = true;
 					anzahlWarnungen = Integer.parseInt(subString[2]);
+					boolean clientUIDErhalten = false;
 					for(Client client : api.getClients())
 					{
 						System.out.println("apiClientName: " + client.getNickname());
@@ -559,8 +561,22 @@ public class Main
 						if(apiClientName.equals(name))
 						{
 							clientUID=client.getUniqueIdentifier();
+							clientUIDErhalten = true;
+						}
+						if(!clientUIDErhalten){
+							
+							for(int i = 0;i<alWarnungen.size();i++){
+							String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
+							if(alWarnungenSubString[1].equals(name)){
+							if(!alWarnungenSubString[0].equals("fehlt")){
+							clientUID_ = alWarnungenSubString[0];
+							clientUIDErhalten = true;
+							}
+							}
+							}
 						}
 					}
+					clientUID = clientUID_;
 					for(int i = 0;i<alWarnungen.size();i++){
 						String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
 						if(name.equals(alWarnungenSubString[1])||clientUID.equals(alWarnungenSubString[0])){
@@ -591,6 +607,7 @@ public class Main
 						}
 					}
 					if(anzahlWarnungen>=2){
+						boolean gebannt = false;
 						for(Client client : api.getClients())
 						{
 							System.out.println("apiClientName: " + client.getNickname());
@@ -606,15 +623,16 @@ public class Main
 								int clientID=client.getId();
 								System.out.println("ClientID: " + clientID);
 								api.banClient(clientID, banZeit, banGrund);
+								gebannt = true;
 							}
-							else{
-								String banGrund = anzahlWarnungen + ". Verwarnung";
-								long banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen-1);
-								if(banZeit >2678400){
-									banZeit = 0;
-								}
-								api.addBan("", name, clientUID, banZeit, banGrund);
+						}
+						if(!gebannt){
+							String banGrund = anzahlWarnungen + ". Verwarnung";
+							long banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen-1);
+							if(banZeit >2678400){
+								banZeit = 0;
 							}
+							api.addBan("", name, clientUID, banZeit, banGrund);
 						}
 					}
 					
