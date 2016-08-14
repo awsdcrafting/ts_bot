@@ -6,17 +6,22 @@ import java.util.List;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3Config;
 import com.github.theholywaffle.teamspeak3.TS3Query;
+import com.github.theholywaffle.teamspeak3.TS3Query.FloodRate;
 import com.github.theholywaffle.teamspeak3.api.TextMessageTargetMode;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventType;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
-
+import com.github.theholywaffle.*;
+import com.github.theholywaffle.teamspeak3.*;
+import com.github.theholywaffle.teamspeak3.api.*;
+import com.github.theholywaffle.teamspeak3.api.reconnect.ConnectionHandler;
+import com.github.theholywaffle.teamspeak3.api.reconnect.ReconnectStrategy;
 import io.github.awsdcrafting.WarnSystem;
 
 public class Main 
 {
-
+	static volatile int botIDm;
 	static int DebugLevel=4;
 	static String clientName;
 	static String vote;
@@ -34,17 +39,31 @@ public class Main
 	{
 		final TS3Config config = new TS3Config();
 		config.setHost("31.214.227.53"); // Die IP-Adresse des Servers, ohne Port
-		config.setLoginCredentials("scissiV2", "e5WqptB8");
+		config.setFloodRate(FloodRate.UNLIMITED);
 		final TS3Query query = new TS3Query(config);
-		query.connect(); // Verbinden
 		final TS3Api apim = query.getApi();
-		apim.login("scissiV2", "e5WqptB8");
-		apim.selectVirtualServerByPort(12200);
-		apim.setNickname("BOT");
-		apim.moveClient(apim.whoAmI().getId(),52360);
 
-		final int botIDm = apim.whoAmI().getId();
-		apim.registerAllEvents();
+		
+		// Use default exponential backoff reconnect strategy
+				config.setReconnectStrategy(ReconnectStrategy.exponentialBackoff());
+
+				// Make stuff run every time the query (re)connects
+				config.setConnectionHandler(new ConnectionHandler() {
+
+					@Override
+					public void onConnect(TS3Query ts3Query) {
+						stuffThatNeedsToRunEveryTimeTheQueryConnects(ts3Query.getApi());
+					}
+
+					@Override
+					public void onDisconnect(TS3Query ts3Query) {
+						// Nothing
+					}
+				});
+				
+				query.connect(); // Verbinden
+				
+		
 		
 		final BotTS3EventAdapter adapter = new BotTS3EventAdapter(apim, botIDm,query);
 		// Register the event listener
@@ -54,6 +73,22 @@ public class Main
 			public void run(){
 				apim.logout();
 				query.exit();}});
+	}
+	
+	public static void stuffThatNeedsToRunEveryTimeTheQueryConnects(TS3Api api){
+		// Logging in, selecting the virtual server, selecting a channel
+		// and setting a nickname needs to be done every time we reconnect
+		api.login("scissiV2", "e5WqptB8");
+		api.selectVirtualServerByPort(12200);
+		api.moveQuery(52360);
+		api.setNickname("BOT");
+
+		// What events we listen to also resets
+		api.registerAllEvents();
+
+		// Out clientID changes every time we connect and we need it
+		// for our event listener, so we need to store the ID in a field
+		botIDm = api.whoAmI().getId();
 	}
 	
 	private static class BotTS3EventAdapter extends TS3EventAdapter
@@ -352,8 +387,7 @@ public class Main
 					
 					if(message.equals("!stop")||message.equals("!quit")||message.equals("!botquit"))
 					{
-						api.logout();
-						query2.exit();
+						System.exit(0);
 					}
 
 					if(message.equals("!ban"))
