@@ -2,6 +2,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3Config;
@@ -40,11 +41,9 @@ public class Main
 		final TS3Config config = new TS3Config();
 		config.setHost("31.214.227.53"); // Die IP-Adresse des Servers, ohne Port
 		config.setFloodRate(FloodRate.UNLIMITED);
-		final TS3Query query = new TS3Query(config);
-		final TS3Api apim = query.getApi();
-
+		config.setDebugLevel(Level.ALL);
 		
-		// Use default exponential backoff reconnect strategy
+			// Use default exponential backoff reconnect strategy
 				config.setReconnectStrategy(ReconnectStrategy.exponentialBackoff());
 
 				// Make stuff run every time the query (re)connects
@@ -60,18 +59,20 @@ public class Main
 						// Nothing
 					}
 				});
-				
-				query.connect(); // Verbinden
+			final TS3Query query = new TS3Query(config);
+			query.connect(); // Verbinden
 				
 		
 		
-		final BotTS3EventAdapter adapter = new BotTS3EventAdapter(apim, botIDm,query);
+		
 		// Register the event listener
-		apim.addTS3Listeners(adapter);
+		final BotTS3EventAdapter adapter = new BotTS3EventAdapter(query.getApi(), botIDm,query);
+		query.getApi().addTS3Listeners(adapter);
 		alWarnungen = io.github.awsdcrafting.WarnSystem.leseWarnungenAsArrayList();
+		
 		Runtime.getRuntime().addShutdownHook(new Thread(){
 			public void run(){
-				apim.logout();
+				query.getApi().logout();
 				query.exit();}});
 	}
 	
