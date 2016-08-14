@@ -568,6 +568,12 @@ public class Main
 						api.sendPrivateMessage(e.getInvokerId(),"" + alWarnungen.get(i));
 					}
 				}
+				if(message.equals("!updatewarns")){
+					alWarnungen = io.github.awsdcrafting.WarnSystem.leseWarnungenAsArrayList();
+					for(int i = 0;i<alWarnungen.size();i++){
+						api.sendPrivateMessage(e.getInvokerId(),"" + alWarnungen.get(i));
+					}
+				}
 				if(message.equals("!warn")){
 					api.sendPrivateMessage(e.getInvokerId(),"Command: !warn name [anzahlwarnungen]");
 				}
