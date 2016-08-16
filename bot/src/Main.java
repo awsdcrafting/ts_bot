@@ -56,7 +56,12 @@ public class Main
 
 					@Override
 					public void onDisconnect(TS3Query ts3Query) {
-						// Nothing
+						try {
+							Thread.sleep(10000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				});
 			final TS3Query query = new TS3Query(config);
