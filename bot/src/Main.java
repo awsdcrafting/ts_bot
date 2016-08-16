@@ -56,12 +56,7 @@ public class Main
 
 					@Override
 					public void onDisconnect(TS3Query ts3Query) {
-						try {
-							Thread.sleep(10000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						//nothing
 					}
 				});
 			final TS3Query query = new TS3Query(config);
@@ -87,7 +82,19 @@ public class Main
 		api.login("scissiV2", "e5WqptB8");
 		api.selectVirtualServerByPort(12200);
 		api.moveQuery(52360);
-		api.setNickname("BOT");
+		for(Client client : api.getClients())
+		{
+			System.out.println("apiClientName: " + client.getNickname());
+			String apiClientName = client.getNickname();
+			
+			if(apiClientName.equals("BOT"))
+			{
+				api.setNickname("BOT2");
+			}
+			else{
+				api.setNickname("BOT");	
+			}
+		}
 
 		// What events we listen to also resets
 		api.registerAllEvents();
