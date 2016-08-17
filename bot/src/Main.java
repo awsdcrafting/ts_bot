@@ -82,6 +82,7 @@ public class Main
 		api.login("scissiV2", "e5WqptB8");
 		api.selectVirtualServerByPort(12200);
 		api.moveQuery(52360);
+		String name = "BOT";
 		for(Client client : api.getClients())
 		{
 			System.out.println("apiClientName: " + client.getNickname());
@@ -89,12 +90,12 @@ public class Main
 			
 			if(apiClientName.equals("BOT"))
 			{
-				api.setNickname("BOT2");
+				name = "BOT2";
 			}
-			else{
-				api.setNickname("BOT");	
-			}
+		
 		}
+		
+		api.setNickname(name);
 
 		// What events we listen to also resets
 		api.registerAllEvents();
