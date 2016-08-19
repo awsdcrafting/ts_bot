@@ -530,7 +530,8 @@ public class Main
 								api.sendServerMessage("Der BOT hält sich im: " + channelName + " channel auf!");
 							}
 						}
-						api.sendServerMessage("votet mit !vote (votemöglichkeit) für: " + vote + "  " + vote_m1 + "  "  + vote_m2 + "  "  + vote_m3 + "  "  + vote_m4);
+						api.sendServerMessage("votet mit !vote (votemöglichkeit) für: " + vote + " vote1: " + vote_m1 + " vote2: "  + vote_m2 + " vote3: "  + vote_m3 + " vote4: "  + vote_m4);
+						api.sendServerMessage("votet entweder indem ihr den name der möglichkeit eingebt oder indem ihr vote1/vote2/vote3/vote4 eingebt");
 						api.sendServerMessage("antwortet im private chat (rechtsklick auf den bot und dann: text chat öffnen oder schreibt im serverchat oder channelchat: !msgme)");
 					}
 				}
@@ -541,19 +542,19 @@ public class Main
 					String befehl = subString[0];
 					String vote = subString[1];
 					
-					if(vote.equals(vote_m1))
+					if(vote.equals(vote_m1)||vote.equals("vote1"))
 					{
 						a_vote_m1 +=1;
 					}
-					if(vote.equals(vote_m2))
+					if(vote.equals(vote_m2)||vote.equals("vote2"))
 					{
 						a_vote_m2 +=1;
 					}
-					if(vote.equals(vote_m3))
+					if(vote.equals(vote_m3)||vote.equals("vote3"))
 					{
 						a_vote_m3 +=1;
 					}
-					if(vote.equals(vote_m4))
+					if(vote.equals(vote_m4)||vote.equals("vote4"))
 					{
 						a_vote_m4 +=1;
 					}
