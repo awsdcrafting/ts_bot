@@ -120,8 +120,9 @@ public class Main
 		
 		public void onTextMessage(TextMessageEvent e)
 		{
-
-			if (e.getTargetMode() != TextMessageTargetMode.SERVER && e.getInvokerId() != botID) 
+			
+			
+			if (e.getInvokerId() != botID) 
 			{
 				String message = e.getMessage();
 				if(DebugLevel==4)
@@ -136,7 +137,11 @@ public class Main
 						System.out.println("" + message);
 					}
 				}
-
+				
+				if(message.equals("!msgme")){
+					api.sendPrivateMessage(e.getInvokerId(), "Hallo :D");
+				}
+				if(e.getTargetMode() != TextMessageTargetMode.SERVER){
 				if(message.equals("!kick"))
 				{
 					api.sendChannelMessage("Command: !kick name grund");
@@ -370,9 +375,7 @@ public class Main
 						}
 					}	
 				}
-				if(message.equals("!msgme")){
-					api.sendPrivateMessage(e.getInvokerId(), "Hallo :D");
-				}
+				
 				if(e.getTargetMode() == TextMessageTargetMode.CLIENT)
 				{
 
@@ -510,9 +513,21 @@ public class Main
 						{
 							subString[5]=" ";
 						}
+						
 						vote_m4 = subString[5];
+						for(Client client : api.getClients())
+						{
+							int apiClientID = client.getId();
+							
+							if(botID==apiClientID)
+							{
+								int channelID = client.getChannelId();
+								String channelName = api.getChannelInfo(channelID).getName();
+								api.sendServerMessage("Der BOT hält sich im: " + channelName + " channel auf!");
+							}
+						}
 						api.sendServerMessage("votet mit !vote (votemöglichkeit) für: " + vote + "  " + vote_m1 + "  "  + vote_m2 + "  "  + vote_m3 + "  "  + vote_m4);
-						api.sendServerMessage("antwortet im private chat (rechtsklick auf den bot und dann: text chat öffnen)");
+						api.sendServerMessage("antwortet im private chat (rechtsklick auf den bot und dann: text chat öffnen oder schreibt im serverchat oder channelchat: !msgme)");
 					}
 				}
 				
@@ -568,9 +583,16 @@ public class Main
 						vote_gewinner = vote_m4;
 					}
 					int serverID = api.getServerIdByPort(12200);
-					api.sendPrivateMessage(e.getInvokerId(), "vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner + " Stimmen!");
+					String vote_message = "";
+					if(a_vote_gewinner==1){
+						vote_message = "vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner + " Stimme!";
+					}
+					else{
+						vote_message = "vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner + " Stimmen!";
+					}
+					api.sendPrivateMessage(e.getInvokerId(), vote_message);
 					api.sendServerMessage("vote ist beendet!");
-					api.sendServerMessage("vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner + " Stimmen!");
+					api.sendServerMessage(vote_message);
 					a_vote_m1 = 0;
 					a_vote_m2 = 0;
 					a_vote_m3 = 0;
@@ -733,7 +755,7 @@ public class Main
 					io.github.awsdcrafting.WarnSystem.SchreibeWarnung(alWarnungen);
 					}
 				}
-				
+				}
 				
 			}
 		}
