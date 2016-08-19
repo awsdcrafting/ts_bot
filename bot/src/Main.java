@@ -493,31 +493,33 @@ public class Main
 						String[] subString = message.split(" ",0);
 						String befehl = subString[0];
 						vote = subString[1];
-						vote = vote.replace("_", " ");
-						if(subString[2].isEmpty())
-						{
-							subString[2]=" ";
+						if(subString.length==5){
+							subString = new String[6];
+							subString[0] = befehl;
+							subString[1] = vote;
+							subString[2] = subString[2];
+							subString[3] = subString[3];
+							subString[4] = subString[4];
+							subString[5] = "leer";
+						}
+						if(subString.length==4){
+							subString = new String[6];
+							subString[0] = befehl;
+							subString[1] = vote;
+							subString[2] = subString[2];
+							subString[3] = subString[3];
+							subString[4] = "leer";
+							subString[5] = "leer";
 						}
 						vote_m1 = subString[2];
-						vote_m1 = vote_m1.replace("_", " ");
-						if(subString[3].isEmpty())
-						{
-							subString[3]=" ";
-						}
 						vote_m2 = subString[3];
-						vote_m2 = vote_m2.replace("_", " ");
-						if(subString[4].isEmpty())
-						{
-							subString[4]=" ";
-						}
 						vote_m3 = subString[4];
-						vote_m3 = vote_m3.replace("_", " ");
-						if(subString[5].isEmpty())
-						{
-							subString[5]=" ";
-						}
-						
 						vote_m4 = subString[5];
+						
+						vote = vote.replace("_", " ");
+						vote_m1 = vote_m1.replace("_", " ");
+						vote_m2 = vote_m2.replace("_", " ");
+						vote_m3 = vote_m3.replace("_", " ");
 						vote_m4 = vote_m4.replace("_", " ");
 						for(Client client : api.getClients())
 						{
@@ -529,6 +531,13 @@ public class Main
 								String channelName = api.getChannelInfo(channelID).getName();
 								api.sendServerMessage("Der BOT hält sich im: " + channelName + " channel auf!");
 							}
+						}
+						String vote_message = vote + " vote1: " + vote_m1 + " vote2: " + vote_m2;
+						if(!vote_m3.equals("leer")){
+							vote_message += " vote3: " + vote_m3;
+						}
+						if(!vote_m4.equals("leer")){
+							vote_message += " vote3: " + vote_m4;
 						}
 						api.sendServerMessage("votet mit !vote (votemöglichkeit) für: " + vote + " vote1: " + vote_m1 + " vote2: "  + vote_m2 + " vote3: "  + vote_m3 + " vote4: "  + vote_m4);
 						api.sendServerMessage("votet entweder indem ihr den name der möglichkeit eingebt oder indem ihr vote1/vote2/vote3/vote4 eingebt");
@@ -631,8 +640,8 @@ public class Main
 						subString[1] = name;
 						subString[2] = "1";
 					}
-					boolean warnungExistiertNicht = true;
 					anzahlWarnungen = Integer.parseInt(subString[2]);
+					boolean warnungExistiertNicht = true;
 					boolean clientUIDErhalten = false;
 					for(Client client : api.getClients())
 					{
