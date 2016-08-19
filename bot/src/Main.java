@@ -493,28 +493,32 @@ public class Main
 						String[] subString = message.split(" ",0);
 						String befehl = subString[0];
 						vote = subString[1];
-						
+						vote = vote.replace("_", " ");
 						if(subString[2].isEmpty())
 						{
 							subString[2]=" ";
 						}
 						vote_m1 = subString[2];
+						vote_m1 = vote_m1.replace("_", " ");
 						if(subString[3].isEmpty())
 						{
 							subString[3]=" ";
 						}
 						vote_m2 = subString[3];
+						vote_m2 = vote_m2.replace("_", " ");
 						if(subString[4].isEmpty())
 						{
 							subString[4]=" ";
 						}
 						vote_m3 = subString[4];
+						vote_m3 = vote_m3.replace("_", " ");
 						if(subString[5].isEmpty())
 						{
 							subString[5]=" ";
 						}
 						
 						vote_m4 = subString[5];
+						vote_m4 = vote_m4.replace("_", " ");
 						for(Client client : api.getClients())
 						{
 							int apiClientID = client.getId();
