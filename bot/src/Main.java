@@ -1,5 +1,6 @@
 
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,13 +36,25 @@ public class Main
 	static String vote_m3;
 	static String vote_m4;
 	static ArrayList<String> alWarnungen;
+	static ArrayList<String> commands;
+	private static final Main MAIN = new Main();
+	static volatile boolean funktionAktiv;
 
+	private Main(){};
+	
+	public static InputStream gibResourceStream(String resource)
+    {
+        return MAIN.getClass().getResourceAsStream(resource);
+    }
+	
 	public static void	main(String[] args)
 	{
+		
 		final TS3Config config = new TS3Config();
 		config.setHost("31.214.227.53"); // Die IP-Adresse des Servers, ohne Port
 		config.setFloodRate(FloodRate.UNLIMITED);
 		config.setDebugLevel(Level.ALL);
+		commands = io.github.awsdcrafting.DateiLeser.leseDateiAsArrayList("commands.txt");
 		
 			// Use default exponential backoff reconnect strategy
 				config.setReconnectStrategy(ReconnectStrategy.exponentialBackoff());
@@ -363,6 +376,7 @@ public class Main
 				{
 					if(message.startsWith("!cspam "))
 					{
+						funktionAktiv = true;
 						String[] subString = message.split(" ", 3);
 						String befehl = subString[0];
 						String anzahl_S = subString[1];
@@ -372,8 +386,20 @@ public class Main
 						for(int i=0;i<anzahl_I;i++){
 							System.out.println("spam" + i);
 							api.sendChannelMessage(nachricht);
+							if(!funktionAktiv){
+								break;
+							}
+							}
 						}
-					}	
+				}
+				
+				if(message.equals("!stop"))
+				{
+					if(!funktionAktiv&&e.getTargetMode() == TextMessageTargetMode.CLIENT){
+					System.exit(0);
+					}else{
+					funktionAktiv = false;	
+					}
 				}
 				
 				if(e.getTargetMode() == TextMessageTargetMode.CLIENT)
@@ -402,10 +428,12 @@ public class Main
 						api.setNickname(nickname);
 					}
 					
-					if(message.equals("!stop")||message.equals("!quit")||message.equals("!botquit"))
+					if(message.equals("!quit")||message.equals("!botquit"))
 					{
 						System.exit(0);
 					}
+					
+					
 
 					if(message.equals("!ban"))
 					{
@@ -490,7 +518,7 @@ public class Main
 				{
 					if(message.startsWith("!votestart "))
 					{
-						String[] subString = message.split(" ",0);
+						String[] subString = message.split(" ",0); //fürs nächste update: beliebig viele möglichkeiten sollen möglich sein
 						String befehl = subString[0];
 						vote = subString[1];
 						if(subString.length==5){
@@ -606,6 +634,7 @@ public class Main
 					}
 					api.sendPrivateMessage(e.getInvokerId(), vote_message);
 					api.sendServerMessage("vote ist beendet!");
+					api.sendServerMessage("vote ergebnisse für: " + vote);
 					api.sendServerMessage(vote_message);
 					a_vote_m1 = 0;
 					a_vote_m2 = 0;
@@ -635,12 +664,21 @@ public class Main
 					String clientUID;
 					String clientUID_ = "fehlt";;
 					if(subString.length==2){
-						subString = new String[3];
+						subString = new String[4];
 						subString[0] = befehl;
 						subString[1] = name;
-						subString[2] = "1";
+						subString[2] = "";
+						subString[3] = "1";
 					}
-					anzahlWarnungen = Integer.parseInt(subString[2]);
+					String grund = subString[2];
+					if(subString.length==3){
+						subString = new String[4];
+						subString[0] = befehl;
+						subString[1] = name;
+						subString[2] = grund;
+						subString[3] = "1";
+					}
+					anzahlWarnungen = Integer.parseInt(subString[3]);
 					boolean warnungExistiertNicht = true;
 					boolean clientUIDErhalten = false;
 					for(Client client : api.getClients())
@@ -689,7 +727,7 @@ public class Main
 							String apiClientUID = client.getUniqueIdentifier();
 							if(apiClientName.equals(name)||apiClientUID.equals(clientUID))
 							{
-								String kickGrund = "1. Verwarnung";
+								String kickGrund = "1. Verwarnung: " + grund;
 								int clientID=client.getId();
 								System.out.println("ClientID: " + clientID);
 								api.kickClientFromServer(kickGrund, clientID);
@@ -705,7 +743,7 @@ public class Main
 							String apiClientUID = client.getUniqueIdentifier();
 							if(apiClientName.equals(name)||apiClientUID.equals(clientUID))
 							{
-								String banGrund = anzahlWarnungen + ". Verwarnung";
+								String banGrund = anzahlWarnungen + ". Verwarnung: " + grund;
 								long banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen-1);
 								if(banZeit >2678400){
 									banZeit = 0;
@@ -717,7 +755,7 @@ public class Main
 							}
 						}
 						if(!gebannt){
-							String banGrund = anzahlWarnungen + ". Verwarnung";
+							String banGrund = anzahlWarnungen + ". Verwarnung: " + grund;
 							long banZeit = 3600 * (int)Math.pow(2, anzahlWarnungen-1);
 							if(banZeit >2678400){
 								banZeit = 0;
@@ -769,6 +807,17 @@ public class Main
 					io.github.awsdcrafting.WarnSystem.SchreibeWarnung(alWarnungen);
 					}
 				}
+				if(message.equals("!help")){
+					for(int i = 0;i<commands.size();i++){
+						String help = commands.get(i);
+						api.sendPrivateMessage(e.getInvokerId(), help);
+					}
+				}
+				
+				
+				
+				
+				//alle offenen klammern schliessen
 				}
 				
 			}
