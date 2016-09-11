@@ -1,4 +1,4 @@
-package io.github.awsdcrafting;
+package io.github.awsdcrafting.logSystem;
 
 import java.io.BufferedReader;
 import java.io.File;
