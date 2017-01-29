@@ -1,4 +1,4 @@
-package io.github.awsdcrafting;
+package io.github.awsdcrafting.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,4 +33,28 @@ public class DateiLeser {
 			return al;
 	    }
 	
+	public static ArrayList leseDateiAsArrayList(File file)
+	  {
+	      ArrayList<String> al = new ArrayList<String>();
+			try
+			{
+				if(!file.exists()){
+					file.createNewFile();
+				}
+				FileReader fr = new FileReader(file);
+				BufferedReader br = new BufferedReader(fr);
+				String s = br.readLine();
+				while(s != null)
+				{
+					al.add(s);
+					s = br.readLine();
+				}
+				br.close();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			return al;
+	    }
 }

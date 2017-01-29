@@ -1,4 +1,4 @@
-package io.github.awsdcrafting;
+package io.github.awsdcrafting.utils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.File;
