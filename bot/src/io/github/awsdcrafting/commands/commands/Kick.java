@@ -11,14 +11,14 @@ public class Kick extends Command
 
 	public Kick()
 	{
-		
-		super("Kick", "Kicks the named client from the server", new String[]{"Kick"}, main.Main.commandManager.getModLevel());
+
+		super("Kick", "Kicks the named client from the server",
+				new String[]{"Kick"}, main.Main.commandManager.getModLevel());
 	}
 
 	@Override
 	public void execute(TS3Api api, TextMessageEvent e, String[] args)
 	{
-		// TODO Auto-generated method stub
 		if (args.length < 1)
 		{
 			help();
@@ -34,11 +34,13 @@ public class Kick extends Command
 			{
 				kickGrund = args[1];
 			}
-			try{
+			try
+			{
 				int clID = Integer.parseInt(clientName);
 				for (Client client : api.getClients())
 				{
-					System.out.println("apiClientName: " + client.getNickname());
+					System.out
+							.println("apiClientName: " + client.getNickname());
 					int apiClientID = client.getId();
 
 					if (apiClientID == clID)
@@ -48,10 +50,12 @@ public class Kick extends Command
 						api.sendChannelMessage(clientName + " wurde gekickt!");
 					}
 				}
-			}catch(NumberFormatException e1){
+			} catch (NumberFormatException e1)
+			{
 				for (Client client : api.getClients())
 				{
-					System.out.println("apiClientName: " + client.getNickname());
+					System.out
+							.println("apiClientName: " + client.getNickname());
 					String apiClientName = client.getNickname();
 
 					if (apiClientName.equals(clientName))
@@ -63,7 +67,7 @@ public class Kick extends Command
 					}
 				}
 			}
-			
+
 		}
 
 	}
