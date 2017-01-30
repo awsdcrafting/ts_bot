@@ -27,6 +27,7 @@ public class CommandManager
 	public CommandManager()
 	{
 		addCommand(new Help());
+		addCommand(new Msgme());
 		//addCommand(new Test());
 		// Commands adden
 	}
