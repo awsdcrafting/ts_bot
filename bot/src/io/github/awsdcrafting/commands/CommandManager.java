@@ -13,10 +13,10 @@ import io.github.awsdcrafting.commands.commands.*;
 public class CommandManager
 {
 
-	private List<Command> allCommands = new ArrayList();
-	private List<Command> modCommands = new ArrayList();
-	private List<Command> adminCommands = new ArrayList();
-	private List<Command> enabledCommands = new ArrayList();
+	private List<Command> allCommands = new ArrayList<Command>();
+	private List<Command> modCommands = new ArrayList<Command>();
+	private List<Command> adminCommands = new ArrayList<Command>();
+	private List<Command> enabledCommands = new ArrayList<Command>();
 
 	private int adminLevel = 200;
 	private int modLevel = 100;
@@ -28,6 +28,8 @@ public class CommandManager
 	{
 		addCommand(new Help());
 		addCommand(new Msgme());
+		addCommand(new Kick());
+		addCommand(new Test());
 		//addCommand(new Test());
 		// Commands adden
 	}

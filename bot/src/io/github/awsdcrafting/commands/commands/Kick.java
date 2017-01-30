@@ -9,11 +9,10 @@ import io.github.awsdcrafting.commands.Command;
 public class Kick extends Command
 {
 
-	public Kick(String name, String description, String[] alias,
-			int permissionLevel)
+	public Kick()
 	{
-		super(name, description, alias, permissionLevel);
-		// TODO Auto-generated constructor stub
+		
+		super("Kick", "Kicks the named client from the server", new String[]{"Kick"}, main.Main.commandManager.getModLevel());
 	}
 
 	@Override
