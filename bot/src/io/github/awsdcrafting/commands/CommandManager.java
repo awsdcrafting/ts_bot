@@ -106,7 +106,7 @@ public class CommandManager
 											.copyOfRange(arguments, 1,
 													arguments.length);
 									cmd.execute(api, e, args);
-									api.sendPrivateMessage(e.getInvokerId(), "admin");
+									//api.sendPrivateMessage(e.getInvokerId(), "admin");
 									return true;
 								}
 							} else if (cmd
@@ -118,7 +118,7 @@ public class CommandManager
 											.copyOfRange(arguments, 1,
 													arguments.length);
 									cmd.execute(api, e, args);
-									api.sendPrivateMessage(e.getInvokerId(), "mod");
+									//api.sendPrivateMessage(e.getInvokerId(), "mod");
 									return true;
 								}
 							} else
@@ -126,7 +126,7 @@ public class CommandManager
 								String[] args = (String[]) Arrays.copyOfRange(
 										arguments, 1, arguments.length);
 								cmd.execute(api, e, args);
-								api.sendPrivateMessage(e.getInvokerId(), "nothing" + cmd.getPermissionLevel());
+							//api.sendPrivateMessage(e.getInvokerId(), "nothing" + cmd.getPermissionLevel());
 								return true;
 							}
 
@@ -186,7 +186,7 @@ public class CommandManager
 							api.sendPrivateMessage(e.getInvokerId(),
 									"You do not have permissions to use this command! :C");
 							api.sendPrivateMessage(e.getInvokerId(),
-									"perm-level: " + cmd.getPermissionLevel());
+									"needed perimission-level: " + cmd.getPermissionLevel());
 						}
 					}
 				}

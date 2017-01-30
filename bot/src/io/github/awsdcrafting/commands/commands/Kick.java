@@ -13,7 +13,7 @@ public class Kick extends Command
 	{
 
 		super("Kick", "Kicks the named client from the server",
-				new String[]{"Kick"}, main.Main.commandManager.getModLevel());
+				new String[]{"Kick"}, 200);
 	}
 
 	@Override
