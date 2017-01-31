@@ -237,9 +237,6 @@ public class Main {
 					}
 				}
 				commandManager.execute(api,e,message);
-				if (message.equals("!msgme")) {
-					api.sendPrivateMessage(e.getInvokerId(), "Hallo :D");
-				}
 				if (e.getTargetMode() != TextMessageTargetMode.SERVER) {
 					if (message.equals("!kick")) {
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !kick name grund");
@@ -353,7 +350,7 @@ public class Main {
 
 					if (message.equals("!msg")) {
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !msg name nachricht");
-					} else {
+					} else { 
 						if (message.startsWith("!msg ")) {
 							String[] subString = message.split(" ", 3);
 							String befehl = subString[0];
@@ -648,17 +645,17 @@ public class Main {
 
 						if (message.equals("!votestart")) {
 							api.sendPrivateMessage(e.getInvokerId(),
-									"Command: !votestart name möglichkeit1 möglichkeit2 möglichkeit3 möglichkeit4");
+									"Command: !votestart name mï¿½glichkeit1 mï¿½glichkeit2 mï¿½glichkeit3 mï¿½glichkeit4");
 						} else {
 							if (message.startsWith("!votestart ")) {
-								String[] subString = message.split(" ", 0); // fürs
-																			// nächste
+								String[] subString = message.split(" ", 0); // fï¿½rs
+																			// nï¿½chste
 																			// update:
 																			// beliebig
 																			// viele
-																			// möglichkeiten
+																			// mï¿½glichkeiten
 																			// sollen
-																			// möglich
+																			// mï¿½glich
 																			// sein
 								String befehl = subString[0];
 								vote = subString[1];
@@ -674,18 +671,18 @@ public class Main {
 								if (botID == apiClientID) {
 									int channelID = client.getChannelId();
 									String channelName = api.getChannelInfo(channelID).getName();
-									api.sendServerMessage("Der BOT hält sich im: " + channelName + " channel auf!");
+									api.sendServerMessage("Der BOT hï¿½lt sich im: " + channelName + " channel auf!");
 								}
 							}
 							String vote_message = vote;
 							for (int i = 0; i < votes.size(); i++) {
 								vote_message += (" " + votes.get(i));
 							}
-							api.sendServerMessage("votet mit !vote (votemöglichkeit) für: " + vote_message);
+							api.sendServerMessage("votet mit !vote (votemï¿½glichkeit) fï¿½r: " + vote_message);
 							api.sendServerMessage(
-									"votet entweder indem ihr den name der möglichkeit eingebt oder indem ihr vote1/vote2/vote3/vote4 eingebt");
+									"votet entweder indem ihr den name der mï¿½glichkeit eingebt oder indem ihr vote1/vote2/vote3/vote4 eingebt");
 							api.sendServerMessage(
-									"antwortet im private chat (rechtsklick auf den bot und dann: text chat öffnen oder schreibt im serverchat oder channelchat: !msgme)");
+									"antwortet im private chat (rechtsklick auf den bot und dann: text chat ï¿½ffnen oder schreibt im serverchat oder channelchat: !msgme)");
 
 						}
 
@@ -703,7 +700,7 @@ public class Main {
 						}
 
 						if (message.equals("!voteend")) {
-							api.sendPrivateMessage(e.getInvokerId(), "vote ergebnisse für: " + vote);
+							api.sendPrivateMessage(e.getInvokerId(), "vote ergebnisse fï¿½r: " + vote);
 							for (int i = 0; i < votes.size(); i++) {
 								api.sendPrivateMessage(e.getInvokerId(), votes.get(i) + ": " + a_votes.get(i));
 							}
@@ -728,7 +725,7 @@ public class Main {
 							}
 							api.sendPrivateMessage(e.getInvokerId(), vote_message);
 							api.sendServerMessage("vote ist beendet!");
-							api.sendServerMessage("vote ergebnisse für: " + vote);
+							api.sendServerMessage("vote ergebnisse fï¿½r: " + vote);
 							api.sendServerMessage(vote_message);
 						}
 						if (message.equals("!getallwarns")) {

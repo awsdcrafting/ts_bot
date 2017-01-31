@@ -13,10 +13,10 @@ import io.github.awsdcrafting.commands.commands.*;
 public class CommandManager
 {
 
-	private List<Command> allCommands = new ArrayList();
-	private List<Command> modCommands = new ArrayList();
-	private List<Command> adminCommands = new ArrayList();
-	private List<Command> enabledCommands = new ArrayList();
+	private List<Command> allCommands = new ArrayList<Command>();
+	private List<Command> modCommands = new ArrayList<Command>();
+	private List<Command> adminCommands = new ArrayList<Command>();
+	private List<Command> enabledCommands = new ArrayList<Command>();
 
 	private int adminLevel = 200;
 	private int modLevel = 100;
@@ -27,6 +27,9 @@ public class CommandManager
 	public CommandManager()
 	{
 		addCommand(new Help());
+		addCommand(new Msgme());
+		addCommand(new Kick());
+		addCommand(new Test());
 		//addCommand(new Test());
 		// Commands adden
 	}
@@ -103,7 +106,7 @@ public class CommandManager
 											.copyOfRange(arguments, 1,
 													arguments.length);
 									cmd.execute(api, e, args);
-									api.sendPrivateMessage(e.getInvokerId(), "admin");
+									//api.sendPrivateMessage(e.getInvokerId(), "admin");
 									return true;
 								}
 							} else if (cmd
@@ -115,7 +118,7 @@ public class CommandManager
 											.copyOfRange(arguments, 1,
 													arguments.length);
 									cmd.execute(api, e, args);
-									api.sendPrivateMessage(e.getInvokerId(), "mod");
+									//api.sendPrivateMessage(e.getInvokerId(), "mod");
 									return true;
 								}
 							} else
@@ -123,7 +126,7 @@ public class CommandManager
 								String[] args = (String[]) Arrays.copyOfRange(
 										arguments, 1, arguments.length);
 								cmd.execute(api, e, args);
-								api.sendPrivateMessage(e.getInvokerId(), "nothing" + cmd.getPermissionLevel());
+							//api.sendPrivateMessage(e.getInvokerId(), "nothing" + cmd.getPermissionLevel());
 								return true;
 							}
 
@@ -183,7 +186,7 @@ public class CommandManager
 							api.sendPrivateMessage(e.getInvokerId(),
 									"You do not have permissions to use this command! :C");
 							api.sendPrivateMessage(e.getInvokerId(),
-									"perm-level: " + cmd.getPermissionLevel());
+									"needed perimission-level: " + cmd.getPermissionLevel());
 						}
 					}
 				}
