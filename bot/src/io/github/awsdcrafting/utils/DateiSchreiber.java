@@ -40,4 +40,37 @@ public class DateiSchreiber {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void schreibeArrayList(ArrayList AL, File file) {
+		// File anlegen
+		try {
+			// new FileWriter(file ,true) - falls die Datei bereits existiert
+			// werden die Bytes an das Ende der Datei geschrieben
+
+			// new FileWriter(file) - falls die Datei bereits existiert
+			// wird diese überschrieben
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file);
+
+			// Text wird in den Stream geschrieben
+			for (int i = 0; i < AL.size(); i++) {
+				fw.write("" + AL.get(i));
+				// Platformunabhängiger Zeilenumbruch wird in den Stream
+				// geschrieben
+				fw.write(System.getProperty("line.separator"));
+			}
+
+			// Schreibt den Stream in die Datei
+			// Sollte immer am Ende ausgeführt werden, sodass der Stream
+			// leer ist und alles in der Datei steht.
+			fw.flush();
+
+			// Schließt den Stream
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

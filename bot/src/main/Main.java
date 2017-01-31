@@ -1,5 +1,7 @@
 package main;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,9 +94,35 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
-		
+		File configDir = new File("Config");
+		if(!configDir.exists()){
+			configDir.mkdir();
+		}
+		File configFile = new File("Config/Config.cfg");
+		if(!configFile.exists()){
+			try
+			{
+				configFile.createNewFile();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		configManager.load();
 		setConfig();
+		
+		File asciiDir = new File("ascii");
+		if(!asciiDir.exists()){
+			asciiDir.mkdir();
+		}
+		
+		File textDir = new File("Text");
+		if(!textDir.exists()){
+			textDir.mkdir();
+		}
+		
+		
+		
 		
 		final TS3Config tsconfig = new TS3Config();
 		tsconfig.setHost("31.214.227.53"); // Die IP-Adresse des Servers, ohne
