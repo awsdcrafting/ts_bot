@@ -67,7 +67,7 @@ public class CommandManager
 		return modLevel;
 	}
 
-	public boolean execute(TS3Api api, TextMessageEvent e, String text)
+	public boolean executeTextMessageEvent(TS3Api api, TextMessageEvent e, String text)
 	{
 		int x = 0;
 		for (int i = 0; i < chat_Prefix.length; i++)

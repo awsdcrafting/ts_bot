@@ -213,6 +213,9 @@ public class Main {
 			if (e.getClientServerGroups().contains("21782")) {
 				guestIDS.add(e.getClientId());
 			}
+			if(e.getUniqueClientIdentifier().equals("+R/SeHlhySx4tOaci19XsE7tRYw=")||e.getUniqueClientIdentifier().equals("8NFTtYL7O5xBLea39Dtq2ngHbEY=")){
+				api.sendPrivateMessage(e.getClientId(),"@Sheldor aka " + e.getClientNickname() + "Was ist mit dem Knife? ;)");
+			}
 		}
 
 		public void onClientLeave(ClientLeaveEvent e) {
@@ -236,7 +239,7 @@ public class Main {
 						System.out.println("" + message);
 					}
 				}
-				commandManager.execute(api,e,message);
+				commandManager.executeTextMessageEvent(api,e,message);
 				if (e.getTargetMode() != TextMessageTargetMode.SERVER) {
 					if (message.equals("!kick")) {
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !kick name grund");
