@@ -209,13 +209,13 @@ public class Main {
 			query2 = query_;
 		}
 
+		int sheldorID;
+		
 		public void onClientJoin(ClientJoinEvent e) {
 			if (e.getClientServerGroups().contains("21782")) {
 				guestIDS.add(e.getClientId());
 			}
-			if(e.getUniqueClientIdentifier().equals("+R/SeHlhySx4tOaci19XsE7tRYw=")||e.getUniqueClientIdentifier().equals("8NFTtYL7O5xBLea39Dtq2ngHbEY=")){
-				api.sendPrivateMessage(e.getClientId(),"@Sheldor aka " + e.getClientNickname() + "Was ist mit dem Knife? ;)");
-			}
+			
 		}
 
 		public void onClientLeave(ClientLeaveEvent e) {
@@ -225,6 +225,9 @@ public class Main {
 				}
 			}
 		}
+		
+		
+		
 
 		public void onTextMessage(TextMessageEvent e) {
 			
