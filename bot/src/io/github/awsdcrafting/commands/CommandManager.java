@@ -26,13 +26,13 @@ public class CommandManager
 
 	public CommandManager()
 	{
+		// Commands adden
 		addCommand(new Help());
 		addCommand(new Msgme());
 		addCommand(new Kick());
 		addCommand(new Test());
 		addCommand(new Abfuck());
-		//addCommand(new Test());
-		// Commands adden
+		
 	}
 
 	public List<Command> getAllCommandsList()

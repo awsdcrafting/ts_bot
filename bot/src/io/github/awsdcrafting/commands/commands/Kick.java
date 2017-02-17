@@ -29,10 +29,13 @@ public class Kick extends Command
 			String kickGrund = "";
 			if (args.length == 1)
 			{
-				kickGrund = "Du wurdes gekickt!";
+				kickGrund = "Du wurdest gekickt!";
 			} else
 			{
-				kickGrund = args[1];
+				for(int i = 1;i<args.length;i++)
+				{
+					kickGrund += args[i] + " ";
+				}
 			}
 			try
 			{
