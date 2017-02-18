@@ -208,8 +208,6 @@ public class Main {
 			botID = id;
 			query2 = query_;
 		}
-
-		int sheldorID;
 		
 		public void onClientJoin(ClientJoinEvent e) {
 			if (e.getClientServerGroups().contains("21782")) {

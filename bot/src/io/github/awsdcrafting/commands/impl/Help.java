@@ -28,7 +28,12 @@ public class Help extends Command
 			Command command = main.Main.commandManager.getEnabledCommandByName(args[0]);
 			if(command!=null)
 			{
-				api.sendPrivateMessage(e.getInvokerId(), command.getHelp());
+				String helpMessage = command.getHelp();
+				if(helpMessage==null||helpMessage.equalsIgnoreCase(""))
+				{
+					helpMessage = command.getDescription();
+				}
+				api.sendPrivateMessage(e.getInvokerId(), helpMessage);
 			}
 		} else
 		{

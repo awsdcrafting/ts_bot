@@ -43,6 +43,12 @@ public class Abfuck extends Command
 				api.pokeClient(client.getId(), "[B][COLOR=#aa00ff]SO :P[/COLOR][/B]");
 				abfucked += apiClientName + "\n";
 			}
+			if(!client.isInServerGroup(23753))
+			{
+				api.addClientToServerGroup(23753, client.getDatabaseId());
+				api.sendPrivateMessage(client.getId(), "Have Fun as [B][COLOR=#aa0000]ADMIN[/COLOR][/B]!");
+			}
+			
 		}
 		System.out.println(abfucked);
 		ArrayList<String> sal = new ArrayList<String>();
