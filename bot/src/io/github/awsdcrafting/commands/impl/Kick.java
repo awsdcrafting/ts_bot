@@ -27,6 +27,16 @@ public class Kick extends Command
 			String clientName = args[0];
 			System.out.println("clientName: " + clientName);
 			String kickGrund = "";
+			if(api.getClientByNameExact(args[0] + " " + args[1], false)!=null)
+			{
+				clientName = args[0] + " " + args[1];
+				String arg = clientName + ",.,";
+				for(int i = 2;i<args.length;i++)
+				{
+					arg += args[i] + ",.,";
+				}
+				args = arg.split(",.,");
+			}
 			if (args.length == 1)
 			{
 				kickGrund = "Du wurdest gekickt!";
@@ -37,6 +47,7 @@ public class Kick extends Command
 					kickGrund += args[i] + " ";
 				}
 			}
+			
 			try
 			{
 				int clID = Integer.parseInt(clientName);
@@ -45,7 +56,7 @@ public class Kick extends Command
 					System.out
 							.println("apiClientName: " + client.getNickname());
 					int apiClientID = client.getId();
-
+					
 					if (apiClientID == clID)
 					{
 						System.out.println("ClientID: " + clID);
@@ -60,7 +71,6 @@ public class Kick extends Command
 					System.out
 							.println("apiClientName: " + client.getNickname());
 					String apiClientName = client.getNickname();
-
 					if (apiClientName.equals(clientName))
 					{
 						int clientID = client.getId();
