@@ -40,9 +40,22 @@ public class Abfuck extends Command
 				{
 					api.addClientToServerGroup(23012, client.getDatabaseId());
 				}
-				api.pokeClient(client.getId(), "[COLOR=#aa00ff]SO :P[/COLOR]");
+				api.pokeClient(client.getId(), "[B][COLOR=#aa00ff]SO :P[/COLOR][/B]");
 				abfucked += apiClientName + "\n";
 			}
+		}
+		System.out.println(abfucked);
+		ArrayList<String> sal = new ArrayList<String>();
+		while(abfucked.length()>1024){
+			sal.add(abfucked.substring(0, 1000));
+			abfucked = abfucked.substring(1000);
+			System.out.println(abfucked);
+			System.out.println(""+abfucked.length());
+		}
+		sal.add(abfucked);
+		for(int i = 0;i<sal.size();i++)
+		{
+			api.sendPrivateMessage(e.getInvokerId(), sal.get(i));
 		}
 	}
 
