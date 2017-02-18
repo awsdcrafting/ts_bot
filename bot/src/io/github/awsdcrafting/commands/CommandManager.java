@@ -8,7 +8,7 @@ import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
-import io.github.awsdcrafting.commands.commands.*;
+import io.github.awsdcrafting.commands.impl.*;
 
 public class CommandManager
 {
@@ -66,6 +66,28 @@ public class CommandManager
 	public int getModLevel()
 	{
 		return modLevel;
+	}
+	
+	public Command getEnabledCommandByName(String name)
+	{
+		for(int i = 0;i<enabledCommands.size();i++)
+		{
+			if(enabledCommands.get(i).getName().equals(name)){
+				return enabledCommands.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public Command getCommandByName(String name)
+	{
+		for(int i = 0;i<allCommands.size();i++)
+		{
+			if(allCommands.get(i).getName().equals(name)){
+				return allCommands.get(i);
+			}
+		}
+		return null;
 	}
 
 	public boolean executeTextMessageEvent(TS3Api api, TextMessageEvent e, String text)

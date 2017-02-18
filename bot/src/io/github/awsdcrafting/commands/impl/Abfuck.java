@@ -1,4 +1,4 @@
-package io.github.awsdcrafting.commands.commands;
+package io.github.awsdcrafting.commands.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,8 +60,9 @@ public class Abfuck extends Command
 	}
 
 	@Override
-	public void help()
+	public String help()
 	{
+		return null;
 		// TODO Auto-generated method stub
 
 	}

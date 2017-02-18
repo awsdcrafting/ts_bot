@@ -1,4 +1,4 @@
-package io.github.awsdcrafting.commands.commands;
+package io.github.awsdcrafting.commands.impl;
 
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
@@ -76,8 +76,9 @@ public class Kick extends Command
 	}
 
 	@Override
-	public void help()
+	public String help()
 	{
+		return null;
 		// TODO Auto-generated method stub
 
 	}

@@ -24,7 +24,7 @@ public abstract class Command implements Comparable<Command>
 	}
 
 	public abstract void execute(TS3Api api,TextMessageEvent e,String[] args);
-	public abstract void help();
+	public abstract String help();
 	
 	public int compareTo(Command command)
 	{
