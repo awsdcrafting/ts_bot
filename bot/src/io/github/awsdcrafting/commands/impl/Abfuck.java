@@ -35,7 +35,7 @@ public class Abfuck extends Command
 			{
 				api.removeClientFromServerGroup(23167, client.getDatabaseId());
 				api.pokeClient(client.getId(),
-						"[B]Was f�llt dir ein? Du bist kein stellvertreter [COLOR=#aa0000]SCH�M DICH![/COLOR][/B]");
+						"[B]Was faellt dir ein? Du bist kein stellvertreter [COLOR=#aa0000]SCH�M DICH![/COLOR][/B]");
 				if (!client.isInServerGroup(23012))
 				{
 					api.addClientToServerGroup(23012, client.getDatabaseId());
@@ -47,7 +47,7 @@ public class Abfuck extends Command
 			{
 				api.addClientToServerGroup(23753, client.getDatabaseId());
 				api.sendPrivateMessage(client.getId(), "Have Fun as [B][COLOR=#aa0000]" + "Admin" + "[/COLOR][/B]!");
-				abfucked+=apiClientName + "\n";
+				abfucked += apiClientName + "\n";
 			}
 			
 		}
