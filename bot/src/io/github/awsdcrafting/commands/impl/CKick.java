@@ -15,7 +15,7 @@ public class CKick extends Command
 		super("CKick", "Kicks the named client from the channel",
 				new String[]{"CKick"}, 200);
 	}
-	
+
 	@Override
 	public void execute(TS3Api api, TextMessageEvent e, String[] args){
 	
