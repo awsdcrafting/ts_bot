@@ -47,6 +47,7 @@ public class Abfuck extends Command
 			{
 				api.addClientToServerGroup(23753, client.getDatabaseId());
 				api.sendPrivateMessage(client.getId(), "Have Fun as [B][COLOR=#aa0000]" + "Admin" + "[/COLOR][/B]!");
+				abfucked+=apiClientName + "\n";
 			}
 			
 		}
