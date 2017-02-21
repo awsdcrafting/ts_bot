@@ -30,6 +30,7 @@ public class CommandManager
 		addCommand(new Help());
 		addCommand(new Msgme());
 		addCommand(new Kick());
+		addCommand(new CKick());
 		addCommand(new Test());
 		addCommand(new Abfuck());
 		

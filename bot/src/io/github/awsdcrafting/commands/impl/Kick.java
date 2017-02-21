@@ -47,20 +47,26 @@ public class Kick extends Command
 					kickGrund += args[i] + " ";
 				}
 			}
-			
+			System.out.print("kick");
 			try
 			{
+				System.out.println("parse");
 				int clID = Integer.parseInt(clientName);
+				System.out.println("parse finished");
 				for (Client client : api.getClients())
 				{
 					System.out
 							.println("apiClientName: " + client.getNickname());
 					int apiClientID = client.getId();
-					
+					int dbID = client.getDatabaseId();
 					if (apiClientID == clID)
 					{
 						System.out.println("ClientID: " + clID);
 						api.kickClientFromServer(kickGrund, clID);
+						api.sendChannelMessage(clientName + " wurde gekickt!");
+					}else if(dbID == clID){
+						System.out.println("ClientID: " + apiClientID);
+						api.kickClientFromServer(kickGrund, apiClientID);
 						api.sendChannelMessage(clientName + " wurde gekickt!");
 					}
 				}
