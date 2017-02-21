@@ -24,35 +24,50 @@ public class Kick extends Command
 			help();
 		} else
 		{
+
 			String clientName = args[0];
+			// suche leute mit leerzeichen im nickname
+			// int j = 1;
+			// while((api.getClientByNameExact(clientName, false) ==
+			// null)&&(j<args.length))
+			// {
+			// clientName +=args[j++];
+			// }
+			// String[] argsNeu =new String[args.length - j];
+			// int k = 0;
+			// while(j<args.length)
+			// {
+			// argsNeu[k++] = args[j++];
+			// }
+
 			System.out.println("clientName: " + clientName);
 			String kickGrund = "";
-			if(api.getClientByNameExact(args[0] + " " + args[1], false)!=null)
-			{
-				clientName = args[0] + " " + args[1];
-				String arg = clientName + ",.,";
-				for(int i = 2;i<args.length;i++)
-				{
-					arg += args[i] + ",.,";
-				}
-				args = arg.split(",.,");
-			}
+
 			if (args.length == 1)
 			{
 				kickGrund = "Du wurdest gekickt!";
 			} else
 			{
-				for(int i = 1;i<args.length;i++)
+				// hat er ein leerzeichen im nickname
+				// if(api.getClientByNameExact(args[0] + " " + args[1], false)
+				// != null)
+				// {
+				// clientName = args[0] + " " + args[1];
+				// String arg = clientName + ",.,";
+				// for(int i = 2;i<args.length;i++)
+				// {
+				// arg += args[i] + ",.,";
+				// }
+				// args = arg.split(",.,");
+				// }
+				for (int i = 1; i < args.length; i++)
 				{
 					kickGrund += args[i] + " ";
 				}
 			}
-			System.out.print("kick");
 			try
 			{
-				System.out.println("parse");
 				int clID = Integer.parseInt(clientName);
-				System.out.println("parse finished");
 				for (Client client : api.getClients())
 				{
 					System.out
@@ -64,7 +79,8 @@ public class Kick extends Command
 						System.out.println("ClientID: " + clID);
 						api.kickClientFromServer(kickGrund, clID);
 						api.sendChannelMessage(clientName + " wurde gekickt!");
-					}else if(dbID == clID){
+					} else if (dbID == clID)
+					{
 						System.out.println("ClientID: " + apiClientID);
 						api.kickClientFromServer(kickGrund, apiClientID);
 						api.sendChannelMessage(clientName + " wurde gekickt!");
@@ -77,7 +93,14 @@ public class Kick extends Command
 					System.out
 							.println("apiClientName: " + client.getNickname());
 					String apiClientName = client.getNickname();
+					String uID = client.getUniqueIdentifier();
 					if (apiClientName.equals(clientName))
+					{
+						int clientID = client.getId();
+						System.out.println("ClientID: " + clientID);
+						api.kickClientFromServer(kickGrund, clientID);
+						api.sendChannelMessage(clientName + " wurde gekickt!");
+					}else if (uID.equals(clientName))
 					{
 						int clientID = client.getId();
 						System.out.println("ClientID: " + clientID);
@@ -88,7 +111,6 @@ public class Kick extends Command
 			}
 
 		}
-
 	}
 
 	@Override
