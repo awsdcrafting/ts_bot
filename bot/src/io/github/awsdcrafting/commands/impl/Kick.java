@@ -90,8 +90,7 @@ public class Kick extends Command
 			{
 				for (Client client : api.getClients())
 				{
-					System.out
-							.println("apiClientName: " + client.getNickname());
+					System.out.println("apiClientName: " + client.getNickname());
 					String apiClientName = client.getNickname();
 					String uID = client.getUniqueIdentifier();
 					if (apiClientName.equals(clientName))

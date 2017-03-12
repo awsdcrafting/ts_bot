@@ -27,12 +27,15 @@ public class CommandManager
 	public CommandManager()
 	{
 		// Commands adden
+		
 		addCommand(new Help());
 		addCommand(new Msgme());
 		addCommand(new Kick());
 		addCommand(new CKick());
 		addCommand(new Test());
 		addCommand(new Abfuck());
+		addCommand(new Poke());
+		addCommand(new Msg());
 		
 	}
 

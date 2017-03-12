@@ -226,6 +226,8 @@ public class Main {
 		
 		
 		
+		
+		
 
 		public void onTextMessage(TextMessageEvent e) {
 			
@@ -241,33 +243,8 @@ public class Main {
 					}
 				}
 				commandManager.executeTextMessageEvent(api,e,message);
+				
 				if (e.getTargetMode() != TextMessageTargetMode.SERVER) {
-					if (message.equals("!kick")) {
-						api.sendPrivateMessage(e.getInvokerId(), "Command: !kick name grund");
-					} else {
-						if (message.startsWith("!kick ")) {
-							String[] subString = message.split(" ", 3);
-							String befehl = subString[0];
-							clientName = subString[1];
-							System.out.println("clientName: " + clientName);
-							String kickGrund = subString[2];
-
-							if (kickGrund.isEmpty()) {
-								kickGrund = "Du wurdest gekickt!";
-							}
-							for (Client client : api.getClients()) {
-								System.out.println("apiClientName: " + client.getNickname());
-								String apiClientName = client.getNickname();
-
-								if (apiClientName.equals(clientName)) {
-									int clientID = client.getId();
-									System.out.println("ClientID: " + clientID);
-									api.kickClientFromServer(kickGrund, clientID);
-									api.sendChannelMessage(clientName + " wurde gekickt!");
-								}
-							}
-						}
-					}
 
 					if (message.equals("!kick*")) {
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !kick name grund");
@@ -290,34 +267,6 @@ public class Main {
 									int clientID = client.getId();
 									System.out.println("ClientID: " + clientID);
 									api.kickClientFromServer(kickGrund, clientID);
-									api.sendChannelMessage(clientName + " wurde gekickt!");
-								}
-							}
-						}
-					}
-
-					if (message.equals("!ckick")) {
-						api.sendPrivateMessage(e.getInvokerId(), "Command: !ckick name grund");
-					} else {
-						if (message.startsWith("!ckick ")) {
-							String[] subString = message.split(" ", 3);
-							String befehl = subString[0];
-							clientName = subString[1];
-							System.out.println("clientName: " + clientName);
-							String kickGrund = subString[2];
-
-							if (kickGrund.isEmpty()) {
-								kickGrund = "Du wurdest gekickt!";
-							}
-
-							for (Client client : api.getClients()) {
-								System.out.println("apiClientName: " + client.getNickname());
-								String apiClientName = client.getNickname();
-
-								if (apiClientName.equals(clientName)) {
-									int clientID = client.getId();
-									System.out.println("ClientID: " + clientID);
-									api.kickClientFromChannel(kickGrund, clientID);
 									api.sendChannelMessage(clientName + " wurde gekickt!");
 								}
 							}
@@ -352,53 +301,9 @@ public class Main {
 						}
 					}
 
-					if (message.equals("!msg")) {
-						api.sendPrivateMessage(e.getInvokerId(), "Command: !msg name nachricht");
-					} else { 
-						if (message.startsWith("!msg ")) {
-							String[] subString = message.split(" ", 3);
-							String befehl = subString[0];
-							clientName = subString[1];
-							System.out.println("clientName: " + clientName);
-							String msgMSG = subString[2];
+					
 
-							for (Client client : api.getClients()) {
-								System.out.println("apiClientName: " + client.getNickname());
-								String apiClientName = client.getNickname();
-
-								if (apiClientName.equals(clientName)) {
-									int clientID = client.getId();
-									System.out.println("ClientID: " + clientID);
-									api.sendPrivateMessage(clientID,
-											e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
-								}
-							}
-						}
-					}
-
-					if (message.equals("!poke")) {
-						api.sendPrivateMessage(e.getInvokerId(), "Command: !poke name nachricht");
-					} else {
-						if (message.startsWith("!poke ")) {
-							String[] subString = message.split(" ", 3);
-							String befehl = subString[0];
-							clientName = subString[1];
-							System.out.println("clientName: " + clientName);
-							String msgMSG = subString[2];
-
-							for (Client client : api.getClients()) {
-								System.out.println("apiClientName: " + client.getNickname());
-								String apiClientName = client.getNickname();
-
-								if (apiClientName.equals(clientName)) {
-									int clientID = client.getId();
-									System.out.println("ClientID: " + clientID);
-									api.pokeClient(clientID, clientName + " hat dich angestupst: " + msgMSG);
-									api.sendPrivateMessage(clientID, clientName + " hat dich angestupst: " + msgMSG);
-								}
-							}
-						}
-					}
+					
 					if (message.equals("!spam")) {
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !spam Anzahl nachricht");
 					} else {

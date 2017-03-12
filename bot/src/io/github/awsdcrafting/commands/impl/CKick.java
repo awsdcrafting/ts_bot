@@ -51,11 +51,17 @@ public class CKick extends Command
 				System.out
 						.println("apiClientName: " + client.getNickname());
 				int apiClientID = client.getId();
+				int dbID = client.getDatabaseId();
 				
 				if (apiClientID == clID)
 				{
 					System.out.println("ClientID: " + clID);
 					api.kickClientFromChannel(kickGrund, clID);
+					api.sendChannelMessage(clientName + " wurde gekickt!");
+				} else if (dbID == clID)
+				{
+					System.out.println("ClientID: " + apiClientID);
+					api.kickClientFromServer(kickGrund, apiClientID);
 					api.sendChannelMessage(clientName + " wurde gekickt!");
 				}
 			}
@@ -66,11 +72,18 @@ public class CKick extends Command
 				System.out
 						.println("apiClientName: " + client.getNickname());
 				String apiClientName = client.getNickname();
+				String uID = client.getUniqueIdentifier();
 				if (apiClientName.equals(clientName))
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
 					api.kickClientFromChannel(kickGrund, clientID);
+					api.sendChannelMessage(clientName + " wurde gekickt!");
+				}else if (uID.equals(clientName))
+				{
+					int clientID = client.getId();
+					System.out.println("ClientID: " + clientID);
+					api.kickClientFromServer(kickGrund, clientID);
 					api.sendChannelMessage(clientName + " wurde gekickt!");
 				}
 			}
