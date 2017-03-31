@@ -27,7 +27,7 @@ public class CommandManager
 	public CommandManager()
 	{
 		// Commands adden
-		
+
 		addCommand(new Help());
 		addCommand(new Msgme());
 		addCommand(new Kick());
@@ -36,7 +36,7 @@ public class CommandManager
 		addCommand(new Abfuck());
 		addCommand(new Poke());
 		addCommand(new Msg());
-		
+
 	}
 
 	public List<Command> getAllCommandsList()
@@ -53,10 +53,10 @@ public class CommandManager
 	{
 		this.allCommands.add(cmd);
 		this.enabledCommands.add(cmd);
-		if (cmd.getPermissionLevel() == adminLevel)
+		if (cmd.getPermissionLevel() >= adminLevel)
 		{
 			this.adminCommands.add(cmd);
-		} else if (cmd.getPermissionLevel() == modLevel)
+		} else if (cmd.getPermissionLevel() >= modLevel)
 		{
 			this.modCommands.add(cmd);
 		}
@@ -71,30 +71,33 @@ public class CommandManager
 	{
 		return modLevel;
 	}
-	
+
 	public Command getEnabledCommandByName(String name)
 	{
-		for(int i = 0;i<enabledCommands.size();i++)
+		for (int i = 0; i < enabledCommands.size(); i++)
 		{
-			if(enabledCommands.get(i).getName().equals(name)){
+			if (enabledCommands.get(i).getName().equals(name))
+			{
 				return enabledCommands.get(i);
 			}
 		}
 		return null;
 	}
-	
+
 	public Command getCommandByName(String name)
 	{
-		for(int i = 0;i<allCommands.size();i++)
+		for (int i = 0; i < allCommands.size(); i++)
 		{
-			if(allCommands.get(i).getName().equals(name)){
+			if (allCommands.get(i).getName().equals(name))
+			{
 				return allCommands.get(i);
 			}
 		}
 		return null;
 	}
 
-	public boolean executeTextMessageEvent(TS3Api api, TextMessageEvent e, String text)
+	public boolean executeTextMessageEvent(TS3Api api, TextMessageEvent e,
+			String text)
 	{
 		int x = 0;
 		for (int i = 0; i < chat_Prefix.length; i++)
@@ -115,56 +118,51 @@ public class CommandManager
 		{
 			if (cmd.getName().equalsIgnoreCase(arguments[0]))
 			{
-				for (Client client : api.getClients())
+
+				Client client = api.getClientByUId(e.getInvokerUniqueId());
+
+				int[] groups = client.getServerGroups();
+				for (int i = 0; i < groups.length; i++)
 				{
-					int apiClientID = client.getId();
-					int clientID = e.getInvokerId();
-
-					if (clientID == apiClientID)
+					if (cmd.getPermissionLevel() >= main.Main.commandManager.adminLevel)
 					{
-						int[] groups = client.getServerGroups();
-						for (int i = 0; i < groups.length; i++)
+						if (main.Main.adminGroups.contains(groups[i]))
 						{
-							if (cmd.getPermissionLevel() >= main.Main.commandManager.adminLevel)
-							{
-								if (main.Main.adminGroups.contains(groups[i]))
-								{
-									String[] args = (String[]) Arrays
-											.copyOfRange(arguments, 1,
-													arguments.length);
-									cmd.execute(api, e, args);
-									//api.sendPrivateMessage(e.getInvokerId(), "admin");
-									return true;
-								}
-							} else if (cmd
-									.getPermissionLevel() >= main.Main.commandManager.modLevel)
-							{
-								if (main.Main.modGroups.contains(groups[i]))
-								{
-									String[] args = (String[]) Arrays
-											.copyOfRange(arguments, 1,
-													arguments.length);
-									cmd.execute(api, e, args);
-									//api.sendPrivateMessage(e.getInvokerId(), "mod");
-									return true;
-								}
-							} else
-							{
-								String[] args = (String[]) Arrays.copyOfRange(
-										arguments, 1, arguments.length);
-								cmd.execute(api, e, args);
-							//api.sendPrivateMessage(e.getInvokerId(), "nothing" + cmd.getPermissionLevel());
-								return true;
-							}
-
+							String[] args = (String[]) Arrays.copyOfRange(
+									arguments, 1, arguments.length);
+							cmd.execute(api, e, args);
+							// api.sendPrivateMessage(e.getInvokerId(),
+							// "admin");
+							return true;
 						}
-						api.sendPrivateMessage(e.getInvokerId(),
-								"You do not have permissions to use this command! :C");
-						api.sendPrivateMessage(e.getInvokerId(),
-								"perm-level: " + cmd.getPermissionLevel());
+					} else if (cmd
+							.getPermissionLevel() >= main.Main.commandManager.modLevel)
+					{
+						if (main.Main.modGroups.contains(groups[i]))
+						{
+							String[] args = (String[]) Arrays.copyOfRange(
+									arguments, 1, arguments.length);
+							cmd.execute(api, e, args);
+							// api.sendPrivateMessage(e.getInvokerId(), "mod");
+							return true;
+						}
+					} else
+					{
+						String[] args = (String[]) Arrays.copyOfRange(arguments,
+								1, arguments.length);
+						cmd.execute(api, e, args);
+						// api.sendPrivateMessage(e.getInvokerId(), "nothing" +
+						// cmd.getPermissionLevel());
+						return true;
 					}
+
 				}
+				api.sendPrivateMessage(e.getInvokerId(),
+						"You do not have permissions to use this command! :C");
+				api.sendPrivateMessage(e.getInvokerId(),
+						"perm-level: " + cmd.getPermissionLevel());
 			}
+
 			String[] alias = cmd.getAlias();
 			for (int i = 0; i < alias.length; i++)
 			{
@@ -182,7 +180,8 @@ public class CommandManager
 							{
 								if (cmd.getPermissionLevel() == main.Main.commandManager.adminLevel)
 								{
-									if (main.Main.adminGroups.contains(groups[i1]))
+									if (main.Main.adminGroups
+											.contains(groups[i1]))
 									{
 										String[] args = (String[]) Arrays
 												.copyOfRange(arguments, 1,
@@ -193,7 +192,8 @@ public class CommandManager
 								} else if (cmd
 										.getPermissionLevel() == main.Main.commandManager.modLevel)
 								{
-									if (main.Main.modGroups.contains(groups[i1]))
+									if (main.Main.modGroups
+											.contains(groups[i1]))
 									{
 										String[] args = (String[]) Arrays
 												.copyOfRange(arguments, 1,
@@ -203,8 +203,9 @@ public class CommandManager
 									}
 								} else
 								{
-									String[] args = (String[]) Arrays.copyOfRange(
-											arguments, 1, arguments.length);
+									String[] args = (String[]) Arrays
+											.copyOfRange(arguments, 1,
+													arguments.length);
 									cmd.execute(api, e, args);
 									return true;
 								}
@@ -213,7 +214,8 @@ public class CommandManager
 							api.sendPrivateMessage(e.getInvokerId(),
 									"You do not have permissions to use this command! :C");
 							api.sendPrivateMessage(e.getInvokerId(),
-									"needed perimission-level: " + cmd.getPermissionLevel());
+									"needed perimission-level: "
+											+ cmd.getPermissionLevel());
 						}
 					}
 				}
