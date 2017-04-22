@@ -76,7 +76,7 @@ public class CommandManager
 	{
 		for (int i = 0; i < enabledCommands.size(); i++)
 		{
-			if (enabledCommands.get(i).getName().equals(name))
+			if (enabledCommands.get(i).getName().equalsIgnoreCase(name))
 			{
 				return enabledCommands.get(i);
 			}
@@ -88,7 +88,7 @@ public class CommandManager
 	{
 		for (int i = 0; i < allCommands.size(); i++)
 		{
-			if (allCommands.get(i).getName().equals(name))
+			if (allCommands.get(i).getName().equalsIgnoreCase(name))
 			{
 				return allCommands.get(i);
 			}

@@ -27,12 +27,22 @@ public class Help extends Command
 		{
 			Command command = main.Main.commandManager
 					.getEnabledCommandByName(args[0]);
+			
 			if (command != null)
 			{
 				String helpMessage = command.getHelp();
+				int helpPower = command.getPermissionLevel();
 				if (helpMessage == null || helpMessage.equalsIgnoreCase(""))
 				{
 					helpMessage = command.getDescription();
+					if (helpPower >= main.Main.commandManager.getAdminLevel()){
+						helpMessage += " Admin Command!";
+					}else if (helpPower >= main.Main.commandManager.getModLevel())
+					{
+						helpMessage += " Mod Command!";
+					}else{
+						helpMessage += " Everyone can use this command!";
+					}
 				}
 				if (e.getTargetMode().getIndex() != 2)
 				{
