@@ -14,8 +14,9 @@ public abstract class Command implements Comparable<Command>
 
 	private int[] allowedGroups;
 	private String[] allowedUIDS;
-	
-	public Command(String name, String description, String[] alias,int permissionLevel)
+
+	public Command(String name, String description, String[] alias,
+			int permissionLevel)
 	{
 		this.name = name;
 		this.description = description;
@@ -23,9 +24,9 @@ public abstract class Command implements Comparable<Command>
 		this.permissionLevel = permissionLevel;
 	}
 
-	public abstract void execute(TS3Api api,TextMessageEvent e,String[] args);
+	public abstract void execute(TS3Api api, TextMessageEvent e, String[] args);
 	public abstract String help();
-	
+
 	public int compareTo(Command command)
 	{
 		return this.name.compareTo(command.getName());
@@ -81,5 +82,50 @@ public abstract class Command implements Comparable<Command>
 		this.permissionLevel = permissionLevel;
 	}
 
+	public boolean sendMessage(TS3Api api, int messageMode, String message,
+			int id)
+	{
+		if (messageMode == 1)
+		{
+			return api.sendPrivateMessage(id, message);
+		}
+		if (messageMode == 2)
+		{
+			return api.sendChannelMessage(id, message);
+		}
+		if (messageMode == 3)
+		{
+			return api.sendServerMessage(id, message);
+		}
+		return false;
+	}
+
+	public boolean sendMessage(TS3Api api, int messageMode, String message,
+			int id, boolean moveback, int mbID)
+	{
+		boolean ret = false;
+		if (messageMode == 1)
+		{
+			ret = api.sendPrivateMessage(id, message);
+
+		}
+		if (messageMode == 2)
+		{
+			ret = api.sendChannelMessage(id, message);
+			if (moveback)
+			{
+				api.moveQuery(mbID);
+			}
+		}
+		if (messageMode == 3)
+		{
+			ret = api.sendServerMessage(id, message);
+			if (moveback)
+			{
+				api.selectVirtualServerByPort(mbID);
+			}
+		}
+		return ret;
+	}
 
 }
