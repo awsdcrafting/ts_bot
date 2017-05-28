@@ -73,9 +73,9 @@ public class Help extends Command
 			if (e.getTargetMode().getIndex() != 2)
 			{
 				api.sendPrivateMessage(e.getInvokerId(),
-						"[B]allowed Chat Prefixes: [/B]" + prefixes);
+						"allowed Chat Prefixes: " + prefixes);
 				api.sendPrivateMessage(e.getInvokerId(),
-						"[B]Enabled Commands and their Description:[/B]");
+						"Enabled Commands and their Description:");
 				for (int i = 0; i < commands.size(); i++);
 			} else
 			{

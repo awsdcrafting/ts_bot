@@ -48,6 +48,8 @@ public class Main {
 	private static final Main MAIN = new Main();
 	static volatile boolean funktionAktiv;
 	
+	public static boolean sendServer = false;
+	
 	public static CommandManager commandManager;
 	private static ConfigManager configManager;
 	public static ArrayList<String> adminIDS;

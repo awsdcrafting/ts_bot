@@ -20,6 +20,7 @@ public class CommandManager
 
 	private int adminLevel = 200;
 	private int modLevel = 100;
+	
 
 	public String[] chat_Prefix = "! . + #".split(" ");
 	// public String chat_Prefix = ".";

@@ -82,8 +82,8 @@ public abstract class Command implements Comparable<Command>
 		this.permissionLevel = permissionLevel;
 	}
 
-	public boolean sendMessage(TS3Api api, int messageMode, String message,
-			int id)
+	public boolean sendMessage(TS3Api api, int messageMode, int id, String message
+			)
 	{
 		if (messageMode == 1)
 		{
@@ -100,8 +100,8 @@ public abstract class Command implements Comparable<Command>
 		return false;
 	}
 
-	public boolean sendMessage(TS3Api api, int messageMode, String message,
-			int id, boolean moveback, int mbID)
+	public boolean sendMessage(TS3Api api, int messageMode, int id,
+			String message, boolean moveback, int mbID)
 	{
 		boolean ret = false;
 		if (messageMode == 1)
