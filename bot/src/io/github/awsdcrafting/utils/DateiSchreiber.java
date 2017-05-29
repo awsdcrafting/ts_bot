@@ -29,7 +29,7 @@ public class DateiSchreiber
 			for (int i = 0; i < AL.size(); i++)
 			{
 				fw.write("" + AL.get(i));
-				// Platformunabh�ngiger Zeilenumbruch wird in den Stream
+				// Platformunabhaengiger Zeilenumbruch wird in den Stream
 				// geschrieben
 				fw.write(System.getProperty("line.separator"));
 			}
