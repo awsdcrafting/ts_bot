@@ -17,7 +17,7 @@ public class DateiSchreiber
 			// werden die Bytes an das Ende der Datei geschrieben
 
 			// new FileWriter(file) - falls die Datei bereits existiert
-			// wird diese �berschrieben
+			// wird diese ueberschrieben
 			File file = new File(dateiName);
 			if (!file.exists())
 			{
@@ -35,11 +35,11 @@ public class DateiSchreiber
 			}
 
 			// Schreibt den Stream in die Datei
-			// Sollte immer am Ende ausgef�hrt werden, sodass der Stream
+			// Sollte immer am Ende ausgefuehrt werden, sodass der Stream
 			// leer ist und alles in der Datei steht.
 			fw.flush();
 
-			// Schlie�t den Stream
+			// Schliesst den Stream
 			fw.close();
 		} catch (IOException e)
 		{
@@ -56,7 +56,7 @@ public class DateiSchreiber
 			// werden die Bytes an das Ende der Datei geschrieben
 
 			// new FileWriter(file) - falls die Datei bereits existiert
-			// wird diese �berschrieben
+			// wird diese ueberschrieben
 			if (!file.exists())
 			{
 				file.createNewFile();
@@ -67,17 +67,17 @@ public class DateiSchreiber
 			for (int i = 0; i < AL.size(); i++)
 			{
 				fw.write("" + AL.get(i));
-				// Platformunabh�ngiger Zeilenumbruch wird in den Stream
+				// Platformunabhaengiger Zeilenumbruch wird in den Stream
 				// geschrieben
 				fw.write(System.getProperty("line.separator"));
 			}
 
 			// Schreibt den Stream in die Datei
-			// Sollte immer am Ende ausgef�hrt werden, sodass der Stream
+			// Sollte immer am Ende ausgefuehrt werden, sodass der Stream
 			// leer ist und alles in der Datei steht.
 			fw.flush();
 
-			// Schlie�t den Stream
+			// Schliesst den Stream
 			fw.close();
 		} catch (IOException e)
 		{
