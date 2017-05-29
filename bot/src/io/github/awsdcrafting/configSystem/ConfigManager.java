@@ -12,15 +12,13 @@ public class ConfigManager
 	private File defaultConfigFile;
 	private ArrayList<String> config = new ArrayList<String>();
 	private ArrayList<String> defaultConfig = DateiLeser.leseDateiAsArrayList("defaultConfig.txt");
-	
-	
-	
+
 	public ConfigManager()
 	{
 		defaultConfigFile = new File("Config/Config.cfg");
 
 	}
-	
+
 	public ArrayList<String> getConfig()
 	{
 		return config;
@@ -39,29 +37,30 @@ public class ConfigManager
 	public void load(File file)
 	{
 		ArrayList<String> config = DateiLeser.leseDateiAsArrayList(file);
-		for(int i = 0;i<config.size();i++){
-			if(config.get(i).startsWith("#")||config.get(i).equals("")){
+		for (int i = 0; i < config.size(); i++)
+		{
+			if (config.get(i).startsWith("#") || config.get(i).equals(""))
+			{
 				continue;
 			}
 			this.config.add(config.get(i));
 
 		}
 	}
-	
+
 	public void save()
 	{
 		save(defaultConfigFile);
 	}
-	
+
 	public void save(String path)
 	{
 		save(new File(path));
 	}
-	
+
 	public void save(File file)
 	{
 		DateiSchreiber.schreibeArrayList(config, file);
 	}
-	
-	
+
 }

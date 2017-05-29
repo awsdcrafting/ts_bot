@@ -16,26 +16,29 @@ public class Test extends Command
 
 	public Test()
 	{
-		super("Test", "Test.", new String[]{"Test"},500);
+		super("Test", "Test.", new String[]{"Test"}, 500);
 	}
 
 	@Override
-	public void execute(TS3Api api,TextMessageEvent e,String[] args)
+	public void execute(TS3Api api, TextMessageEvent e, String[] args)
 	{
-			api.sendPrivateMessage(e.getInvokerId(),"test");
-			String ausgabe = "";
-				for (Client client : api.getClients()) {
-					int apiClientID = client.getId();
-					int clientID = e.getInvokerId();
+		api.sendPrivateMessage(e.getInvokerId(), "test");
+		String ausgabe = "";
+		for (Client client : api.getClients())
+		{
+			int apiClientID = client.getId();
+			int clientID = e.getInvokerId();
 
-					if (clientID == apiClientID) {
-						int[] groups = client.getServerGroups();
-						for(int i = 0;i<groups.length;i++){
-							ausgabe += groups[i] + " ";
-						}
-					}
+			if (clientID == apiClientID)
+			{
+				int[] groups = client.getServerGroups();
+				for (int i = 0; i < groups.length; i++)
+				{
+					ausgabe += groups[i] + " ";
 				}
-				api.sendPrivateMessage(e.getInvokerId(),ausgabe);
+			}
+		}
+		api.sendPrivateMessage(e.getInvokerId(), ausgabe);
 	}
 
 	@Override
@@ -43,8 +46,7 @@ public class Test extends Command
 	{
 		return null;
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 }

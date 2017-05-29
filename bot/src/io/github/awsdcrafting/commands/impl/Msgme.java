@@ -9,14 +9,14 @@ public class Msgme extends Command
 {
 	public Msgme()
 	{
-		super("Msgme", "Messages the invoker.", new String[]{"Msgme"},0);
+		super("Msgme", "Messages the invoker.", new String[]{"Msgme"}, 0);
 	}
 
 	@Override
 	public void execute(TS3Api api, TextMessageEvent e, String[] args)
 	{
 		api.sendPrivateMessage(e.getInvokerId(), "Hallo :D");
-		
+
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class Msgme extends Command
 	{
 		return null;
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -30,7 +30,8 @@ import io.github.awsdcrafting.configSystem.ConfigManager;
 import io.github.awsdcrafting.ui.Fenster;
 import io.github.awsdcrafting.utils.WarnSystem;
 
-public class Main {
+public class Main
+{
 	public static final int SIZE_X = 600;
 	public static final int SIZE_Y = 500;
 	private Fenster fenster;
@@ -47,20 +48,20 @@ public class Main {
 	static ArrayList<String> usedAltsAL = new ArrayList<String>();
 	private static final Main MAIN = new Main();
 	static volatile boolean funktionAktiv;
-	
+
 	public static boolean sendServer = false;
-	
+
 	public static CommandManager commandManager;
 	private static ConfigManager configManager;
 	public static ArrayList<String> adminIDS;
 	public static ArrayList<Integer> adminGroups = new ArrayList<Integer>();
 	public static ArrayList<Integer> modGroups = new ArrayList<Integer>();
 
-	public Main() {
+	public Main()
+	{
 		commandManager = new CommandManager();
 		configManager = new ConfigManager();
-		
-		
+
 		//fenster
 		fenster = new Fenster("TS3Bot - by scisneromam", SIZE_X, SIZE_Y);
 
@@ -69,39 +70,43 @@ public class Main {
 		fenster.initialize();
 	}
 
-	public static InputStream gibResourceStream(String resource) {
+	public static InputStream gibResourceStream(String resource)
+	{
 		return MAIN.getClass().getResourceAsStream(resource);
 	}
-	
+
 	public static void setConfig()
 	{
 		System.out.println("config");
-		for(int i = 0;i<configManager.getConfig().size();i++){
+		for (int i = 0; i < configManager.getConfig().size(); i++)
+		{
 			switch (configManager.getConfig().get(i).split("=")[0])
 			{
-				case "admin_groups": 
-					System.out.println("admin_Groups");
-					String[] groups = configManager.getConfig().get(i).split("=")[1].split(",");
-					for(int x = 0;x<groups.length;x++){
-						adminGroups.add(Integer.parseInt(groups[x]));
-					}
-					break;
+			case "admin_groups":
+				System.out.println("admin_Groups");
+				String[] groups = configManager.getConfig().get(i).split("=")[1].split(",");
+				for (int x = 0; x < groups.length; x++)
+				{
+					adminGroups.add(Integer.parseInt(groups[x]));
+				}
+				break;
 
-				default :
-					break;
+			default:
+				break;
 			}
 		}
 	}
-	
-	
-	
-	public static void main(String[] args) {
+
+	public static void main(String[] args)
+	{
 		File configDir = new File("Config");
-		if(!configDir.exists()){
+		if (!configDir.exists())
+		{
 			configDir.mkdir();
 		}
 		File configFile = new File("Config/Config.cfg");
-		if(!configFile.exists()){
+		if (!configFile.exists())
+		{
 			try
 			{
 				configFile.createNewFile();
@@ -112,23 +117,22 @@ public class Main {
 		}
 		configManager.load();
 		setConfig();
-		
+
 		File asciiDir = new File("ascii");
-		if(!asciiDir.exists()){
+		if (!asciiDir.exists())
+		{
 			asciiDir.mkdir();
 		}
-		
+
 		File textDir = new File("Text");
-		if(!textDir.exists()){
+		if (!textDir.exists())
+		{
 			textDir.mkdir();
 		}
-		
-		
-		
-		
+
 		final TS3Config tsconfig = new TS3Config();
 		tsconfig.setHost("31.214.227.53"); // Die IP-Adresse des Servers, ohne
-											// Port
+		// Port
 		tsconfig.setFloodRate(FloodRate.UNLIMITED);
 		tsconfig.setDebugLevel(Level.ALL);
 		commands = io.github.awsdcrafting.utils.DateiLeser.leseDateiAsArrayList("commands.txt");
@@ -138,15 +142,18 @@ public class Main {
 		tsconfig.setReconnectStrategy(ReconnectStrategy.exponentialBackoff());
 
 		// Make stuff run every time the query (re)connects
-		tsconfig.setConnectionHandler(new ConnectionHandler() {
+		tsconfig.setConnectionHandler(new ConnectionHandler()
+		{
 
 			@Override
-			public void onConnect(TS3Query ts3Query) {
+			public void onConnect(TS3Query ts3Query)
+			{
 				stuffThatNeedsToRunEveryTimeTheQueryConnects(ts3Query.getApi());
 			}
 
 			@Override
-			public void onDisconnect(TS3Query ts3Query) {
+			public void onDisconnect(TS3Query ts3Query)
+			{
 				// nothing
 			}
 		});
@@ -158,30 +165,37 @@ public class Main {
 		query.getApi().addTS3Listeners(adapter);
 		alWarnungen = io.github.awsdcrafting.utils.WarnSystem.leseWarnungenAsArrayList();
 
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			public void run() {
+		Runtime.getRuntime().addShutdownHook(new Thread()
+		{
+			public void run()
+			{
 				query.getApi().logout();
 				query.exit();
 			}
 		});
 	}
 
-	public static void stuffThatNeedsToRunEveryTimeTheQueryConnects(TS3Api api) {
+	public static void stuffThatNeedsToRunEveryTimeTheQueryConnects(TS3Api api)
+	{
 		// Logging in, selecting the virtual server, selecting a channel
 		// and setting a nickname needs to be done every time we reconnect
 		api.login("scissiV2", "ziAz99n2");
 		api.selectVirtualServerByPort(12200);
 		api.moveQuery(52360);
 		String name = "BOT";
-		for (Client client : api.getClients()) {
+		for (Client client : api.getClients())
+		{
 			System.out.println("apiClientName: " + client.getNickname());
 			String apiClientName = client.getNickname();
 
-			if (apiClientName.equals(name)) {
+			if (apiClientName.equals(name))
+			{
 				String fname = "";
-				try {
+				try
+				{
 					fname = ((int) (Integer.parseInt(name.substring(3, apiClientName.length())) + 1)) + "";
-				} catch (NumberFormatException e) {
+				} catch (NumberFormatException e)
+				{
 					fname = "2";
 				}
 
@@ -200,72 +214,86 @@ public class Main {
 		botIDm = api.whoAmI().getId();
 	}
 
-	private static class BotTS3EventAdapter extends TS3EventAdapter {
+	private static class BotTS3EventAdapter extends TS3EventAdapter
+	{
 		TS3Api api;
 		int botID;
 		TS3Query query2;
 
-		BotTS3EventAdapter(TS3Api api_, int id, TS3Query query_) {
+		BotTS3EventAdapter(TS3Api api_, int id, TS3Query query_)
+		{
 			api = api_;
 			botID = id;
 			query2 = query_;
 		}
-		
-		public void onClientJoin(ClientJoinEvent e) {
-			if (e.getClientServerGroups().contains("21782")) {
+
+		public void onClientJoin(ClientJoinEvent e)
+		{
+			if (e.getClientServerGroups().contains("21782"))
+			{
 				guestIDS.add(e.getClientId());
 			}
-			
+
 		}
 
-		public void onClientLeave(ClientLeaveEvent e) {
-			for (int i = 0; i < guestIDS.size(); i++) {
-				if (e.getClientId() == guestIDS.get(i)) {
+		public void onClientLeave(ClientLeaveEvent e)
+		{
+			for (int i = 0; i < guestIDS.size(); i++)
+			{
+				if (e.getClientId() == guestIDS.get(i))
+				{
 					guestIDS.remove(i);
 				}
 			}
 		}
-		
-		
-		
-		
-		
 
-		public void onTextMessage(TextMessageEvent e) {
-			
-			if (e.getInvokerId() != botID) {
+		public void onTextMessage(TextMessageEvent e)
+		{
+
+			if (e.getInvokerId() != botID)
+			{
 				String message = e.getMessage();
-				if (DebugLevel == 4) {
+				if (DebugLevel == 4)
+				{
 					clientName = e.getInvokerName();
 					System.out.println(clientName + ": " + message);
 				}
-				if (message.startsWith("!")) {
-					if (DebugLevel >= 3) {
+				if (message.startsWith("!"))
+				{
+					if (DebugLevel >= 3)
+					{
 						System.out.println("" + message);
 					}
 				}
-				commandManager.executeTextMessageEvent(api,e,message);
-				
-				if (e.getTargetMode() != TextMessageTargetMode.SERVER) {
+				commandManager.executeTextMessageEvent(api, e, message);
 
-					if (message.equals("!kick*")) {
+				if (e.getTargetMode() != TextMessageTargetMode.SERVER)
+				{
+
+					if (message.equals("!kick*"))
+					{
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !kick name grund");
-					} else {
-						if (message.startsWith("!kick* ")) {
+					} else
+					{
+						if (message.startsWith("!kick* "))
+						{
 							String[] subString = message.split(" ", 3);
 							String befehl = subString[0];
 							clientName = subString[1];
 							System.out.println("clientName: " + clientName);
 							String kickGrund = subString[2];
 
-							if (kickGrund.isEmpty()) {
+							if (kickGrund.isEmpty())
+							{
 								kickGrund = "Du wurdest gekickt!";
 							}
-							for (Client client : api.getClients()) {
+							for (Client client : api.getClients())
+							{
 								System.out.println("apiClientName: " + client.getNickname());
 								String apiClientName = client.getNickname();
 
-								if (apiClientName.startsWith(clientName)) {
+								if (apiClientName.startsWith(clientName))
+								{
 									int clientID = client.getId();
 									System.out.println("ClientID: " + clientID);
 									api.kickClientFromServer(kickGrund, clientID);
@@ -275,25 +303,31 @@ public class Main {
 						}
 					}
 
-					if (message.equals("!ckick*")) {
+					if (message.equals("!ckick*"))
+					{
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !ckick name grund");
-					} else {
-						if (message.startsWith("!ckick* ")) {
+					} else
+					{
+						if (message.startsWith("!ckick* "))
+						{
 							String[] subString = message.split(" ", 3);
 							String befehl = subString[0];
 							clientName = subString[1];
 							System.out.println("clientName: " + clientName);
 							String kickGrund = subString[2];
 
-							if (kickGrund.isEmpty() || kickGrund == "" || kickGrund == " ") {
+							if (kickGrund.isEmpty() || kickGrund == "" || kickGrund == " ")
+							{
 								kickGrund = "Du wurdest gekickt!";
 							}
 
-							for (Client client : api.getClients()) {
+							for (Client client : api.getClients())
+							{
 								System.out.println("apiClientName: " + client.getNickname());
 								String apiClientName = client.getNickname();
 
-								if (apiClientName.startsWith(clientName)) {
+								if (apiClientName.startsWith(clientName))
+								{
 									int clientID = client.getId();
 									System.out.println("ClientID: " + clientID);
 									api.kickClientFromChannel(kickGrund, clientID);
@@ -303,47 +337,56 @@ public class Main {
 						}
 					}
 
-					
-
-					
-					if (message.equals("!spam")) {
+					if (message.equals("!spam"))
+					{
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !spam Anzahl nachricht");
-					} else {
-						if (message.startsWith("!spam ")) {
+					} else
+					{
+						if (message.startsWith("!spam "))
+						{
 							String[] subString = message.split(" ", 3);
 							String befehl = subString[0];
 							String anzahl_S = subString[1];
 							String nachricht = subString[2];
 							int anzahl_I = Integer.parseInt(anzahl_S);
 
-							for (int i = 0; i < anzahl_I; i++) {
+							for (int i = 0; i < anzahl_I; i++)
+							{
 								System.out.println("spam" + i);
 								api.sendServerMessage(nachricht);
 							}
 						}
 					}
-					if (message.equals("!dspam")) {
+					if (message.equals("!dspam"))
+					{
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !cspam nachricht");
-					} else {
-						if (message.startsWith("!dspam ")) {
+					} else
+					{
+						if (message.startsWith("!dspam "))
+						{
 							funktionAktiv = true;
 							String[] subString = message.split(" ", 2);
 							String befehl = subString[0];
 							String nachricht = subString[1];
 
-							while (funktionAktiv) {
+							while (funktionAktiv)
+							{
 								System.out.println("spam");
 								api.sendServerMessage(nachricht);
-								if (!funktionAktiv) {
+								if (!funktionAktiv)
+								{
 									break;
 								}
 							}
 						}
 					}
-					if (message.equals("!cspam")) {
+					if (message.equals("!cspam"))
+					{
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !cspam Anzahl nachricht");
-					} else {
-						if (message.startsWith("!cspam ")) {
+					} else
+					{
+						if (message.startsWith("!cspam "))
+						{
 							funktionAktiv = true;
 							String[] subString = message.split(" ", 3);
 							String befehl = subString[0];
@@ -351,131 +394,166 @@ public class Main {
 							String nachricht = subString[2];
 							int anzahl_I = Integer.parseInt(anzahl_S);
 
-							for (int i = 0; i < anzahl_I; i++) {
+							for (int i = 0; i < anzahl_I; i++)
+							{
 								System.out.println("spam" + i);
 								api.sendChannelMessage(nachricht);
-								if (!funktionAktiv) {
+								if (!funktionAktiv)
+								{
 									break;
 								}
 							}
 						}
 					}
-					if (message.equals("!dcspam")) {
+					if (message.equals("!dcspam"))
+					{
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !cspam nachricht");
-					} else {
-						if (message.startsWith("!dcspam ")) {
+					} else
+					{
+						if (message.startsWith("!dcspam "))
+						{
 							funktionAktiv = true;
 							String[] subString = message.split(" ", 2);
 							String befehl = subString[0];
 							String nachricht = subString[1];
 
-							while (funktionAktiv) {
+							while (funktionAktiv)
+							{
 								System.out.println("spam");
 								api.sendChannelMessage(nachricht);
-								if (!funktionAktiv) {
+								if (!funktionAktiv)
+								{
 									break;
 								}
 							}
 						}
 					}
-					if (message.equals("!ascii")) {
+					if (message.equals("!ascii"))
+					{
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !ascii .txt Datei");
-					} else {
-						if (message.startsWith("!ascii ")) {
+					} else
+					{
+						if (message.startsWith("!ascii "))
+						{
 							funktionAktiv = true;
 							String[] subString = message.split(" ", 2);
 							String befehl = subString[0];
 							String datei = subString[1];
-							ArrayList<String> aAL = io.github.awsdcrafting.utils.DateiLeser
-									.leseDateiAsArrayList("ascii/" + datei);
-							for (int i = 0; i < aAL.size(); i++) {
+							ArrayList<String> aAL = io.github.awsdcrafting.utils.DateiLeser.leseDateiAsArrayList("ascii/" + datei);
+							for (int i = 0; i < aAL.size(); i++)
+							{
 								System.out.println("spam");
 								api.sendChannelMessage(aAL.get(i));
-								if (!funktionAktiv) {
+								if (!funktionAktiv)
+								{
 									break;
 								}
 							}
 						}
 					}
-					if (message.equals("!altgen")) {
+					if (message.equals("!altgen"))
+					{
 						api.sendPrivateMessage(e.getInvokerId(), "Command: !altgen amount");
-					} else {
-						if (message.startsWith("!altgen ")) {
+					} else
+					{
+						if (message.startsWith("!altgen "))
+						{
 							funktionAktiv = true;
 							String[] subString = message.split(" ", 2);
 							String befehl = subString[0];
 							int amount = 0;
-							if (subString[1].equalsIgnoreCase("all")) {
+							if (subString[1].equalsIgnoreCase("all"))
+							{
 								amount = altsAL.size();
-							} else {
+							} else
+							{
 								amount = Integer.parseInt(subString[1]);
 							}
-							for (int i = 0; i < amount; i++) {
+							for (int i = 0; i < amount; i++)
+							{
 								System.out.println("spam");
-								if (altsAL.size() > 0) {
-									if (usedAltsAL.contains(altsAL.get(0))) {
+								if (altsAL.size() > 0)
+								{
+									if (usedAltsAL.contains(altsAL.get(0)))
+									{
 										altsAL.remove(0);
 										i--;
-									} else {
+									} else
+									{
 										api.sendChannelMessage(altsAL.get(0));
 										usedAltsAL.add(altsAL.get(0));
-										io.github.awsdcrafting.utils.DateiSchreiber.schreibeArrayList(usedAltsAL,
-												"usedAlts.txt");
+										io.github.awsdcrafting.utils.DateiSchreiber.schreibeArrayList(usedAltsAL, "usedAlts.txt");
 										altsAL.remove(0);
 									}
-								} else {
+								} else
+								{
 									api.sendChannelMessage("no alts left! :C");
 								}
-								if (!funktionAktiv) {
+								if (!funktionAktiv)
+								{
 									break;
 								}
 							}
 						}
 						io.github.awsdcrafting.utils.DateiSchreiber.schreibeArrayList(usedAltsAL, "usedAlts.txt");
 					}
-					if (message.equalsIgnoreCase("!alts")) {
+					if (message.equalsIgnoreCase("!alts"))
+					{
 						api.sendChannelMessage(altsAL.size() + " alts left!");
 					}
-					if (message.equalsIgnoreCase("!generatedAlts") || message.equalsIgnoreCase("!usedAlts")) {
+					if (message.equalsIgnoreCase("!generatedAlts") || message.equalsIgnoreCase("!usedAlts"))
+					{
 						api.sendChannelMessage(usedAltsAL.size() + " alts generated!");
 					}
-					if (message.equals("!stop")) {
-						if (!funktionAktiv && e.getTargetMode() == TextMessageTargetMode.CLIENT) {
+					if (message.equals("!stop"))
+					{
+						if (!funktionAktiv && e.getTargetMode() == TextMessageTargetMode.CLIENT)
+						{
 							System.exit(0);
-						} else {
+						} else
+						{
 							funktionAktiv = false;
 						}
 					}
 
-					if (e.getTargetMode() == TextMessageTargetMode.CLIENT) {
-						if(message.equals("!adminGroups")){
+					if (e.getTargetMode() == TextMessageTargetMode.CLIENT)
+					{
+						if (message.equals("!adminGroups"))
+						{
 							String ausgabe = "";
-							for(int i = 0; i<adminGroups.size();i++){
+							for (int i = 0; i < adminGroups.size(); i++)
+							{
 								ausgabe += adminGroups.get(i);
 							}
-							if(ausgabe.equals("")){
+							if (ausgabe.equals(""))
+							{
 								api.sendPrivateMessage(e.getInvokerId(), "nothing :C");
 							}
 							api.sendPrivateMessage(e.getInvokerId(), ausgabe);
 						}
-						if(message.equals("!getConfig")){
+						if (message.equals("!getConfig"))
+						{
 							String ausgabe = "";
-							for(int i = 0; i<configManager.getConfig().size();i++){
+							for (int i = 0; i < configManager.getConfig().size(); i++)
+							{
 								ausgabe += configManager.getConfig().get(i);
 							}
-							if(ausgabe.equals("")){
+							if (ausgabe.equals(""))
+							{
 								api.sendPrivateMessage(e.getInvokerId(), "nothing :C");
 							}
 							api.sendPrivateMessage(e.getInvokerId(), ausgabe);
 						}
-						
 
-						if (message.equals("!komm")) {
-							for (Client client : api.getClients()) {
+						if (message.equals("!komm"))
+						{
+							for (Client client : api.getClients())
+							{
 								int apiClientID = client.getId();
 								int clientID = e.getInvokerId();
 
-								if (clientID == apiClientID) {
+								if (clientID == apiClientID)
+								{
 									int channelID = client.getChannelId();
 									System.out.println("ClientID: " + clientID);
 									api.moveClient(botID, channelID);
@@ -483,21 +561,26 @@ public class Main {
 							}
 						}
 
-						if (message.startsWith("!rename ")) {
+						if (message.startsWith("!rename "))
+						{
 							String[] subString = message.split(" ", 2);
 							String befehl = subString[0];
 							String nickname = subString[1];
 							api.setNickname(nickname);
 						}
 
-						if (message.equals("!quit") || message.equals("!botquit")) {
+						if (message.equals("!quit") || message.equals("!botquit"))
+						{
 							System.exit(0);
 						}
 
-						if (message.equals("!ban")) {
+						if (message.equals("!ban"))
+						{
 							api.sendPrivateMessage(e.getInvokerId(), "Command: !ban name zeit grund");
-						} else {
-							if (message.startsWith("!ban ")) {
+						} else
+						{
+							if (message.startsWith("!ban "))
+							{
 								String[] subString = message.split(" ", 4);
 								String befehl = subString[0];
 								clientName = subString[1];
@@ -505,16 +588,19 @@ public class Main {
 								String banZeit = subString[2];
 								String banGrund = subString[3];
 
-								if (banGrund.isEmpty()) {
+								if (banGrund.isEmpty())
+								{
 									banGrund = "Du wurdest gebannt!";
 								}
 								long BanZeit = Long.parseLong(banZeit);
 
-								for (Client client : api.getClients()) {
+								for (Client client : api.getClients())
+								{
 									System.out.println("apiClientName: " + client.getNickname());
 									String apiClientName = client.getNickname();
 
-									if (apiClientName.equals(clientName)) {
+									if (apiClientName.equals(clientName))
+									{
 										int clientID = client.getId();
 										System.out.println("ClientID: " + clientID);
 										api.banClient(clientID, BanZeit, banGrund);
@@ -524,10 +610,13 @@ public class Main {
 							}
 						}
 
-						if (message.equals("!ban*")) {
+						if (message.equals("!ban*"))
+						{
 							api.sendPrivateMessage(e.getInvokerId(), "Command: !ban name zeit grund");
-						} else {
-							if (message.startsWith("!ban* ")) {
+						} else
+						{
+							if (message.startsWith("!ban* "))
+							{
 								String[] subString = message.split(" ", 4);
 								String befehl = subString[0];
 								clientName = subString[1];
@@ -535,16 +624,19 @@ public class Main {
 								String banZeit = subString[2];
 								String banGrund = subString[3];
 
-								if (banGrund.isEmpty()) {
+								if (banGrund.isEmpty())
+								{
 									banGrund = "Du wurdest gebannt!";
 								}
 								long BanZeit = Long.parseLong(banZeit);
 
-								for (Client client : api.getClients()) {
+								for (Client client : api.getClients())
+								{
 									System.out.println("apiClientName: " + client.getNickname());
 									String apiClientName = client.getNickname();
 
-									if (apiClientName.startsWith(clientName)) {
+									if (apiClientName.startsWith(clientName))
+									{
 										int clientID = client.getId();
 										System.out.println("ClientID: " + clientID);
 										api.banClient(clientID, BanZeit, banGrund);
@@ -554,20 +646,22 @@ public class Main {
 							}
 						}
 
-						if (message.equals("!votestart")) {
-							api.sendPrivateMessage(e.getInvokerId(),
-									"Command: !votestart name m�glichkeit1 m�glichkeit2 m�glichkeit3 m�glichkeit4");
-						} else {
-							if (message.startsWith("!votestart ")) {
+						if (message.equals("!votestart"))
+						{
+							api.sendPrivateMessage(e.getInvokerId(), "Command: !votestart name m�glichkeit1 m�glichkeit2 m�glichkeit3 m�glichkeit4");
+						} else
+						{
+							if (message.startsWith("!votestart "))
+							{
 								String[] subString = message.split(" ", 0); // f�rs
-																			// n�chste
-																			// update:
-																			// beliebig
-																			// viele
-																			// m�glichkeiten
-																			// sollen
-																			// m�glich
-																			// sein
+								// n�chste
+								// update:
+								// beliebig
+								// viele
+								// m�glichkeiten
+								// sollen
+								// m�glich
+								// sein
 								String befehl = subString[0];
 								vote = subString[1];
 
@@ -576,84 +670,100 @@ public class Main {
 								a_votes.add(0);
 							}
 							vote = vote.replace("_", " ");
-							for (Client client : api.getClients()) {
+							for (Client client : api.getClients())
+							{
 								int apiClientID = client.getId();
 
-								if (botID == apiClientID) {
+								if (botID == apiClientID)
+								{
 									int channelID = client.getChannelId();
 									String channelName = api.getChannelInfo(channelID).getName();
 									api.sendServerMessage("Der BOT h�lt sich im: " + channelName + " channel auf!");
 								}
 							}
 							String vote_message = vote;
-							for (int i = 0; i < votes.size(); i++) {
+							for (int i = 0; i < votes.size(); i++)
+							{
 								vote_message += (" " + votes.get(i));
 							}
 							api.sendServerMessage("votet mit !vote (votem�glichkeit) f�r: " + vote_message);
-							api.sendServerMessage(
-									"votet entweder indem ihr den name der m�glichkeit eingebt oder indem ihr vote1/vote2/vote3/vote4 eingebt");
+							api.sendServerMessage("votet entweder indem ihr den name der m�glichkeit eingebt oder indem ihr vote1/vote2/vote3/vote4 eingebt");
 							api.sendServerMessage(
 									"antwortet im private chat (rechtsklick auf den bot und dann: text chat �ffnen oder schreibt im serverchat oder channelchat: !msgme)");
 
 						}
 
-						if (message.startsWith("!vote ")) {
+						if (message.startsWith("!vote "))
+						{
 							String[] subString = message.split(" ", 2);
 							String befehl = subString[0];
 							String vote = subString[1];
 
-							for (int i = 0; i < votes.size(); i++) {
-								if ((vote.equals(votes.get(i))) || (vote.equals("vote" + (i + 1)))) {
+							for (int i = 0; i < votes.size(); i++)
+							{
+								if ((vote.equals(votes.get(i))) || (vote.equals("vote" + (i + 1))))
+								{
 									a_votes.set(i, a_votes.get(i) + 1);
 								}
 							}
 
 						}
 
-						if (message.equals("!voteend")) {
+						if (message.equals("!voteend"))
+						{
 							api.sendPrivateMessage(e.getInvokerId(), "vote ergebnisse f�r: " + vote);
-							for (int i = 0; i < votes.size(); i++) {
+							for (int i = 0; i < votes.size(); i++)
+							{
 								api.sendPrivateMessage(e.getInvokerId(), votes.get(i) + ": " + a_votes.get(i));
 							}
 							int a_vote_gewinner = Collections.max(a_votes);
 
 							String vote_gewinner = "";
 
-							for (int i = 0; i < votes.size(); i++) {
-								if (a_vote_gewinner == a_votes.get(i)) {
+							for (int i = 0; i < votes.size(); i++)
+							{
+								if (a_vote_gewinner == a_votes.get(i))
+								{
 									vote_gewinner = votes.get(i);
 								}
 							}
 
 							int serverID = api.getServerIdByPort(12200);
 							String vote_message = "";
-							if (a_vote_gewinner == 1) {
-								vote_message = "vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner
-										+ " Stimme!";
-							} else {
-								vote_message = "vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner
-										+ " Stimmen!";
+							if (a_vote_gewinner == 1)
+							{
+								vote_message = "vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner + " Stimme!";
+							} else
+							{
+								vote_message = "vote gewinner: " + vote_gewinner + " mit: " + a_vote_gewinner + " Stimmen!";
 							}
 							api.sendPrivateMessage(e.getInvokerId(), vote_message);
 							api.sendServerMessage("vote ist beendet!");
 							api.sendServerMessage("vote ergebnisse f�r: " + vote);
 							api.sendServerMessage(vote_message);
 						}
-						if (message.equals("!getallwarns")) {
-							for (int i = 0; i < alWarnungen.size(); i++) {
+						if (message.equals("!getallwarns"))
+						{
+							for (int i = 0; i < alWarnungen.size(); i++)
+							{
 								api.sendPrivateMessage(e.getInvokerId(), "" + alWarnungen.get(i));
 							}
 						}
-						if (message.equals("!updatewarns")) {
+						if (message.equals("!updatewarns"))
+						{
 							alWarnungen = io.github.awsdcrafting.utils.WarnSystem.leseWarnungenAsArrayList();
-							for (int i = 0; i < alWarnungen.size(); i++) {
+							for (int i = 0; i < alWarnungen.size(); i++)
+							{
 								api.sendPrivateMessage(e.getInvokerId(), "" + alWarnungen.get(i));
 							}
 						}
-						if (message.equals("!warn")) {
+						if (message.equals("!warn"))
+						{
 							api.sendPrivateMessage(e.getInvokerId(), "Command: !warn name [anzahlwarnungen]");
-						} else {
-							if (message.startsWith("!warn ")) {
+						} else
+						{
+							if (message.startsWith("!warn "))
+							{
 								int anzahlWarnungen = 0;
 								String[] subString = message.split(" ", 3);
 								String befehl = subString[0];
@@ -661,7 +771,8 @@ public class Main {
 								String clientUID;
 								String clientUID_ = "fehlt";
 								;
-								if (subString.length == 2) {
+								if (subString.length == 2)
+								{
 									subString = new String[4];
 									subString[0] = befehl;
 									subString[1] = name;
@@ -669,7 +780,8 @@ public class Main {
 									subString[3] = "1";
 								}
 								String grund = subString[2];
-								if (subString.length == 3) {
+								if (subString.length == 3)
+								{
 									subString = new String[4];
 									subString[0] = befehl;
 									subString[1] = name;
@@ -679,20 +791,26 @@ public class Main {
 								anzahlWarnungen = Integer.parseInt(subString[3]);
 								boolean warnungExistiertNicht = true;
 								boolean clientUIDErhalten = false;
-								for (Client client : api.getClients()) {
+								for (Client client : api.getClients())
+								{
 									System.out.println("apiClientName: " + client.getNickname());
 									String apiClientName = client.getNickname();
 
-									if (apiClientName.equals(name)) {
+									if (apiClientName.equals(name))
+									{
 										clientUID = client.getUniqueIdentifier();
 										clientUID_ = clientUID;
 										clientUIDErhalten = true;
 									}
-									if (!clientUIDErhalten) {
-										for (int i = 0; i < alWarnungen.size(); i++) {
+									if (!clientUIDErhalten)
+									{
+										for (int i = 0; i < alWarnungen.size(); i++)
+										{
 											String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
-											if (alWarnungenSubString[1].equals(name)) {
-												if (!alWarnungenSubString[0].equals("fehlt")) {
+											if (alWarnungenSubString[1].equals(name))
+											{
+												if (!alWarnungenSubString[0].equals("fehlt"))
+												{
 													clientUID_ = alWarnungenSubString[0];
 													clientUIDErhalten = true;
 												}
@@ -701,27 +819,32 @@ public class Main {
 									}
 								}
 								clientUID = clientUID_;
-								for (int i = 0; i < alWarnungen.size(); i++) {
+								for (int i = 0; i < alWarnungen.size(); i++)
+								{
 									String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
-									if (name.equals(alWarnungenSubString[1])
-											|| clientUID.equals(alWarnungenSubString[0])) {
+									if (name.equals(alWarnungenSubString[1]) || clientUID.equals(alWarnungenSubString[0]))
+									{
 										int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[2]);
 										anzahlWarnungen += alAnzahlWarnungen;
 										alWarnungen.set(i, clientUID + " " + name + " " + anzahlWarnungen);
 										warnungExistiertNicht = false;
 									}
 								}
-								if (warnungExistiertNicht) {
+								if (warnungExistiertNicht)
+								{
 									alWarnungen.add(clientUID + " " + name + " " + anzahlWarnungen);
 								}
 								warnungExistiertNicht = true;
 								io.github.awsdcrafting.utils.WarnSystem.SchreibeWarnung(alWarnungen);
-								if (anzahlWarnungen == 1) {
-									for (Client client : api.getClients()) {
+								if (anzahlWarnungen == 1)
+								{
+									for (Client client : api.getClients())
+									{
 										System.out.println("apiClientName: " + client.getNickname());
 										String apiClientName = client.getNickname();
 										String apiClientUID = client.getUniqueIdentifier();
-										if (apiClientName.equals(name) || apiClientUID.equals(clientUID)) {
+										if (apiClientName.equals(name) || apiClientUID.equals(clientUID))
+										{
 											String kickGrund = "1. Verwarnung: " + grund;
 											int clientID = client.getId();
 											System.out.println("ClientID: " + clientID);
@@ -729,16 +852,20 @@ public class Main {
 										}
 									}
 								}
-								if (anzahlWarnungen >= 2) {
+								if (anzahlWarnungen >= 2)
+								{
 									boolean gebannt = false;
-									for (Client client : api.getClients()) {
+									for (Client client : api.getClients())
+									{
 										System.out.println("apiClientName: " + client.getNickname());
 										String apiClientName = client.getNickname();
 										String apiClientUID = client.getUniqueIdentifier();
-										if (apiClientName.equals(name) || apiClientUID.equals(clientUID)) {
+										if (apiClientName.equals(name) || apiClientUID.equals(clientUID))
+										{
 											String banGrund = anzahlWarnungen + ". Verwarnung: " + grund;
 											long banZeit = 3600 * (int) Math.pow(2, anzahlWarnungen - 1);
-											if (banZeit > 2678400) {
+											if (banZeit > 2678400)
+											{
 												banZeit = 0;
 											}
 											int clientID = client.getId();
@@ -747,10 +874,12 @@ public class Main {
 											gebannt = true;
 										}
 									}
-									if (!gebannt) {
+									if (!gebannt)
+									{
 										String banGrund = anzahlWarnungen + ". Verwarnung: " + grund;
 										long banZeit = 3600 * (int) Math.pow(2, anzahlWarnungen - 1);
-										if (banZeit > 2678400) {
+										if (banZeit > 2678400)
+										{
 											banZeit = 0;
 										}
 										api.addBan("", name, clientUID, banZeit, banGrund);
@@ -759,16 +888,20 @@ public class Main {
 
 							}
 						}
-						if (message.equals("!removewarn")) {
+						if (message.equals("!removewarn"))
+						{
 							api.sendPrivateMessage(e.getInvokerId(), "Command: !removewarn name [anzahlwarnungen]");
-						} else {
-							if (message.startsWith("!removewarn ")) {
+						} else
+						{
+							if (message.startsWith("!removewarn "))
+							{
 								int anzahlWarnungen = 0;
 								String[] subString = message.split(" ", 3);
 								String befehl = subString[0];
 								String name = subString[1];
 								String clientUID = "";
-								if (subString.length == 2) {
+								if (subString.length == 2)
+								{
 									subString = new String[3];
 									subString[0] = befehl;
 									subString[1] = name;
@@ -776,30 +909,37 @@ public class Main {
 								}
 								boolean warnungExistiertNicht = true;
 								anzahlWarnungen = Integer.parseInt(subString[2]);
-								for (int i = 0; i < alWarnungen.size(); i++) {
+								for (int i = 0; i < alWarnungen.size(); i++)
+								{
 									String[] alWarnungenSubString = alWarnungen.get(i).toString().split(" ");
-									if (name.equals(alWarnungenSubString[1])) {
+									if (name.equals(alWarnungenSubString[1]))
+									{
 										clientUID = alWarnungenSubString[0];
 										int alAnzahlWarnungen = Integer.parseInt(alWarnungenSubString[2]);
-										if (anzahlWarnungen >= alAnzahlWarnungen) {
+										if (anzahlWarnungen >= alAnzahlWarnungen)
+										{
 											anzahlWarnungen = 0;
 											alWarnungen.remove(i);
-										} else {
+										} else
+										{
 											anzahlWarnungen = alAnzahlWarnungen - anzahlWarnungen;
 											alWarnungen.set(i, clientUID + " " + name + " " + anzahlWarnungen);
 										}
 										warnungExistiertNicht = false;
 									}
 								}
-								if (warnungExistiertNicht) {
+								if (warnungExistiertNicht)
+								{
 									api.sendPrivateMessage(e.getInvokerId(), name + " hat keine Verwarnungen!");
 								}
 								warnungExistiertNicht = true;
 								io.github.awsdcrafting.utils.WarnSystem.SchreibeWarnung(alWarnungen);
 							}
 						}
-						if (message.equals("!help")) {
-							for (int i = 0; i < commands.size(); i++) {
+						if (message.equals("!help"))
+						{
+							for (int i = 0; i < commands.size(); i++)
+							{
 								String help = commands.get(i);
 								api.sendPrivateMessage(e.getInvokerId(), help);
 							}

@@ -16,7 +16,7 @@ public abstract class Command implements Comparable<Command>
 	private String[] allowedUIDS;
 
 	public Command(String name, String description, String[] alias,
-			int permissionLevel)
+				   int permissionLevel)
 	{
 		this.name = name;
 		this.description = description;
@@ -25,6 +25,7 @@ public abstract class Command implements Comparable<Command>
 	}
 
 	public abstract void execute(TS3Api api, TextMessageEvent e, String[] args);
+
 	public abstract String help();
 
 	public int compareTo(Command command)
@@ -49,11 +50,13 @@ public abstract class Command implements Comparable<Command>
 
 	public void setHelp(String help)
 	{
+
 		this.help = help;
 	}
 
 	public String getDescription()
 	{
+
 		return description;
 	}
 
@@ -64,16 +67,19 @@ public abstract class Command implements Comparable<Command>
 
 	public String[] getAlias()
 	{
+
 		return alias;
 	}
 
 	public void setAlias(String[] alias)
 	{
+
 		this.alias = alias;
 	}
 
 	public int getPermissionLevel()
 	{
+
 		return permissionLevel;
 	}
 
@@ -82,8 +88,8 @@ public abstract class Command implements Comparable<Command>
 		this.permissionLevel = permissionLevel;
 	}
 
-	public boolean sendMessage(TS3Api api, int messageMode, int id, String message
-			)
+	public boolean sendMessage(TS3Api api, int messageMode, int id,
+							   String message)
 	{
 		if (messageMode == 1)
 		{
@@ -101,7 +107,7 @@ public abstract class Command implements Comparable<Command>
 	}
 
 	public boolean sendMessage(TS3Api api, int messageMode, int id,
-			String message, boolean moveback, int mbID)
+							   String message, boolean moveback, int mbID)
 	{
 		boolean ret = false;
 		if (messageMode == 1)

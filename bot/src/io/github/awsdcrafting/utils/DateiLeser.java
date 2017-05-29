@@ -5,56 +5,57 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class DateiLeser {
-	
+public class DateiLeser
+{
+
 	public static ArrayList leseDateiAsArrayList(String dateiName)
-	  {
-	      ArrayList<String> al = new ArrayList<String>();
-			try
+	{
+		ArrayList<String> al = new ArrayList<String>();
+		try
+		{
+			File file = new File(dateiName);
+			if (!file.exists())
 			{
-				File file = new File(dateiName);
-				if(!file.exists()){
-					file.createNewFile();
-				}
-				FileReader fr = new FileReader(file);
-				BufferedReader br = new BufferedReader(fr);
-				String s = br.readLine();
-				while(s != null)
-				{
-					al.add(s);
-					s = br.readLine();
-				}
-				br.close();
+				file.createNewFile();
 			}
-			catch(Exception e)
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			String s = br.readLine();
+			while (s != null)
 			{
-				e.printStackTrace();
+				al.add(s);
+				s = br.readLine();
 			}
-			return al;
-	    }
-	
+			br.close();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return al;
+	}
+
 	public static ArrayList leseDateiAsArrayList(File file)
-	  {
-	      ArrayList<String> al = new ArrayList<String>();
-			try
+	{
+		ArrayList<String> al = new ArrayList<String>();
+		try
+		{
+			if (!file.exists())
 			{
-				if(!file.exists()){
-					file.createNewFile();
-				}
-				FileReader fr = new FileReader(file);
-				BufferedReader br = new BufferedReader(fr);
-				String s = br.readLine();
-				while(s != null)
-				{
-					al.add(s);
-					s = br.readLine();
-				}
-				br.close();
+				file.createNewFile();
 			}
-			catch(Exception e)
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			String s = br.readLine();
+			while (s != null)
 			{
-				e.printStackTrace();
+				al.add(s);
+				s = br.readLine();
 			}
-			return al;
-	    }
+			br.close();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return al;
+	}
 }

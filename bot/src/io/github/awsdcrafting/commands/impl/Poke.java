@@ -20,18 +20,18 @@ public class Poke extends Command
 		String clientName = args[0];
 		System.out.println("clientName: " + clientName);
 		String msgMSG = "";
-		
-		if(args.length==1){
+
+		if (args.length == 1)
+		{
 			msgMSG = "Du Wurdest angestupst";
-		}else{
+		} else
+		{
 			for (int i = 1; i < args.length; i++)
 			{
 				msgMSG += args[i] + " ";
 			}
 		}
-		
-		
-		
+
 		try
 		{
 			int clID = Integer.parseInt(clientName);
@@ -45,14 +45,12 @@ public class Poke extends Command
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
-					api.pokeClient(clientID, e.getInvokerName()
-							+ " hat dich angeschrieben: " + msgMSG);
+					api.pokeClient(clientID, e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
 				} else if (dbID == clID)
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
-					api.pokeClient(clientID, e.getInvokerName()
-							+ " hat dich angeschrieben: " + msgMSG);
+					api.pokeClient(clientID, e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
 				}
 			}
 		} catch (NumberFormatException e1)
@@ -66,14 +64,12 @@ public class Poke extends Command
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
-					api.pokeClient(clientID, e.getInvokerName()
-							+ " hat dich angeschrieben: " + msgMSG);
+					api.pokeClient(clientID, e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
 				} else if (uID.equals(clientName))
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
-					api.pokeClient(clientID, e.getInvokerName()
-							+ " hat dich angeschrieben: " + msgMSG);
+					api.pokeClient(clientID, e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
 				}
 			}
 		}

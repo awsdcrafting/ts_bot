@@ -16,8 +16,7 @@ public class Help extends Command
 	public Help()
 	{
 
-		super("Help", "Returns all Commands with their description.",
-				new String[]{"Help"}, 0);
+		super("Help", "Returns all Commands with their description.", new String[]{"Help"}, 0);
 	}
 
 	@Override
@@ -25,9 +24,8 @@ public class Help extends Command
 	{
 		if (args.length > 0)
 		{
-			Command command = main.Main.commandManager
-					.getEnabledCommandByName(args[0]);
-			
+			Command command = main.Main.commandManager.getEnabledCommandByName(args[0]);
+
 			if (command != null)
 			{
 				String helpMessage = command.getHelp();
@@ -35,12 +33,14 @@ public class Help extends Command
 				if (helpMessage == null || helpMessage.equalsIgnoreCase(""))
 				{
 					helpMessage = command.getDescription();
-					if (helpPower >= main.Main.commandManager.getAdminLevel()){
+					if (helpPower >= main.Main.commandManager.getAdminLevel())
+					{
 						helpMessage += " Admin Command!";
-					}else if (helpPower >= main.Main.commandManager.getModLevel())
+					} else if (helpPower >= main.Main.commandManager.getModLevel())
 					{
 						helpMessage += " Mod Command!";
-					}else{
+					} else
+					{
 						helpMessage += " Everyone can use this command!";
 					}
 				}
@@ -54,8 +54,7 @@ public class Help extends Command
 			}
 		} else
 		{
-			List<Command> commands = main.Main.commandManager
-					.getEnabledCommandsList();
+			List<Command> commands = main.Main.commandManager.getEnabledCommandsList();
 			Collections.sort(commands);
 
 			if (e.getTargetMode().getIndex() != 2)
@@ -72,29 +71,23 @@ public class Help extends Command
 			}
 			if (e.getTargetMode().getIndex() != 2)
 			{
-				api.sendPrivateMessage(e.getInvokerId(),
-						"allowed Chat Prefixes: " + prefixes);
-				api.sendPrivateMessage(e.getInvokerId(),
-						"Enabled Commands and their Description:");
-				for (int i = 0; i < commands.size(); i++);
+				api.sendPrivateMessage(e.getInvokerId(), "allowed Chat Prefixes: " + prefixes);
+				api.sendPrivateMessage(e.getInvokerId(), "Enabled Commands and their Description:");
+				for (int i = 0; i < commands.size(); i++)
+					;
 			} else
 			{
-				api.sendChannelMessage(
-						"[B]allowed Chat Prefixes: [/B]" + prefixes);
-				api.sendChannelMessage(
-						"[B]Enabled Commands and their Description:[/B]");
+				api.sendChannelMessage("[B]allowed Chat Prefixes: [/B]" + prefixes);
+				api.sendChannelMessage("[B]Enabled Commands and their Description:[/B]");
 			}
 			for (int i = 0; i < commands.size(); i++)
 			{
 				if (e.getTargetMode().getIndex() != 2)
 				{
-					api.sendPrivateMessage(e.getInvokerId(),
-							commands.get(i).getName() + " : "
-									+ commands.get(i).getDescription());
+					api.sendPrivateMessage(e.getInvokerId(), commands.get(i).getName() + " : " + commands.get(i).getDescription());
 				} else
 				{
-					api.sendChannelMessage(commands.get(i).getName() + " : "
-							+ commands.get(i).getDescription());
+					api.sendChannelMessage(commands.get(i).getName() + " : " + commands.get(i).getDescription());
 				}
 
 			}

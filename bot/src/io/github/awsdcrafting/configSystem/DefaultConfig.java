@@ -9,8 +9,8 @@ public class DefaultConfig extends Properties
 
 	private DefaultConfig()
 	{
-		put("admin_groups","0");
-		put("mod_groups","0");
+		put("admin_groups", "0");
+		put("mod_groups", "0");
 	}
 
 }

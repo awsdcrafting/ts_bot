@@ -20,10 +20,12 @@ public class Msg extends Command
 		String clientName = args[0];
 		System.out.println("clientName: " + clientName);
 		String msgMSG = "";
-		
-		if(args.length==1){
+
+		if (args.length == 1)
+		{
 			msgMSG = "Du Wurdest angeschrieben";
-		}else{
+		} else
+		{
 			for (int i = 1; i < args.length; i++)
 			{
 				msgMSG += args[i] + " ";
@@ -42,14 +44,12 @@ public class Msg extends Command
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
-					api.sendPrivateMessage(clientID, e.getInvokerName()
-							+ " hat dich angeschrieben: " + msgMSG);
+					api.sendPrivateMessage(clientID, e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
 				} else if (dbID == clID)
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
-					api.sendPrivateMessage(clientID, e.getInvokerName()
-							+ " hat dich angeschrieben: " + msgMSG);
+					api.sendPrivateMessage(clientID, e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
 				}
 			}
 		} catch (NumberFormatException e1)
@@ -63,14 +63,12 @@ public class Msg extends Command
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
-					api.sendPrivateMessage(clientID, e.getInvokerName()
-							+ " hat dich angeschrieben: " + msgMSG);
+					api.sendPrivateMessage(clientID, e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
 				} else if (uID.equals(clientName))
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
-					api.sendPrivateMessage(clientID, e.getInvokerName()
-							+ " hat dich angeschrieben: " + msgMSG);
+					api.sendPrivateMessage(clientID, e.getInvokerName() + " hat dich angeschrieben: " + msgMSG);
 				}
 			}
 		}

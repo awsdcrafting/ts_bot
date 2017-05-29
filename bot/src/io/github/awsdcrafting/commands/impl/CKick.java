@@ -8,25 +8,25 @@ import io.github.awsdcrafting.commands.Command;
 
 public class CKick extends Command
 {
-	
+
 	public CKick()
 	{
 
-		super("CKick", "Kicks the named client from the channel",
-				new String[]{"CKick"}, 200);
+		super("CKick", "Kicks the named client from the channel", new String[]{"CKick"}, 200);
 	}
 
 	@Override
-	public void execute(TS3Api api, TextMessageEvent e, String[] args){
-	
+	public void execute(TS3Api api, TextMessageEvent e, String[] args)
+	{
+
 		String clientName = args[0];
 		System.out.println("clientName: " + clientName);
 		String kickGrund = "";
-		if(api.getClientByNameExact(args[0] + " " + args[1], false)!=null)
+		if (api.getClientByNameExact(args[0] + " " + args[1], false) != null)
 		{
 			clientName = args[0] + " " + args[1];
 			String arg = clientName + ",.,";
-			for(int i = 2;i<args.length;i++)
+			for (int i = 2; i < args.length; i++)
 			{
 				arg += args[i] + ",.,";
 			}
@@ -35,24 +35,23 @@ public class CKick extends Command
 		if (args.length == 1)
 		{
 			kickGrund = "Du wurdest gekickt!";
-		}else
+		} else
 		{
-			for(int i = 1;i<args.length;i++)
+			for (int i = 1; i < args.length; i++)
 			{
 				kickGrund += args[i] + " ";
 			}
 		}
-		
+
 		try
 		{
 			int clID = Integer.parseInt(clientName);
 			for (Client client : api.getClients())
 			{
-				System.out
-						.println("apiClientName: " + client.getNickname());
+				System.out.println("apiClientName: " + client.getNickname());
 				int apiClientID = client.getId();
 				int dbID = client.getDatabaseId();
-				
+
 				if (apiClientID == clID)
 				{
 					System.out.println("ClientID: " + clID);
@@ -69,8 +68,7 @@ public class CKick extends Command
 		{
 			for (Client client : api.getClients())
 			{
-				System.out
-						.println("apiClientName: " + client.getNickname());
+				System.out.println("apiClientName: " + client.getNickname());
 				String apiClientName = client.getNickname();
 				String uID = client.getUniqueIdentifier();
 				if (apiClientName.equals(clientName))
@@ -79,7 +77,7 @@ public class CKick extends Command
 					System.out.println("ClientID: " + clientID);
 					api.kickClientFromChannel(kickGrund, clientID);
 					api.sendChannelMessage(clientName + " wurde gekickt!");
-				}else if (uID.equals(clientName))
+				} else if (uID.equals(clientName))
 				{
 					int clientID = client.getId();
 					System.out.println("ClientID: " + clientID);
@@ -90,14 +88,12 @@ public class CKick extends Command
 		}
 
 	}
-	
-	
 
 	@Override
 	public String help()
 	{
 		// TODO Auto-generated method stub
 		return null;
-	}		
-	
+	}
+
 }

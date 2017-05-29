@@ -12,8 +12,7 @@ public class Kick extends Command
 	public Kick()
 	{
 
-		super("Kick", "Kicks the named client from the server",
-				new String[]{"Kick"}, 200);
+		super("Kick", "Kicks the named client from the server", new String[]{"Kick"}, 200);
 	}
 
 	@Override
@@ -70,8 +69,7 @@ public class Kick extends Command
 				int clID = Integer.parseInt(clientName);
 				for (Client client : api.getClients())
 				{
-					System.out
-							.println("apiClientName: " + client.getNickname());
+					System.out.println("apiClientName: " + client.getNickname());
 					int apiClientID = client.getId();
 					int dbID = client.getDatabaseId();
 					if (apiClientID == clID)
@@ -99,7 +97,7 @@ public class Kick extends Command
 						System.out.println("ClientID: " + clientID);
 						api.kickClientFromServer(kickGrund, clientID);
 						api.sendChannelMessage(clientName + " wurde gekickt!");
-					}else if (uID.equals(clientName))
+					} else if (uID.equals(clientName))
 					{
 						int clientID = client.getId();
 						System.out.println("ClientID: " + clientID);

@@ -5,71 +5,82 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DateiSchreiber {
+public class DateiSchreiber
+{
 
-	public static void schreibeArrayList(ArrayList AL, String dateiName) {
+	public static void schreibeArrayList(ArrayList AL, String dateiName)
+	{
 		// File anlegen
-		try {
+		try
+		{
 			// new FileWriter(file ,true) - falls die Datei bereits existiert
 			// werden die Bytes an das Ende der Datei geschrieben
 
 			// new FileWriter(file) - falls die Datei bereits existiert
-			// wird diese überschrieben
+			// wird diese ï¿½berschrieben
 			File file = new File(dateiName);
-			if (!file.exists()) {
+			if (!file.exists())
+			{
 				file.createNewFile();
 			}
 			FileWriter fw = new FileWriter(file);
 
 			// Text wird in den Stream geschrieben
-			for (int i = 0; i < AL.size(); i++) {
+			for (int i = 0; i < AL.size(); i++)
+			{
 				fw.write("" + AL.get(i));
-				// Platformunabhängiger Zeilenumbruch wird in den Stream
+				// Platformunabhï¿½ngiger Zeilenumbruch wird in den Stream
 				// geschrieben
 				fw.write(System.getProperty("line.separator"));
 			}
 
 			// Schreibt den Stream in die Datei
-			// Sollte immer am Ende ausgeführt werden, sodass der Stream
+			// Sollte immer am Ende ausgefï¿½hrt werden, sodass der Stream
 			// leer ist und alles in der Datei steht.
 			fw.flush();
 
-			// Schließt den Stream
+			// Schlieï¿½t den Stream
 			fw.close();
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
-	
-	public static void schreibeArrayList(ArrayList AL, File file) {
+
+	public static void schreibeArrayList(ArrayList AL, File file)
+	{
 		// File anlegen
-		try {
+		try
+		{
 			// new FileWriter(file ,true) - falls die Datei bereits existiert
 			// werden die Bytes an das Ende der Datei geschrieben
 
 			// new FileWriter(file) - falls die Datei bereits existiert
-			// wird diese überschrieben
-			if (!file.exists()) {
+			// wird diese ï¿½berschrieben
+			if (!file.exists())
+			{
 				file.createNewFile();
 			}
 			FileWriter fw = new FileWriter(file);
 
 			// Text wird in den Stream geschrieben
-			for (int i = 0; i < AL.size(); i++) {
+			for (int i = 0; i < AL.size(); i++)
+			{
 				fw.write("" + AL.get(i));
-				// Platformunabhängiger Zeilenumbruch wird in den Stream
+				// Platformunabhï¿½ngiger Zeilenumbruch wird in den Stream
 				// geschrieben
 				fw.write(System.getProperty("line.separator"));
 			}
 
 			// Schreibt den Stream in die Datei
-			// Sollte immer am Ende ausgeführt werden, sodass der Stream
+			// Sollte immer am Ende ausgefï¿½hrt werden, sodass der Stream
 			// leer ist und alles in der Datei steht.
 			fw.flush();
 
-			// Schließt den Stream
+			// Schlieï¿½t den Stream
 			fw.close();
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
