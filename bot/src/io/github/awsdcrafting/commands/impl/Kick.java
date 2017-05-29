@@ -137,7 +137,7 @@ public class Kick extends Command
 	@Override
 	public String help()
 	{
-		return getDescription();
+		return getName() + ": " + getDescription();
 		// TODO Auto-generated method stub
 
 	}
