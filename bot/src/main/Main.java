@@ -35,7 +35,7 @@ public class Main
 	public static final int SIZE_X = 600;
 	public static final int SIZE_Y = 500;
 	private Fenster fenster;
-	static volatile int botIDm;
+	public static volatile int botIDm;
 	static int DebugLevel = 4;
 	static String clientName;
 	static String vote;

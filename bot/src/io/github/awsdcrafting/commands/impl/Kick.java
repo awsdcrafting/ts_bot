@@ -5,6 +5,7 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
 import io.github.awsdcrafting.commands.Command;
+import main.Main;
 
 public class Kick extends Command
 {
@@ -22,7 +23,7 @@ public class Kick extends Command
 
 		if (args.length < 1)
 		{
-			help();
+			api.sendPrivateMessage(e.getInvokerId(), help());
 		} else
 		{
 
@@ -77,11 +78,11 @@ public class Kick extends Command
 				{
 					System.out.println("apiClientName: " + client.getNickname());
 					int clID = client.getId();
-					if (clID != e.getInvokerId())
+					if (clID != e.getInvokerId() && clID != Main.botIDm)
 					{
 						System.out.println("ClientID: " + clID);
 						//api.kickClientFromServer(kickGrund, clID);
-						api.sendChannelMessage(clientName + " wurde gekickt!");
+						api.sendChannelMessage(client.getNickname() + " wurde gekickt!");
 					}
 				}
 			} else
@@ -136,7 +137,7 @@ public class Kick extends Command
 	@Override
 	public String help()
 	{
-		return null;
+		return getDescription();
 		// TODO Auto-generated method stub
 
 	}
