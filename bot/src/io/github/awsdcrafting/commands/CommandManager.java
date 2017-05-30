@@ -36,6 +36,7 @@ public class CommandManager
 		addCommand(new Abfuck());
 		addCommand(new Poke());
 		addCommand(new Msg());
+		addCommand(new Config());
 
 	}
 

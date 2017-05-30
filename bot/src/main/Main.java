@@ -53,7 +53,7 @@ public class Main
 	public static boolean sendServer = false;
 
 	public static CommandManager commandManager;
-	private static ConfigManager configManager;
+	public static ConfigManager configManager;
 	public static ArrayList<String> adminIDS;
 	public static ArrayList<Integer> adminGroups = new ArrayList<Integer>();
 	public static ArrayList<Integer> modGroups = new ArrayList<Integer>();
@@ -117,6 +117,7 @@ public class Main
 				e.printStackTrace();
 			}
 		}
+
 		configManager.load();
 		setConfig();
 
