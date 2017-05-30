@@ -12,7 +12,6 @@ public class Kick extends Command
 
 	public Kick()
 	{
-
 		super("Kick", "Kicks the named client from the server, or all others", new String[]{"Kick"}, 200);
 	}
 
@@ -81,7 +80,7 @@ public class Kick extends Command
 					if (clID != e.getInvokerId() && clID != Main.botIDm)
 					{
 						System.out.println("ClientID: " + clID);
-						//api.kickClientFromServer(kickGrund, clID);
+						api.kickClientFromServer(kickGrund, clID);
 						api.sendChannelMessage(client.getNickname() + " wurde gekickt!");
 					}
 				}

@@ -27,6 +27,7 @@ import com.github.theholywaffle.teamspeak3.api.reconnect.ReconnectStrategy;
 
 import io.github.awsdcrafting.commands.CommandManager;
 import io.github.awsdcrafting.configSystem.ConfigManager;
+import io.github.awsdcrafting.configSystem.DefaultConfig;
 import io.github.awsdcrafting.ui.Fenster;
 import io.github.awsdcrafting.utils.WarnSystem;
 
@@ -110,6 +111,7 @@ public class Main
 			try
 			{
 				configFile.createNewFile();
+				configManager.setDefaultConfig();
 			} catch (IOException e)
 			{
 				e.printStackTrace();

@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ts_bot:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ts_bot_jar</output-path>
+    <root id="archive" name="ts_bot.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/bot/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="bot" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/theholywaffle/teamspeak3-api/1.0.14/teamspeak3-api-1.0.14.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

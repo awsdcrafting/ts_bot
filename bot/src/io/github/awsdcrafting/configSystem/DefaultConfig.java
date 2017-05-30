@@ -1,16 +1,21 @@
 package io.github.awsdcrafting.configSystem;
 
-import java.util.Properties;
-
-public class DefaultConfig extends Properties
+import java.util.ArrayList;
+public class DefaultConfig
 {
-
-	public static final DefaultConfig defaultConfig = new DefaultConfig();
-
-	private DefaultConfig()
+	ArrayList<String> config;
+	public DefaultConfig()
 	{
-		put("admin_groups", "0");
-		put("mod_groups", "0");
+		config = new ArrayList<String>();
 	}
 
+	public ArrayList<String> setConfig(){
+		config.add("#Default Config");
+		config.add("");
+		config.add("#admin Groups separated by a comma");
+		config.add("admin_groups=0");
+
+		// end
+		return config;
+	}
 }

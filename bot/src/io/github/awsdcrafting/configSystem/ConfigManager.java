@@ -10,18 +10,24 @@ import io.github.awsdcrafting.utils.DateiSchreiber;
 public class ConfigManager
 {
 	private File defaultConfigFile;
+	private DefaultConfig defaultConfig;
 	private ArrayList<String> config = new ArrayList<String>();
-	private ArrayList<String> defaultConfig = DateiLeser.leseDateiAsArrayList("defaultConfig.txt");
 
 	public ConfigManager()
 	{
 		defaultConfigFile = new File("Config/Config.cfg");
-
+		defaultConfig = new DefaultConfig();
 	}
 
 	public ArrayList<String> getConfig()
 	{
 		return config;
+	}
+
+	public void setDefaultConfig()
+	{
+		config = defaultConfig.setConfig();
+		save();
 	}
 
 	public void load()
