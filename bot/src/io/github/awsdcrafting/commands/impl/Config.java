@@ -65,6 +65,7 @@ public class Config extends Command
 									config.set(i,setting_Name+"="+setting_Value);
 								}
 							}
+							Main.setConfig();
 
 						}
 					}
