@@ -27,7 +27,10 @@ public class Spam extends Command
 			if (args[0].equalsIgnoreCase("stop"))
 			{
 				infinite = false;
-			} else if (args.length == 3)
+			} else if (args.length < 3)
+			{
+				api.sendPrivateMessage(e.getInvokerId(), "Syntax: !Spam <stop/mode <count/infinite> <message>>");
+			} else
 			{
 				if (args[0].equalsIgnoreCase("channel") || args[0].equalsIgnoreCase("server"))
 				{
@@ -49,6 +52,7 @@ public class Spam extends Command
 					} else
 					{
 						api.sendPrivateMessage(e.getInvokerId(), "Syntax: !Spam <stop/mode [COLOR=#aa0000]<count/infinite>[/COLOR] <message>>");
+						count = 0;
 					}
 				}
 
