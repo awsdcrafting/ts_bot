@@ -1,15 +1,11 @@
 package io.github.awsdcrafting.commands.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
 import io.github.awsdcrafting.commands.Command;
-import io.github.awsdcrafting.commands.CommandManager;
+import main.Main;
 
 public class Test extends Command
 {
@@ -35,6 +31,12 @@ public class Test extends Command
 				for (int i = 0; i < groups.length; i++)
 				{
 					ausgabe += groups[i] + " ";
+				}
+
+				ausgabe += "\nadmingroups: ";
+				for (int i = 0; i < Main.adminGroups.size(); i++)
+				{
+					ausgabe += Main.adminGroups.get(i) + " ";
 				}
 			}
 		}

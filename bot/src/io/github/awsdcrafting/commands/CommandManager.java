@@ -9,6 +9,7 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
 import io.github.awsdcrafting.commands.impl.*;
+import main.Main;
 
 public class CommandManager
 {
@@ -136,7 +137,7 @@ public class CommandManager
 						}
 					} else if (cmd.getPermissionLevel() >= main.Main.commandManager.modLevel)
 					{
-						if (main.Main.modGroups.contains(groups[i]))
+						if (Main.modGroups.contains(groups[i]) || Main.adminGroups.contains(groups[i]))
 						{
 							String[] args = (String[]) Arrays.copyOfRange(arguments, 1, arguments.length);
 							cmd.execute(api, e, args);
@@ -154,7 +155,8 @@ public class CommandManager
 
 				}
 				api.sendPrivateMessage(e.getInvokerId(), "You do not have permissions to use this command! :C");
-				api.sendPrivateMessage(e.getInvokerId(), "perm-level: " + cmd.getPermissionLevel());
+				api.sendPrivateMessage(e.getInvokerId(), "needed permission-level: " + cmd.getPermissionLevel());
+				return false;
 			}
 
 			String[] alias = cmd.getAlias();
@@ -182,7 +184,7 @@ public class CommandManager
 									}
 								} else if (cmd.getPermissionLevel() == main.Main.commandManager.modLevel)
 								{
-									if (main.Main.modGroups.contains(groups[i1]))
+									if (main.Main.modGroups.contains(groups[i1]) || Main.adminGroups.contains(groups[i]))
 									{
 										String[] args = (String[]) Arrays.copyOfRange(arguments, 1, arguments.length);
 										cmd.execute(api, e, args);
@@ -197,7 +199,8 @@ public class CommandManager
 
 							}
 							api.sendPrivateMessage(e.getInvokerId(), "You do not have permissions to use this command! :C");
-							api.sendPrivateMessage(e.getInvokerId(), "needed perimission-level: " + cmd.getPermissionLevel());
+							api.sendPrivateMessage(e.getInvokerId(), "needed permission-level: " + cmd.getPermissionLevel());
+							return false;
 						}
 					}
 				}

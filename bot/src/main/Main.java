@@ -92,6 +92,8 @@ public class Main
 				}
 				break;
 
+			case "test":
+				System.out.println("test-config");
 			default:
 				break;
 			}
