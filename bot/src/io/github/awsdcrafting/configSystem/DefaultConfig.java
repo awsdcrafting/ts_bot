@@ -16,7 +16,6 @@ public class DefaultConfig
 		defaultConfig.add("#admin Groups separated by a comma");
 		defaultConfig.add("admin_groups=0");
 
-		//fix git bug
 		// end
 		config = defaultConfig;
 		return config;
