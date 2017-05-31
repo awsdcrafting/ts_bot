@@ -10,6 +10,8 @@ import main.Main;
 public class Test extends Command
 {
 
+	boolean spam = false;
+
 	public Test()
 	{
 		super("Test", "Test.", new String[]{"Test"}, 500);
@@ -41,6 +43,22 @@ public class Test extends Command
 			}
 		}
 		api.sendPrivateMessage(e.getInvokerId(), ausgabe);
+		if (args.length == 1)
+		{
+			if (args[0].equalsIgnoreCase("spam"))
+			{
+				spam = true;
+				int i = 0;
+				while(spam){
+
+					api.sendChannelMessage("spam(test)" + i);
+					i++;
+				}
+			}
+			if(args[0].equalsIgnoreCase("stop")){
+				spam = false;
+			}
+		}
 	}
 
 	@Override

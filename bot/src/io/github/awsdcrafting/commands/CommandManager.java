@@ -27,17 +27,45 @@ public class CommandManager
 
 	public CommandManager()
 	{
-		// Commands adden
-
-		addCommand(new Help());
-		addCommand(new Msgme());
-		addCommand(new Kick());
-		addCommand(new CKick());
-		addCommand(new Test());
+		// Commands are added here
+		//alphabetical
+		//a
 		addCommand(new Abfuck());
-		addCommand(new Poke());
-		addCommand(new Msg());
+		//b
+		//c
+		addCommand(new CKick());
 		addCommand(new Config());
+		//d
+		//e
+		//f
+		//g
+		//h
+		addCommand(new Help());
+		//i
+		//j
+		//k
+		addCommand(new Kick());
+		//l
+		//m
+		addCommand(new Msg());
+		addCommand(new Msgme());
+		//n
+		//o
+		//p
+		addCommand(new Poke());
+		//q
+		addCommand(new Quit());
+		//r
+		//s
+		addCommand(new Spam());
+		//t
+		addCommand(new Test());
+		//u
+		//v
+		//w
+		//x
+		//y
+		//z
 
 	}
 

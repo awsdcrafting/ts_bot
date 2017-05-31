@@ -19,6 +19,7 @@ public class Kick extends Command
 	public void execute(TS3Api api, TextMessageEvent e, String[] args)
 	{
 		boolean all = false;
+		boolean starts = false;
 
 		if (args.length < 1)
 		{
@@ -44,6 +45,12 @@ public class Kick extends Command
 			if (clientName.equalsIgnoreCase("all") || clientName.equalsIgnoreCase("*") || clientName.equalsIgnoreCase("alle"))
 			{
 				all = true;
+			}
+
+			if (clientName.startsWith("starts:_"))
+			{
+				starts = true;
+				clientName = clientName.split("_",2)[1];
 			}
 
 			System.out.println("clientName: " + clientName);
@@ -94,16 +101,26 @@ public class Kick extends Command
 						System.out.println("apiClientName: " + client.getNickname());
 						int apiClientID = client.getId();
 						int dbID = client.getDatabaseId();
-						if (apiClientID == clID)
+						//workaround should be changed!!
+						if (starts)
 						{
-							System.out.println("ClientID: " + clID);
-							api.kickClientFromServer(kickGrund, clID);
-							api.sendChannelMessage(clientName + " wurde gekickt!");
-						} else if (dbID == clID)
+							String sCLID = clID + "";
+							String sDBID = dbID + "";
+							String sApiClientID = apiClientID + "";
+							if (sDBID.startsWith(sCLID) || sApiClientID.startsWith(sCLID))
+							{
+								System.out.println("ClientID: " + apiClientID);
+								api.kickClientFromServer(kickGrund, apiClientID);
+								api.sendChannelMessage(client.getNickname() + " wurde gekickt!");
+							}
+						} else
 						{
-							System.out.println("ClientID: " + apiClientID);
-							api.kickClientFromServer(kickGrund, apiClientID);
-							api.sendChannelMessage(clientName + " wurde gekickt!");
+							if (apiClientID == clID || dbID == clID)
+							{
+								System.out.println("ClientID: " + apiClientID);
+								api.kickClientFromServer(kickGrund, apiClientID);
+								api.sendChannelMessage(clientName + " wurde gekickt!");
+							}
 						}
 					}
 				} catch (NumberFormatException e1)
@@ -113,18 +130,25 @@ public class Kick extends Command
 						System.out.println("apiClientName: " + client.getNickname());
 						String apiClientName = client.getNickname();
 						String uID = client.getUniqueIdentifier();
-						if (apiClientName.equals(clientName))
+
+						if (starts)
 						{
-							int clientID = client.getId();
-							System.out.println("ClientID: " + clientID);
-							api.kickClientFromServer(kickGrund, clientID);
-							api.sendChannelMessage(clientName + " wurde gekickt!");
-						} else if (uID.equals(clientName))
+							if (apiClientName.startsWith(clientName) || uID.startsWith(clientName))
+							{
+								int clientID = client.getId();
+								System.out.println("ClientID: " + clientID);
+								api.kickClientFromServer(kickGrund, clientID);
+								api.sendChannelMessage(client.getNickname() + " wurde gekickt!");
+							}
+						} else
 						{
-							int clientID = client.getId();
-							System.out.println("ClientID: " + clientID);
-							api.kickClientFromServer(kickGrund, clientID);
-							api.sendChannelMessage(clientName + " wurde gekickt!");
+							if (apiClientName.equals(clientName) || uID.equals(clientName))
+							{
+								int clientID = client.getId();
+								System.out.println("ClientID: " + clientID);
+								api.kickClientFromServer(kickGrund, clientID);
+								api.sendChannelMessage(clientName + " wurde gekickt!");
+							}
 						}
 					}
 				}

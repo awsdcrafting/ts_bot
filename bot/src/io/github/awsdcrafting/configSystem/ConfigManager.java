@@ -19,7 +19,8 @@ public class ConfigManager
 		defaultConfig = new DefaultConfig();
 	}
 
-	public void setConfig(ArrayList<String> config){
+	public void setConfig(ArrayList<String> config)
+	{
 		this.config = config;
 	}
 
