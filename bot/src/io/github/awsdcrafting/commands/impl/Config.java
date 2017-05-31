@@ -61,10 +61,13 @@ public class Config extends Command
 
 							for (int i = 0; i < config.size(); i++)
 							{
-								if(config.get(i).equalsIgnoreCase(setting_Name)){
-									config.set(i,setting_Name+"="+setting_Value);
+								if (config.get(i).equalsIgnoreCase(setting_Name))
+								{
+									config.set(i, setting_Name + "=" + setting_Value);
 								}
 							}
+
+							Main.configManager.setConfig(config);
 							Main.configManager.save();
 							Main.setConfig();
 
