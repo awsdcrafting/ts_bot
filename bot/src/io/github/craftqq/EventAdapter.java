@@ -5,7 +5,8 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 
 public class EventAdapter extends TS3EventAdapter
 {
-	private static char split = '�';
+	//was sollte hier sein??
+	private static char split = '?';
 	public EventAdapter()
 	{
 
