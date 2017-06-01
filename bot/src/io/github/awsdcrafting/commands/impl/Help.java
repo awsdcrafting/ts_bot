@@ -65,9 +65,9 @@ public class Help extends Command
 				api.sendChannelMessage("BOT Help");
 			}
 			String prefixes = "";
-			for (int i = 0; i < main.Main.commandManager.chat_Prefix.length; i++)
+			for (int i = 0; i < main.Main.commandManager.getChat_Prefix().length; i++)
 			{
-				prefixes += main.Main.commandManager.chat_Prefix[i] + " ";
+				prefixes += main.Main.commandManager.getChat_Prefix()[i] + " ";
 			}
 			if (e.getTargetMode().getIndex() != 2)
 			{

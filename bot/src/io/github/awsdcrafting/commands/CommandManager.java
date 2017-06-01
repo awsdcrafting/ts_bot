@@ -22,7 +22,7 @@ public class CommandManager
 	private int adminLevel = 200;
 	private int modLevel = 100;
 
-	public String[] chat_Prefix = "! . + #".split(" ");
+	private String[] chat_Prefix /*= "! . + #".split(" ");*/ = new String[]{"!", ".", "+", "#"};
 	// public String chat_Prefix = ".";
 
 	public CommandManager()
@@ -77,6 +77,11 @@ public class CommandManager
 	public List<Command> getEnabledCommandsList()
 	{
 		return enabledCommands;
+	}
+
+	public String[] getChat_Prefix()
+	{
+		return chat_Prefix;
 	}
 
 	public void addCommand(Command cmd)
