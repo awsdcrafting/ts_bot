@@ -57,6 +57,9 @@ public class Spam extends Command
 				}
 
 				message = args[2];
+				for(int i = 3;i<args.length;i++){
+					message += " " + args[i];
+				}
 
 				if (infinite)
 				{
