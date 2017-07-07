@@ -2,11 +2,13 @@ package io.github.awsdcrafting.commands.impl;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
+import com.github.theholywaffle.teamspeak3.api.wrapper.Permission;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
 import io.github.awsdcrafting.commands.Command;
 import main.Main;
 
 import java.util.List;
+import java.util.Map;
 /**
  * Created by Michael on 05.07.2017.
  */
@@ -47,18 +49,20 @@ public class Mute extends Command
 					boolean doBreak = false;
 					if (contains)
 					{
-						boolean containsMute1=false;
-						boolean containsMute2=false;
-						int muteInt=group.getInt("i_client_talk_power");
-						if (muteInt< 0)
-						{
-							containsMute1=true;
+						boolean containsMute=false;
+						int muteInt = 0;
+						int neededMuteInt = 0;
+						for(Permission permission : api.getServerGroupPermissions(group.getId())){
+							if(permission.getName().equalsIgnoreCase("i_client_talk_power")){
+								muteInt = permission.getValue();
+							}else if(permission.getName().equalsIgnoreCase("i_client_needed_talk_power")){
+								neededMuteInt = permission.getValue();
+							}
 						}
-						int neededMuteInt = group.getInt("i_client_needed_talk_power");
 						if(neededMuteInt>muteInt){
-							containsMute2=true;
+							containsMute=true;
 						}
-						if(containsMute1&&containsMute2)
+						if(containsMute)
 						{
 							muteGroupExists = true;
 							groupID = group.getId();
@@ -72,6 +76,13 @@ public class Mute extends Command
 				if (!muteGroupExists)
 				{
 					groupID = api.addServerGroup("botGenerated_muted");
+					if(groupID<=0){
+						for(ServerGroup group : api.getServerGroups()){
+							if(group.getName().equalsIgnoreCase("botGenerated_muted")){
+								groupID = group.getId();
+							}
+						}
+					}
 					api.addServerGroupPermission(groupID, "i_client_talk_power", -1, true, true);
 					api.addServerGroupPermission(groupID, "i_client_needed_talk_power", 9999, false, true);
 				}
