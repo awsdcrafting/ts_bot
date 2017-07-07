@@ -49,7 +49,7 @@ public class CommandManager
 		//m
 		addCommand(new Msg());
 		addCommand(new Msgme());
-		addCommand(new Mute()); //does not work yet
+		addCommand(new Mute());
 		//n
 		//o
 		//p

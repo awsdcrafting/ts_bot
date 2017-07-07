@@ -36,7 +36,7 @@ public class UnMute extends Command
 			}
 			String mode = args[0];
 			String[] clientNames = args[1].split(",");
-			String message = "Muted Clients: ";
+			String message = "UnMuted Clients: ";
 			int groupID = 0;
 
 			if (mode.equalsIgnoreCase("server"))
@@ -44,6 +44,11 @@ public class UnMute extends Command
 				for(int i = 0;i<clientNames.length;i++){
 					try{
 						int dbID = Integer.parseInt(clientNames[i]);
+						for(ServerGroup group :api.getServerGroupsByClientId(dbID)){
+							if(group.getName().contains("mute")){
+								groupID=group.getId();
+							}
+						}
 						if(api.removeClientFromServerGroup(groupID,dbID)){
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
 						}
@@ -57,6 +62,11 @@ public class UnMute extends Command
 							if(client!=null)
 							{
 								dbID = client.getDatabaseId();
+							}
+						}
+						for(ServerGroup group :api.getServerGroupsByClientId(dbID)){
+							if(group.getName().contains("mute")){
+								groupID=group.getId();
 							}
 						}
 						System.out.println(dbID);
