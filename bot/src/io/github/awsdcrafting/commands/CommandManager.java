@@ -62,6 +62,7 @@ public class CommandManager
 		//t
 		addCommand(new Test());
 		//u
+		addCommand(new UnMute());
 		//v
 		//w
 		//x
