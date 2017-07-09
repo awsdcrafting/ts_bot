@@ -29,10 +29,12 @@ public class Mute extends Command
 		} else
 		{
 			boolean ignoreCase;
-			if(args.length<3){
-				ignoreCase=false;
-			}else{
-					ignoreCase = Boolean.parseBoolean(args[3]);
+			if (args.length < 3)
+			{
+				ignoreCase = false;
+			} else
+			{
+				ignoreCase = Boolean.parseBoolean(args[3]);
 			}
 			String mode = args[0];
 			String[] clientNames = args[1].split(",");
@@ -49,36 +51,44 @@ public class Mute extends Command
 					boolean doBreak = false;
 					if (contains)
 					{
-						boolean containsMute=false;
+						boolean containsMute = false;
 						int muteInt = 0;
 						int neededMuteInt = 0;
-						for(Permission permission : api.getServerGroupPermissions(group.getId())){
-							if(permission.getName().equalsIgnoreCase("i_client_talk_power")){
+						for (Permission permission : api.getServerGroupPermissions(group.getId()))
+						{
+							if (permission.getName().equalsIgnoreCase("i_client_talk_power"))
+							{
 								muteInt = permission.getValue();
-							}else if(permission.getName().equalsIgnoreCase("i_client_needed_talk_power")){
+							} else if (permission.getName().equalsIgnoreCase("i_client_needed_talk_power"))
+							{
 								neededMuteInt = permission.getValue();
 							}
 						}
-						if(neededMuteInt>muteInt){
-							containsMute=true;
+						if (neededMuteInt > muteInt)
+						{
+							containsMute = true;
 						}
-						if(containsMute)
+						if (containsMute)
 						{
 							muteGroupExists = true;
 							groupID = group.getId();
-							 doBreak = true;
+							doBreak = true;
 						}
 					}
-					if(doBreak){
+					if (doBreak)
+					{
 						break;
 					}
 				}
 				if (!muteGroupExists)
 				{
-					groupID = api.addServerGroup("botGenerated_muted");
-					if(groupID<=0){
-						for(ServerGroup group : api.getServerGroups()){
-							if(group.getName().equalsIgnoreCase("botGenerated_muted")){
+					int code = api.addServerGroup("botGenerated_muted");
+					if (code == 0)
+					{
+						for (ServerGroup group : api.getServerGroups())
+						{
+							if (group.getName().equalsIgnoreCase("botGenerated_muted"))
+							{
 								groupID = group.getId();
 							}
 						}
@@ -86,28 +96,35 @@ public class Mute extends Command
 					api.addServerGroupPermission(groupID, "i_client_talk_power", -1, true, true);
 					api.addServerGroupPermission(groupID, "i_client_needed_talk_power", 9999, false, true);
 				}
-				for(int i = 0;i<clientNames.length;i++){
-					try{
+				for (int i = 0; i < clientNames.length; i++)
+				{
+					try
+					{
 						int dbID = Integer.parseInt(clientNames[i]);
-						if(api.addClientToServerGroup(groupID,dbID)){
+						if (api.addClientToServerGroup(groupID, dbID))
+						{
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
 						}
-					}catch(NumberFormatException nFM){
+					} catch (NumberFormatException nFM)
+					{
 						Client client = api.getClientByNameExact(clientNames[i], ignoreCase);
 						int dbID = 0;
-						if(client!=null){
+						if (client != null)
+						{
 							dbID = client.getDatabaseId();
-						}else{
+						} else
+						{
 							client = api.getClientByUId(clientNames[i]);
-							if(client!=null)
+							if (client != null)
 							{
 								dbID = client.getDatabaseId();
 							}
 						}
 						System.out.println(dbID);
-						boolean worked = api.addClientToServerGroup(groupID,dbID);
+						boolean worked = api.addClientToServerGroup(groupID, dbID);
 						System.out.println(worked);
-						if(worked){
+						if (worked)
+						{
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
 						}
 					}
@@ -116,8 +133,7 @@ public class Mute extends Command
 
 			}
 
-
-			api.sendPrivateMessage(e.getInvokerId(),message);
+			api.sendPrivateMessage(e.getInvokerId(), message);
 		}
 
 	}
