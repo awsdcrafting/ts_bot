@@ -26,7 +26,6 @@ public class UnMute extends Command
 			api.sendPrivateMessage(e.getInvokerId(), "Syntax: !unmute <mode> <name/id> [ignoreCase]");
 		} else
 		{
-			boolean silent = false;
 			int extra = 0;
 			for (int i = 0; i < args.length; i++)
 			{
@@ -40,10 +39,7 @@ public class UnMute extends Command
 
 						} else
 						{
-							if (extraBefehle[x].equalsIgnoreCase("silent"))
-							{
-								silent = true;
-							}
+
 						}
 					}
 				}
@@ -62,7 +58,7 @@ public class UnMute extends Command
 			String[] clientNames = args[1 + extra].split(",");
 			String message = "UnMuted Clients: ";
 			int groupID = 0;
-			if (silent)
+			if (mode.equalsIgnoreCase("client"))
 			{
 				for (int i = 0; i < clientNames.length; i++)
 				{
@@ -98,65 +94,62 @@ public class UnMute extends Command
 						}
 					}
 				}
-			} else
+			} else if (mode.equalsIgnoreCase("server"))
 			{
-				if (mode.equalsIgnoreCase("server"))
+				for (int i = 0; i < clientNames.length; i++)
 				{
-					for (int i = 0; i < clientNames.length; i++)
+					try
 					{
-						try
+						int dbID = Integer.parseInt(clientNames[i]);
+						for (ServerGroup group : api.getServerGroupsByClientId(dbID))
 						{
-							int dbID = Integer.parseInt(clientNames[i]);
-							for (ServerGroup group : api.getServerGroupsByClientId(dbID))
+							if (group.getName().contains("mute"))
 							{
-								if (group.getName().contains("mute"))
-								{
-									groupID = group.getId();
-								}
+								groupID = group.getId();
 							}
-							if (api.removeClientFromServerGroup(groupID, dbID))
-							{
-								message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
-							}
-						} catch (NumberFormatException nFM)
+						}
+						if (api.removeClientFromServerGroup(groupID, dbID))
 						{
-							Client client = api.getClientByNameExact(clientNames[i], ignoreCase);
-							int dbID = 0;
+							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
+						}
+					} catch (NumberFormatException nFM)
+					{
+						Client client = api.getClientByNameExact(clientNames[i], ignoreCase);
+						int dbID = 0;
+						if (client != null)
+						{
+							dbID = client.getDatabaseId();
+						} else
+						{
+							client = api.getClientByUId(clientNames[i]);
 							if (client != null)
 							{
 								dbID = client.getDatabaseId();
-							} else
-							{
-								client = api.getClientByUId(clientNames[i]);
-								if (client != null)
-								{
-									dbID = client.getDatabaseId();
-								}
-							}
-							for (ServerGroup group : api.getServerGroupsByClientId(dbID))
-							{
-								if (group.getName().contains("mute"))
-								{
-									groupID = group.getId();
-								}
-							}
-							System.out.println(dbID);
-							boolean worked = api.removeClientFromServerGroup(groupID, dbID);
-							if (worked)
-							{
-								message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
 							}
 						}
-
+						for (ServerGroup group : api.getServerGroupsByClientId(dbID))
+						{
+							if (group.getName().contains("mute"))
+							{
+								groupID = group.getId();
+							}
+						}
+						System.out.println(dbID);
+						boolean worked = api.removeClientFromServerGroup(groupID, dbID);
+						if (worked)
+						{
+							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
+						}
 					}
 
 				}
 
-				api.sendPrivateMessage(e.getInvokerId(), message);
 			}
-		}
 
+			api.sendPrivateMessage(e.getInvokerId(), message);
+		}
 	}
+
 	@Override
 	public String help()
 	{
