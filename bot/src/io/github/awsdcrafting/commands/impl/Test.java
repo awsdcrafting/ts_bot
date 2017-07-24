@@ -14,7 +14,7 @@ public class Test extends Command
 
 	public Test()
 	{
-		super("Test", "Test.", new String[]{"Test"}, 500);
+		super("Test", "Test.","test", new String[]{"Test"}, 500);
 	}
 
 	@Override

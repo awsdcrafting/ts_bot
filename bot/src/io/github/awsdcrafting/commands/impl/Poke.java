@@ -11,7 +11,7 @@ public class Poke extends Command
 
 	public Poke()
 	{
-		super("Poke", "Pokes the named client.", new String[]{"Poke"}, 0);
+		super("Poke", "Pokes the named client.","!poke <name/id>", new String[]{"Poke"}, 0);
 	}
 
 	@Override

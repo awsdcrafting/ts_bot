@@ -12,7 +12,7 @@ public class Kick extends Command
 
 	public Kick()
 	{
-		super("Kick", "Kicks the named client from the server, or all others", new String[]{"Kick"}, 200);
+		super("Kick", "Kicks the named client from the server, or all others", "unvollständig", new String[]{"Kick"}, 200);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class Kick extends Command
 			if (clientName.startsWith("starts:_"))
 			{
 				starts = true;
-				clientName = clientName.split("_",2)[1];
+				clientName = clientName.split("_", 2)[1];
 			}
 
 			System.out.println("clientName: " + clientName);

@@ -11,7 +11,7 @@ public class Config extends Command
 
 	public Config()
 	{
-		super("Config", "Changes the Config", new String[]{"Config"}, 100);
+		super("Config", "Changes the Config", "!config <default/reload/setting name <new value>>", new String[]{"Config"}, 100);
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class Config extends Command
 		if (args.length < 1)
 		{
 			api.sendPrivateMessage(e.getInvokerId(), help());
-			api.sendPrivateMessage(e.getInvokerId(), "Syntax: <default/reload/setting name <new value>>");
+			api.sendPrivateMessage(e.getInvokerId(), "Syntax: " + syntax);
 
 		} else
 		{

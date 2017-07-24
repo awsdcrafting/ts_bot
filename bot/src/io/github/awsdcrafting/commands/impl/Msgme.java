@@ -9,7 +9,7 @@ public class Msgme extends Command
 {
 	public Msgme()
 	{
-		super("Msgme", "Messages the invoker.", new String[]{"Msgme"}, 0);
+		super("Msgme", "Messages the invoker.","!msgme", new String[]{"Msgme"}, 0);
 	}
 
 	@Override

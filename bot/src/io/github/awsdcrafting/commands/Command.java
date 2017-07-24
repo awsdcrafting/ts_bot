@@ -6,19 +6,21 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 public abstract class Command implements Comparable<Command>
 {
 
-	private String name;
-	private String description;
-	private String[] alias;
-	private String help;
-	private int permissionLevel;
+	protected String name;
+	protected String description;
+	protected String syntax;
+	protected String[] alias;
+	protected String help;
+	protected int permissionLevel;
 
-	private int[] allowedGroups;
-	private String[] allowedUIDS;
+	protected int[] allowedGroups;
+	protected String[] allowedUIDS;
 
-	public Command(String name, String description, String[] alias, int permissionLevel)
+	public Command(String name, String description, String syntax, String[] alias, int permissionLevel)
 	{
 		this.name = name;
 		this.description = description;
+		this.syntax = syntax;
 		this.alias = alias;
 		this.permissionLevel = permissionLevel;
 	}
@@ -79,6 +81,10 @@ public abstract class Command implements Comparable<Command>
 	{
 
 		return permissionLevel;
+	}
+
+	public String getSyntax(){
+		return syntax;
 	}
 
 	public void setPermissionLevel(int permissionLevel)

@@ -11,7 +11,7 @@ public class Quit extends Command
 
 	public Quit()
 	{
-		super("Quit", "Makes the bot quit", new String[]{"Exit","botquit"}, 200);
+		super("Quit", "Makes the bot quit","!quit", new String[]{"Exit","botquit"}, 200);
 	}
 	@Override
 	public void execute(TS3Api api, TextMessageEvent e, String[] args)

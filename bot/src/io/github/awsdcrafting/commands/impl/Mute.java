@@ -17,7 +17,7 @@ public class Mute extends Command
 
 	public Mute()
 	{
-		super("Mute", "Mutes the named Client", new String[]{"Mute"}, 100);
+		super("Mute", "Mutes the named Client","!mute <mode> <name/id> [ignoreCase]", new String[]{"Mute"}, 100);
 	}
 	@Override
 	public void execute(TS3Api api, TextMessageEvent e, String[] args)
@@ -25,7 +25,7 @@ public class Mute extends Command
 		//expected: mode name/id
 		if (args.length < 2)
 		{
-			api.sendPrivateMessage(e.getInvokerId(), "Syntax: !mute <mode> <name/id> [ignoreCase]");
+			api.sendPrivateMessage(e.getInvokerId(), "Syntax: " + syntax);
 		} else
 		{
 			int extra = 0;

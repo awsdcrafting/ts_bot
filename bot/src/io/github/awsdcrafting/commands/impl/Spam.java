@@ -10,7 +10,7 @@ public class Spam extends Command
 	boolean infinite = false;
 	public Spam()
 	{
-		super("Spam", "Spams!", new String[]{"Spam"}, 100);
+		super("Spam", "Spams!","!Spam <stop/mode <count/infinite> <message>>", new String[]{"Spam"}, 100);
 	}
 	@Override
 	public void execute(TS3Api api, TextMessageEvent e, String[] args)
@@ -21,7 +21,7 @@ public class Spam extends Command
 		String message = "spam";
 		if (args.length < 1)
 		{
-			api.sendPrivateMessage(e.getInvokerId(), "Syntax: !Spam <stop/mode <count/infinite> <message>>");
+			api.sendPrivateMessage(e.getInvokerId(), "Syntax: " + syntax);
 		} else
 		{
 			if (args[0].equalsIgnoreCase("stop"))

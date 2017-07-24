@@ -16,7 +16,7 @@ public class Help extends Command
 	public Help()
 	{
 
-		super("Help", "Returns all Commands with their description.", new String[]{"Help"}, 0);
+		super("Help", "Returns all Commands with their description.","!help [command]", new String[]{"Help"}, 0);
 	}
 
 	@Override
@@ -35,14 +35,15 @@ public class Help extends Command
 					helpMessage = command.getDescription();
 					if (helpPower >= main.Main.commandManager.getAdminLevel())
 					{
-						helpMessage += " Admin Command!";
+						helpMessage += " - Admin Command!";
 					} else if (helpPower >= main.Main.commandManager.getModLevel())
 					{
-						helpMessage += " Mod Command!";
+						helpMessage += " -  Mod Command!";
 					} else
 					{
-						helpMessage += " Everyone can use this command!";
+						helpMessage += " - Everyone can use this command!";
 					}
+					helpMessage += " - Syntax: " + command.getSyntax();
 				}
 				if (e.getTargetMode().getIndex() != 2)
 				{

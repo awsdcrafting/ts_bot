@@ -16,7 +16,7 @@ public class Abfuck extends Command
 
 	public Abfuck()
 	{
-		super("Abfuck", "Gets on everyone nerves :D.", new String[]{"Abfuck"}, 200);
+		super("Abfuck", "Gets on everyone nerves :D.","!Abfuck", new String[]{"Abfuck"}, 200);
 	}
 
 	@Override

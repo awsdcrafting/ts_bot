@@ -11,7 +11,7 @@ public class Msg extends Command
 
 	public Msg()
 	{
-		super("Msg", "Messages the named client.", new String[]{"Msg"}, 0);
+		super("Msg", "Messages the named client.","!msg <name/id>", new String[]{"Msg"}, 0);
 	}
 
 	@Override

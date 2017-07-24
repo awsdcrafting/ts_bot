@@ -12,7 +12,7 @@ public class CKick extends Command
 	public CKick()
 	{
 
-		super("CKick", "Kicks the named client from the channel", new String[]{"ChannelKick"}, 200);
+		super("CKick", "Kicks the named client from the channel","unvollständig", new String[]{"ChannelKick"}, 200);
 	}
 
 	@Override

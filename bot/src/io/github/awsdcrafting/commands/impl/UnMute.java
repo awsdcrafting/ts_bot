@@ -15,7 +15,7 @@ public class UnMute extends Command
 
 	public UnMute()
 	{
-		super("UnMute", "UnMutes a previously muted client", new String[]{"EntMute"}, 100);
+		super("UnMute", "UnMutes a previously muted client","!unmute <mode> <name/id> [ignoreCase]", new String[]{"EntMute"}, 100);
 	}
 	@Override
 	public void execute(TS3Api api, TextMessageEvent e, String[] args)
@@ -23,7 +23,7 @@ public class UnMute extends Command
 		//expected: mode name/id
 		if (args.length < 2)
 		{
-			api.sendPrivateMessage(e.getInvokerId(), "Syntax: !unmute <mode> <name/id> [ignoreCase]");
+			api.sendPrivateMessage(e.getInvokerId(), "Syntax: " + syntax);
 		} else
 		{
 			int extra = 0;
