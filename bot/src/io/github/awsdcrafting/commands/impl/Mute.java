@@ -98,7 +98,7 @@ public class Mute extends Command
 						}
 					}
 				}
-			} else if (mode.equalsIgnoreCase("server"))
+			} else if (mode.equalsIgnoreCase("servergroup"))
 			{
 				List<ServerGroup> serverGroups = api.getServerGroups();
 				for (int i = 0; i < serverGroups.size(); i++)

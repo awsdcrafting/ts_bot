@@ -94,7 +94,7 @@ public class UnMute extends Command
 						}
 					}
 				}
-			} else if (mode.equalsIgnoreCase("server"))
+			} else if (mode.equalsIgnoreCase("servergroup"))
 			{
 				for (int i = 0; i < clientNames.length; i++)
 				{
