@@ -26,61 +26,134 @@ public class UnMute extends Command
 			api.sendPrivateMessage(e.getInvokerId(), "Syntax: !unmute <mode> <name/id> [ignoreCase]");
 		} else
 		{
+			boolean silent = false;
+			int extra = 0;
+			for (int i = 0; i < args.length; i++)
+			{
+				if (args[i].startsWith("-"))
+				{
+					String[] extraBefehle = args[i].split("-");
+					for (int x = 1; x < extraBefehle.length; x++)
+					{
+						if (extraBefehle[x].equals(""))
+						{
+
+						} else
+						{
+							if (extraBefehle[x].equalsIgnoreCase("silent"))
+							{
+								silent = true;
+							}
+						}
+					}
+				}
+
+			}
 			boolean ignoreCase;
-			if (args.length < 3)
+			if (args.length < 3 + extra)
 			{
 				ignoreCase = false;
 			} else
 			{
-				ignoreCase = Boolean.parseBoolean(args[3]);
+				ignoreCase = Boolean.parseBoolean(args[3 + extra]);
 			}
-			String mode = args[0];
-			String[] clientNames = args[1].split(",");
+
+			String mode = args[0 + extra];
+			String[] clientNames = args[1 + extra].split(",");
 			String message = "UnMuted Clients: ";
 			int groupID = 0;
-
-			if (mode.equalsIgnoreCase("server"))
+			if (silent)
 			{
-				for(int i = 0;i<clientNames.length;i++){
-					try{
+				for (int i = 0; i < clientNames.length; i++)
+				{
+					try
+					{
 						int dbID = Integer.parseInt(clientNames[i]);
-						for(ServerGroup group :api.getServerGroupsByClientId(dbID)){
-							if(group.getName().contains("mute")){
-								groupID=group.getId();
-							}
-						}
-						if(api.removeClientFromServerGroup(groupID,dbID)){
+						if (api.addClientToServerGroup(groupID, dbID))
+						{
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
 						}
-					}catch(NumberFormatException nFM){
+					} catch (NumberFormatException nFM)
+					{
 						Client client = api.getClientByNameExact(clientNames[i], ignoreCase);
 						int dbID = 0;
-						if(client!=null){
+						if (client != null)
+						{
 							dbID = client.getDatabaseId();
-						}else{
+						} else
+						{
 							client = api.getClientByUId(clientNames[i]);
-							if(client!=null)
+							if (client != null)
 							{
 								dbID = client.getDatabaseId();
 							}
 						}
-						for(ServerGroup group :api.getServerGroupsByClientId(dbID)){
-							if(group.getName().contains("mute")){
-								groupID=group.getId();
-							}
-						}
 						System.out.println(dbID);
-						boolean worked = api.removeClientFromServerGroup(groupID,dbID);
-						if(worked){
+						boolean worked1 = api.deleteClientPermission(dbID, "i_client_needed_talk_power");
+						boolean worked2 = api.deleteClientPermission(dbID, "i_client_talk_power");
+						System.out.println(worked1 && worked2);
+						if (worked1 && worked2)
+						{
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
 						}
+					}
+				}
+			} else
+			{
+				if (mode.equalsIgnoreCase("server"))
+				{
+					for (int i = 0; i < clientNames.length; i++)
+					{
+						try
+						{
+							int dbID = Integer.parseInt(clientNames[i]);
+							for (ServerGroup group : api.getServerGroupsByClientId(dbID))
+							{
+								if (group.getName().contains("mute"))
+								{
+									groupID = group.getId();
+								}
+							}
+							if (api.removeClientFromServerGroup(groupID, dbID))
+							{
+								message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
+							}
+						} catch (NumberFormatException nFM)
+						{
+							Client client = api.getClientByNameExact(clientNames[i], ignoreCase);
+							int dbID = 0;
+							if (client != null)
+							{
+								dbID = client.getDatabaseId();
+							} else
+							{
+								client = api.getClientByUId(clientNames[i]);
+								if (client != null)
+								{
+									dbID = client.getDatabaseId();
+								}
+							}
+							for (ServerGroup group : api.getServerGroupsByClientId(dbID))
+							{
+								if (group.getName().contains("mute"))
+								{
+									groupID = group.getId();
+								}
+							}
+							System.out.println(dbID);
+							boolean worked = api.removeClientFromServerGroup(groupID, dbID);
+							if (worked)
+							{
+								message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
+							}
+						}
+
 					}
 
 				}
 
+				api.sendPrivateMessage(e.getInvokerId(), message);
 			}
-
-			api.sendPrivateMessage(e.getInvokerId(), message);
 		}
 
 	}
