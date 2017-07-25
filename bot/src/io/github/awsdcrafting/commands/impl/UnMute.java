@@ -65,8 +65,8 @@ public class UnMute extends Command
 					try
 					{
 						int dbID = Integer.parseInt(clientNames[i]);
-						boolean worked1 = api.addClientPermission(dbID, "i_client_needed_talk_power", 9999, true);
-						boolean worked2 = api.addClientPermission(dbID, "i_client_talk_power", -1, true);
+						boolean worked1 = api.deleteClientPermission(dbID, "i_client_needed_talk_power");
+						boolean worked2 = api.deleteClientPermission(dbID, "i_client_talk_power");
 						if (worked1&&worked2)
 						{
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
