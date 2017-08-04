@@ -136,4 +136,16 @@ public abstract class Command implements Comparable<Command>
 		return ret;
 	}
 
+	public boolean sendSyntax(TS3Api api, TextMessageEvent e){
+		boolean ret = true;
+		for(int i = 0;i<syntax.length();i++){
+			if(i==0){
+				ret = ret && api.sendPrivateMessage(e.getInvokerId(),"Syntax: " + syntax);
+			}else{
+				ret = ret && api.sendPrivateMessage(e.getInvokerId(),syntax);
+			}
+		}
+		return ret;
+	}
+
 }

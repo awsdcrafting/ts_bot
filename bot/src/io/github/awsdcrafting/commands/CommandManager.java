@@ -189,7 +189,7 @@ public class CommandManager
 					}
 
 				}
-				api.sendPrivateMessage(e.getInvokerId(), "You do not have permissions to use this command! :C");
+				api.sendPrivateMessage(e.getInvokerId(), "You do not have permissions to use the command " + cmd.getName() + "! :C");
 				api.sendPrivateMessage(e.getInvokerId(), "needed permission-level: " + cmd.getPermissionLevel());
 				return false;
 			}

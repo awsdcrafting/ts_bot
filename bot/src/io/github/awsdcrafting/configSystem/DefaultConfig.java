@@ -15,7 +15,7 @@ public class DefaultConfig
 		defaultConfig.add("");
 		defaultConfig.add("#admin Groups separated by a comma");
 		defaultConfig.add("admin_groups=0");
-
+		//fix??
 		// end
 		config = defaultConfig;
 		return config;
