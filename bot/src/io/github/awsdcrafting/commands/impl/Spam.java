@@ -3,7 +3,7 @@ import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import io.github.awsdcrafting.commands.Command;
 /**
- * Created by Michael on 31.05.2017.
+ * Created by scisneromam on 31.05.2017.
  */
 public class Spam extends Command
 {

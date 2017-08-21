@@ -4,7 +4,7 @@ import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import io.github.awsdcrafting.commands.Command;
 import main.Main;
 /**
- * Created by Michael on 31.05.2017.
+ * Created by scisneromam on 31.05.2017.
  */
 public class Quit extends Command
 {

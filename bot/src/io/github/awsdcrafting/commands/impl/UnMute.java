@@ -8,7 +8,7 @@ import io.github.awsdcrafting.commands.Command;
 
 import java.util.List;
 /**
- * Created by Michael on 07.07.2017.
+ * Created by scisneromam on 07.07.2017.
  */
 public class UnMute extends Command
 {
