@@ -13,11 +13,7 @@ import com.github.theholywaffle.teamspeak3.TS3Config;
 import com.github.theholywaffle.teamspeak3.TS3Query;
 import com.github.theholywaffle.teamspeak3.TS3Query.FloodRate;
 import com.github.theholywaffle.teamspeak3.api.TextMessageTargetMode;
-import com.github.theholywaffle.teamspeak3.api.event.ClientJoinEvent;
-import com.github.theholywaffle.teamspeak3.api.event.ClientLeaveEvent;
-import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
-import com.github.theholywaffle.teamspeak3.api.event.TS3EventType;
-import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import com.github.theholywaffle.teamspeak3.api.event.*;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import com.github.theholywaffle.*;
 import com.github.theholywaffle.teamspeak3.*;
@@ -28,6 +24,7 @@ import com.github.theholywaffle.teamspeak3.api.reconnect.ReconnectStrategy;
 import io.github.awsdcrafting.commands.CommandManager;
 import io.github.awsdcrafting.configSystem.ConfigManager;
 import io.github.awsdcrafting.configSystem.DefaultConfig;
+import io.github.awsdcrafting.configSystem.Store;
 import io.github.awsdcrafting.ui.Fenster;
 import io.github.awsdcrafting.utils.WarnSystem;
 
@@ -42,15 +39,21 @@ public class Main
 	static String vote;
 	static ArrayList<String> votes = new ArrayList<String>();
 	static ArrayList<Integer> a_votes = new ArrayList<Integer>();
+
+	//move to store
+	public static ArrayList<Integer> notInvited;
 	static ArrayList<String> alWarnungen;
 	static ArrayList<String> commands;
 	static ArrayList<Integer> guestIDS;
+
 	static ArrayList<String> altsAL = io.github.awsdcrafting.utils.DateiLeser.leseDateiAsArrayList("alts.txt");
 	static ArrayList<String> usedAltsAL = new ArrayList<String>();
-	private static final Main MAIN = new Main();
+	public static Main MAIN;
 	static volatile boolean funktionAktiv;
 
 	public static boolean sendServer = false;
+
+	public static Store store;
 
 	public static CommandManager commandManager;
 	public static ConfigManager configManager;
@@ -60,8 +63,16 @@ public class Main
 
 	public Main()
 	{
+		if (MAIN == null)
+		{
+			MAIN = this;
+		}
 		commandManager = new CommandManager();
 		configManager = new ConfigManager();
+
+		store = new Store();
+		guestIDS = new ArrayList<>();
+		notInvited = new ArrayList<>();
 
 		//fenster
 		fenster = new Fenster("TS3Bot - by scisneromam", SIZE_X, SIZE_Y);
@@ -102,6 +113,10 @@ public class Main
 
 	public static void main(String[] args)
 	{
+		if (MAIN == null)
+		{
+			MAIN = new Main();
+		}
 		File configDir = new File("Config");
 		if (!configDir.exists())
 		{
@@ -234,24 +249,53 @@ public class Main
 
 		public void onClientJoin(ClientJoinEvent e)
 		{
+
 			if (e.getClientServerGroups().contains("21782"))
 			{
 				guestIDS.add(e.getClientId());
+				if (store.getJoinMode().equalsIgnoreCase("inviteOnly"))
+				{
+					notInvited.add(e.getClientId());
+					api.sendPrivateMessage(e.getClientId(),
+										   "Um dich zu registrieren schreibe den bot mit !join <invitecode> an den invitecode erhältst du von der person die dich auf den ts invited hat");
+				}
 			}
 
 		}
 
+		@Override
 		public void onClientLeave(ClientLeaveEvent e)
 		{
-			for (int i = 0; i < guestIDS.size(); i++)
+			guestIDS.remove(new Integer(e.getClientId()));
+
+			notInvited.remove(new Integer(e.getClientId()));
+		}
+
+		@Override
+		public void onClientMoved(ClientMovedEvent e)
+		{
+			System.out.println("moved");
+			if (store.getJoinMode().equalsIgnoreCase("inviteOnly"))
 			{
-				if (e.getClientId() == guestIDS.get(i))
+				for (int i = 0; i < notInvited.size(); i++)
 				{
-					guestIDS.remove(i);
+					System.out.println(notInvited.get(i) + ":" + e.getClientId());
+					if ((int) notInvited.get(i) == e.getClientId())
+					{
+						System.out.println("test-vorher");
+						notInvited.remove(new Integer(e.getClientId()));
+						System.out.println("test");
+						api.kickClientFromServer("Der Server ist momentan im invite only mode.", e.getClientId());
+						System.out.println("test-nachher");
+					} else
+					{
+						System.out.println("Fail");
+					}
 				}
 			}
 		}
 
+		@Override
 		public void onTextMessage(TextMessageEvent e)
 		{
 
@@ -449,7 +493,6 @@ public class Main
 							String nickname = subString[1];
 							api.setNickname(nickname);
 						}
-
 
 						if (message.equals("!ban"))
 						{

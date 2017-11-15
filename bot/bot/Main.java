@@ -32,6 +32,7 @@ public class Main {
         final TS3Config config = new TS3Config();
         config.setHost("31.214.227.53"); // Die IP-Adresse des Servers, ohne Port
         config.setLoginCredentials("scissiV2", "e5WqptB8");
+        config.setFloodRate(FloodRate.UNLIMITED);
         final TS3Query query = new TS3Query(config);
         query.connect(); // Verbinden
         final TS3Api api = query.getApi();
@@ -269,7 +270,7 @@ public class Main {
 				
 				}
 
-				if(message.equals("!votestart")){api.sendPrivateMessage(e.getInvokerId(),"Command: !votestart name möglichkeit1 möglichkeit2 möglichkeit3 möglichkeit4");}
+				if(message.equals("!votestart")){api.sendPrivateMessage(e.getInvokerId(),"Command: !votestart name mï¿½glichkeit1 mï¿½glichkeit2 mï¿½glichkeit3 mï¿½glichkeit4");}
 				else{
 				if(message.startsWith("!votestart")){
 					String[] subString = message.split(" ",0);
@@ -283,8 +284,8 @@ public class Main {
 					vote_m3 = subString[4];
 					if(subString[5].isEmpty()){subString[5]=" ";}
 					vote_m4 = subString[5];
-					api.sendServerMessage("votet mit !vote (votemöglichkeit) für: " + vote + "  " + vote_m1 + "  "  + vote_m2 + "  "  + vote_m3 + "  "  + vote_m4);
-					api.sendServerMessage("antwortet im private chat (rechtsklick auf den bot und dann: text chat öffnen)");
+					api.sendServerMessage("votet mit !vote (votemï¿½glichkeit) fï¿½r: " + vote + "  " + vote_m1 + "  "  + vote_m2 + "  "  + vote_m3 + "  "  + vote_m4);
+					api.sendServerMessage("antwortet im private chat (rechtsklick auf den bot und dann: text chat ï¿½ffnen)");
 					}
 					}
 				if(message.startsWith("!vote"))
@@ -300,7 +301,7 @@ public class Main {
 				
 				if(message.equals("!voteend"))
 				{
-					api.sendPrivateMessage(e.getInvokerId(), "vote ergebnisse für: " + vote);
+					api.sendPrivateMessage(e.getInvokerId(), "vote ergebnisse fï¿½r: " + vote);
 					api.sendPrivateMessage(e.getInvokerId(), vote_m1 + ": " + a_vote_m1);
 					api.sendPrivateMessage(e.getInvokerId(), vote_m2 + ": " + a_vote_m2);
 					api.sendPrivateMessage(e.getInvokerId(), vote_m3 + ": " + a_vote_m3);

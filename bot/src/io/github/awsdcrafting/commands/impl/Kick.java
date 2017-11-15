@@ -12,7 +12,7 @@ public class Kick extends Command
 
 	public Kick()
 	{
-		super("Kick", "Kicks the named client from the server, or all others", "unvollständig", new String[]{"Kick"}, 200);
+		super("Kick", "Kicks the named client from the server, or all except yourself", "unvollständig", new String[]{"Kick"}, 200);
 	}
 
 	@Override

@@ -43,6 +43,7 @@ public class CommandManager
 		addCommand(new Help());
 		//i
 		//j
+		addCommand(new Join());
 		//k
 		addCommand(new Kick());
 		//l
