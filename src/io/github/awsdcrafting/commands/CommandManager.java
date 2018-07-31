@@ -134,6 +134,7 @@ public class CommandManager
 		return null;
 	}
 
+	//todo rewrite permission system
 	public boolean executeTextMessageEvent(TS3Api api, TextMessageEvent e, String text)
 	{
 		int x = 0;

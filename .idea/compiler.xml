@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bot" />
+        <module name="ts_bot" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="bot" target="1.8" />
+      <module name="ts_bot" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

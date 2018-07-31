@@ -2,6 +2,7 @@ package io.github.awsdcrafting.commands.impl;
 
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import com.github.theholywaffle.teamspeak3.api.exception.TS3CommandFailedException;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
 import io.github.awsdcrafting.commands.Command;
@@ -26,7 +27,7 @@ public class Kick extends Command
 			api.sendPrivateMessage(e.getInvokerId(), "Syntax: " + syntax);
 		} else
 		{
-			
+
 			String clientName = args[0];
 			// suche leute mit leerzeichen im nickname
 			// int j = 1;
@@ -87,10 +88,12 @@ public class Kick extends Command
 					if (clID != e.getInvokerId() && clID != Main.botIDm)
 					{
 						System.out.println("ClientID: " + clID);
-						boolean worked = api.kickClientFromServer(kickGrund, clID);
-						if(worked){
+						try
+						{
+							api.kickClientFromServer(kickGrund, clID);
 							api.sendChannelMessage(client.getNickname() + " wurde gekickt!");
-						}else{
+						} catch (TS3CommandFailedException ts3CommandFailedException)
+						{
 							api.sendChannelMessage(client.getNickname() + " konnte nicht gekickt werden!");
 						}
 					}
@@ -114,10 +117,12 @@ public class Kick extends Command
 							if (sDBID.startsWith(sCLID) || sApiClientID.startsWith(sCLID))
 							{
 								System.out.println("ClientID: " + apiClientID);
-								boolean worked = api.kickClientFromServer(kickGrund, apiClientID);
-								if(worked){
+								try
+								{
+									api.kickClientFromServer(kickGrund, clID);
 									api.sendChannelMessage(client.getNickname() + " wurde gekickt!");
-								}else{
+								} catch (TS3CommandFailedException ts3CommandFailedException)
+								{
 									api.sendChannelMessage(client.getNickname() + " konnte nicht gekickt werden!");
 								}
 							}
@@ -126,11 +131,13 @@ public class Kick extends Command
 							if (apiClientID == clID || dbID == clID)
 							{
 								System.out.println("ClientID: " + apiClientID);
-								boolean worked = api.kickClientFromServer(kickGrund, apiClientID);
-								if(worked){
-									api.sendChannelMessage(clientName + " wurde gekickt!");
-								}else{
-									api.sendChannelMessage(clientName + " konnte nicht gekickt werden!");
+								try
+								{
+									api.kickClientFromServer(kickGrund, clID);
+									api.sendChannelMessage(client.getNickname() + " wurde gekickt!");
+								} catch (TS3CommandFailedException ts3CommandFailedException)
+								{
+									api.sendChannelMessage(client.getNickname() + " konnte nicht gekickt werden!");
 								}
 							}
 						}
@@ -149,10 +156,12 @@ public class Kick extends Command
 							{
 								int clientID = client.getId();
 								System.out.println("ClientID: " + clientID);
-								boolean worked = api.kickClientFromServer(kickGrund, clientID);
-								if(worked){
+								try
+								{
+									api.kickClientFromServer(kickGrund, clientID);
 									api.sendChannelMessage(client.getNickname() + " wurde gekickt!");
-								}else{
+								} catch (TS3CommandFailedException ts3CommandFailedException)
+								{
 									api.sendChannelMessage(client.getNickname() + " konnte nicht gekickt werden!");
 								}
 
@@ -163,11 +172,13 @@ public class Kick extends Command
 							{
 								int clientID = client.getId();
 								System.out.println("ClientID: " + clientID);
-								boolean worked = api.kickClientFromServer(kickGrund, clientID);
-								if(worked){
-									api.sendChannelMessage(clientName + " wurde gekickt!");
-								}else{
-									api.sendChannelMessage(clientName + " konnte nicht gekickt werden!");
+								try
+								{
+									api.kickClientFromServer(kickGrund, clientID);
+									api.sendChannelMessage(client.getNickname() + " wurde gekickt!");
+								} catch (TS3CommandFailedException ts3CommandFailedException)
+								{
+									api.sendChannelMessage(client.getNickname() + " konnte nicht gekickt werden!");
 								}
 							}
 						}

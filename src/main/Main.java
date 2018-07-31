@@ -13,12 +13,15 @@ import io.github.awsdcrafting.commands.CommandManager;
 import io.github.awsdcrafting.configSystem.ConfigManager;
 import io.github.awsdcrafting.configSystem.Store;
 import io.github.awsdcrafting.ui.Fenster;
+import io.github.awsdcrafting.utils.DateiLeser;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main
 {
@@ -150,6 +153,17 @@ public class Main
 		tsconfig.setEnableCommunicationsLogging(true);
 		commands = io.github.awsdcrafting.utils.DateiLeser.leseDateiAsArrayList("commands.txt");
 		adminIDS = io.github.awsdcrafting.utils.DateiLeser.leseDateiAsArrayList("admins.txt");
+		List<String> modGroupIDs = DateiLeser.leseDateiAsArrayList("mods.txt");
+		for (String modGroupID : modGroupIDs)
+		{
+			try
+			{
+				modGroups.add(Integer.parseInt(modGroupID));
+			} catch (NumberFormatException ignored)
+			{
+
+			}
+		}
 
 		// Use default exponential backoff reconnect strategy
 		tsconfig.setReconnectStrategy(ReconnectStrategy.exponentialBackoff());

@@ -83,7 +83,8 @@ public abstract class Command implements Comparable<Command>
 		return permissionLevel;
 	}
 
-	public String getSyntax(){
+	public String getSyntax()
+	{
 		return syntax;
 	}
 
@@ -92,34 +93,32 @@ public abstract class Command implements Comparable<Command>
 		this.permissionLevel = permissionLevel;
 	}
 
-	public boolean sendMessage(TS3Api api, int messageMode, int id, String message)
+	public void sendMessage(TS3Api api, int messageMode, int id, String message)
 	{
 		if (messageMode == 1)
 		{
-			return api.sendPrivateMessage(id, message);
+			api.sendPrivateMessage(id, message);
 		}
 		if (messageMode == 2)
 		{
-			return api.sendChannelMessage(id, message);
+			api.sendChannelMessage(id, message);
 		}
 		if (messageMode == 3)
 		{
-			return api.sendServerMessage(id, message);
+			api.sendServerMessage(id, message);
 		}
-		return false;
 	}
 
-	public boolean sendMessage(TS3Api api, int messageMode, int id, String message, boolean moveback, int mbID)
+	public void sendMessage(TS3Api api, int messageMode, int id, String message, boolean moveback, int mbID)
 	{
-		boolean ret = false;
 		if (messageMode == 1)
 		{
-			ret = api.sendPrivateMessage(id, message);
+			api.sendPrivateMessage(id, message);
 
 		}
 		if (messageMode == 2)
 		{
-			ret = api.sendChannelMessage(id, message);
+			api.sendChannelMessage(id, message);
 			if (moveback)
 			{
 				api.moveQuery(mbID);
@@ -127,25 +126,26 @@ public abstract class Command implements Comparable<Command>
 		}
 		if (messageMode == 3)
 		{
-			ret = api.sendServerMessage(id, message);
+			api.sendServerMessage(id, message);
 			if (moveback)
 			{
 				api.selectVirtualServerByPort(mbID);
 			}
 		}
-		return ret;
 	}
 
-	public boolean sendSyntax(TS3Api api, TextMessageEvent e){
-		boolean ret = true;
-		for(int i = 0;i<syntax.length();i++){
-			if(i==0){
-				ret = ret && api.sendPrivateMessage(e.getInvokerId(),"Syntax: " + syntax);
-			}else{
-				ret = ret && api.sendPrivateMessage(e.getInvokerId(),syntax);
+	public void sendSyntax(TS3Api api, TextMessageEvent e)
+	{
+		for (int i = 0; i < syntax.length(); i++)
+		{
+			if (i == 0)
+			{
+				api.sendPrivateMessage(e.getInvokerId(), "Syntax: " + syntax);
+			} else
+			{
+				api.sendPrivateMessage(e.getInvokerId(), syntax);
 			}
 		}
-		return ret;
 	}
 
 }

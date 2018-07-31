@@ -1,6 +1,7 @@
 package io.github.awsdcrafting.commands.impl;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import com.github.theholywaffle.teamspeak3.api.exception.TS3CommandFailedException;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Permission;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
@@ -15,7 +16,7 @@ public class UnMute extends Command
 
 	public UnMute()
 	{
-		super("UnMute", "UnMutes a previously muted client","!unmute <mode> <name/id> [ignoreCase]", new String[]{"EntMute"}, 100);
+		super("UnMute", "UnMutes a previously muted client", "!unmute <mode> <name/id> [ignoreCase]", new String[]{"EntMute"}, 100);
 	}
 	@Override
 	public void execute(TS3Api api, TextMessageEvent e, String[] args)
@@ -65,11 +66,14 @@ public class UnMute extends Command
 					try
 					{
 						int dbID = Integer.parseInt(clientNames[i]);
-						boolean worked1 = api.deleteClientPermission(dbID, "i_client_needed_talk_power");
-						boolean worked2 = api.deleteClientPermission(dbID, "i_client_talk_power");
-						if (worked1&&worked2)
+						try
 						{
+							api.deleteClientPermission(dbID, "i_client_needed_talk_power");
+							api.deleteClientPermission(dbID, "i_client_talk_power");
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
+						} catch (TS3CommandFailedException ignored)
+						{
+
 						}
 					} catch (NumberFormatException nFM)
 					{
@@ -87,12 +91,14 @@ public class UnMute extends Command
 							}
 						}
 						System.out.println(dbID);
-						boolean worked1 = api.deleteClientPermission(dbID, "i_client_needed_talk_power");
-						boolean worked2 = api.deleteClientPermission(dbID, "i_client_talk_power");
-						System.out.println(worked1 && worked2);
-						if (worked1 && worked2)
+						try
 						{
+							api.deleteClientPermission(dbID, "i_client_needed_talk_power");
+							api.deleteClientPermission(dbID, "i_client_talk_power");
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
+						} catch (TS3CommandFailedException ignored)
+						{
+
 						}
 					}
 				}
@@ -110,7 +116,10 @@ public class UnMute extends Command
 								groupID = group.getId();
 							}
 						}
-						if (api.removeClientFromServerGroup(groupID, dbID))
+						try
+						{
+							api.removeClientFromServerGroup(groupID, dbID);
+						} catch (TS3CommandFailedException ignored)
 						{
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
 						}
@@ -137,8 +146,10 @@ public class UnMute extends Command
 							}
 						}
 						System.out.println(dbID);
-						boolean worked = api.removeClientFromServerGroup(groupID, dbID);
-						if (worked)
+						try
+						{
+							api.removeClientFromServerGroup(groupID, dbID);
+						} catch (TS3CommandFailedException ignored)
 						{
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
 						}

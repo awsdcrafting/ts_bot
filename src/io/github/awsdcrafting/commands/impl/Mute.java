@@ -1,6 +1,7 @@
 package io.github.awsdcrafting.commands.impl;
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
+import com.github.theholywaffle.teamspeak3.api.exception.TS3CommandFailedException;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Permission;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
@@ -111,13 +112,16 @@ public class Mute extends Command
 					if (mode.equalsIgnoreCase("client"))
 					{
 
-						boolean worked1 = api.addClientPermission(dbID, "i_client_needed_talk_power", 9999, true);
-						boolean worked2 = api.addClientPermission(dbID, "i_client_talk_power", -1, true);
-						if (worked1 && worked2)
+						try
 						{
+							api.addClientPermission(dbID, "i_client_needed_talk_power", 9999, true);
+							api.addClientPermission(dbID, "i_client_talk_power", -1, true);
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
+						} catch (TS3CommandFailedException ignored)
+						{
+
 						}
-					} else if (mode.equalsIgnoreCase("servergroup")||mode.equalsIgnoreCase("server"))
+					} else if (mode.equalsIgnoreCase("servergroup") || mode.equalsIgnoreCase("server"))
 					{
 						boolean muteGroupExists = false;
 						List<ServerGroup> serverGroups = api.getServerGroups();
@@ -174,11 +178,13 @@ public class Mute extends Command
 							api.addServerGroupPermission(groupID, "i_client_needed_talk_power", 9999, false, true);
 						}
 
-						boolean worked = api.addClientToServerGroup(groupID, dbID);
-						System.out.println(worked);
-						if (worked)
+						try
 						{
+							api.addClientToServerGroup(groupID, dbID);
 							message += api.getDatabaseClientInfo(dbID).getNickname() + " ";
+						} catch (TS3CommandFailedException ignored)
+						{
+
 						}
 
 					} else if (mode.equalsIgnoreCase("channel"))
